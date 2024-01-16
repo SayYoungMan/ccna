@@ -4,24 +4,28 @@
 
 - A `computer network` is a digital telecommunications network which allows nodes to share resources.
 
-### Symbols
+### Devices in Network
 
-#### Router
+#### Client & Server
 
-<img src="./Images/router.png" height=100 width=100>
+- A `client` is a device that accesses a service made available by a server.
+- A `server` is a device that provides functions or services for clients.
+- Same device can both be a client and a server.
 
-#### Switch
+#### Switches / Routers
 
-<img src="./Images/switch.jpeg" height=100 width=100>
+- Number of network interfaces / ports
+  - Switch: Many
+  - Router: Few
+- Connectivity
+  - Switch: to hosts within the same LAN and no connectivity between LAN or over the internet
+  - Router: between LANs and used to send data over the Internet
 
-#### Firewall
+#### Firewalls
 
-<img src="./Images/firewall.png" height=100 width=100>
+- monitor and control network traffic based on configured rules
+- can be placed inside or outside network
 
-#### Server
-
-<img src="./Images/server.png" height=100 width=100>
-
-#### Client
-
-<img src="./Images/client.png" height=100 width=100>
+- `Next-generation firewalls` include more modern and advanced filtering capabilities.
+- `Network firewalls` are hardware devices that filter traffic between networks.
+- `Host-based firewalls` are software applications that filter traffic entering and exiting a host machine.
