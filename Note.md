@@ -100,3 +100,86 @@
 - UTP is vulnerable to EMI but fiber optic is not.
 - RJ45 is cheaper than SFP.
 - UTP emits a faint signal outside which can be security risk.
+
+## 3. OSI Model & TCP/IP Suite
+
+- `Networking models` categorize and provide a structure for networking protocols and standards.
+- `Protocols` are a set of rules defining how network devices and software should work.
+
+### OSI (Open Systems Interconnection) Model
+
+- A conceptual model that categorizes and standardizes the different functions in a network.
+- Created by International Organization for Standardization (ISO).
+- 7 Layers work together to make the network work.
+  1. Physical
+  2. Data Link
+  3. Network
+  4. Transport
+  5. Session
+  6. Presentation
+  7. Application
+- When sending data to another, the data is first processed through the OSI stack, each layer adding something to original (`encapsulation`).
+- Then, at the physical layer, it's sent to another as electrical signal and it strips off the layers up the OSI stack. (`de-encapsulation`)
+- Both encapsulation and de-encapsulation are examples of `adjacent-layer interaction`.
+- `Same-layer interaction` is when the same layer of two systems interact.
+
+#### Application Layer
+
+- Layer that interacts with software applications like browser.
+- HTTP and HTTPS are examples of layer 7 protocols.
+- Functions:
+  - Identifying communication partners
+  - Synchronizing communication
+
+#### Presentation Layer
+
+- Translates between application and network formats.
+- One example is encryption and decryption of data.
+- Also it translates between different application layer formats.
+
+#### Session Layer
+
+- Controls dialogues (`sessions`) between communicating hosts.
+- Establishes, manages and terminates connections between the local application and the remote application.
+
+#### Transport Layer
+
+- Segments and re-assembles data for communications between end hosts.
+- Provide `host-to-host` communication.
+- Layer 4 header is added at this layer and the PDU is called `segment`.
+
+#### Network Layer
+
+- Provides connectivity between end hosts on different networks outside LAN.
+- Provides logical addressing like IP addresses.
+- Provides path selection between the source and the destination.
+- Routers operate at this layer.
+- Layer 3 header is added with information like source and destination IP address.
+- The PDU is called a `packet`.
+
+#### Data Link Layer
+
+- Provides `node-to-node` connectivity and data transfer.
+- Defines how data is formatted for transmission over physical medium.
+- Detects and corrects physical layer errors.
+- Switches operate at this layer.
+- Layer 2 header and trailer is added.
+- The PDU is called `frame`.
+
+#### Physical Layer
+
+- Defines physical characteristics of the medium used to transfer data between devices, i.e. voltage levels, maximum transmission distance, cable specification, etc.
+- Digital bits are converted into eletrical (for wired transmission) or radio (for wireless transmission) signals.
+- PDU is called `bit`.
+
+### TCP/IP Suite
+
+- Conceptual model and set of communications protocols used in Internet and other networks.
+- Developed by the United States Department of Defence.
+- Smilar structure to OSI model but has fewer layers.
+- It's in use in modern networks but OSI model still influences how network engineers think and talk about networks.
+
+1. Link - Equivalent to data link and physical layers of OSI
+2. Internet - Eqivalent to Network layer
+3. Transport - Same as OSI
+4. Application - All upper layers in OSI
