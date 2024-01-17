@@ -183,3 +183,50 @@
 2. Internet - Eqivalent to Network layer
 3. Transport - Same as OSI
 4. Application - All upper layers in OSI
+
+## 4. Intro to the CLI
+
+### Connecting to the Device
+
+- In order to configure a device, you have to connect to the console port, which has RJ45 and USB ports.
+- `Rollover cable` is used for connection, that has RJ45 and DB9 ends.
+- They have 8 pins as well but they connect in different pairs of 1-8. 2-7, 3-6, 4-5.
+
+### User EXEC mode
+
+- This is the mode set by default, when you first enter the CLI.
+- `Name>` indicates that you are in user EXEC mode.
+- Users can look at things, but can't make any changes.
+
+### Previleged EXEC mode
+
+- By entering `enable`, user can enter previleged EXEC mode
+- `Name#` indicates that you are in previleged EXEC mdoe.
+- Provides complete access to view the device's configuration, restart the device, etc.
+- Cannot change config itself but can save config file, etc.
+
+### Global Configuration mode
+
+- Enter `configure terminal` to enter global configuration mode from previleged EXEC mode.
+- `Name(config)#` indicates this mode.
+
+- You can set password by `enable password` command.
+  - It uses Cisco's default 7 hash algorithm which is not too secure.
+  - `service password-encryption` encrypts passwords in config.
+- `enable secret` is more secure as it uses MD5 hash and it takes precedence over password
+
+### CLI Commands
+
+- You can type `?` to view available commands (e.g. `e?` shows all commands that start with e).
+  - The commands that are all capital from suggestions of `?` indicate a variable.
+  - `<cr>` indicates that there are no available commands.
+- Tab will auto-complete what you are typing but you don't necessary have to type the whole thing because CLI can infer the command.
+- `exit` command to exit configuration or previleged mode.
+- Typing `no` in front of command will undo the command.
+- `do` command executes command in previleged EXEC level from global configuration mode.
+
+### Configuration files
+
+- `Running-config`: current, active configuration file on the device.
+- `Startup-config`: the config file that will be loaded upon restart.
+- `write`, `write memory` or `copy running-config startup-config` will all write the running-config to startup-config.
