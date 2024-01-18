@@ -230,3 +230,56 @@
 - `Running-config`: current, active configuration file on the device.
 - `Startup-config`: the config file that will be loaded upon restart.
 - `write`, `write memory` or `copy running-config startup-config` will all write the running-config to startup-config.
+
+## 5. Ethernet LAN Switching (1/2)
+
+### Ethernet Frame
+
+- Header consists of 5 parts: preamble, SFD, destination, source and type / length.
+- Trailer only has FCS.
+- Total of 26 bytes.
+
+#### Preamble
+
+- 7 bytes of alternating 1s and 0s (10101010 \* 7)
+- Allows devices to synchronize receiver clocks.
+
+#### SFD (Start Frame Delimiter)
+
+- 1 byte of 10101011
+- Marks the end of preamble and beginning of rest of the frame.
+
+#### Destination & Source
+
+- Indicates the devices sending and receiving the frame.
+- Consist of 6 byte `MAC address` of the physical device.
+
+#### Type / Length
+
+- 2 byte field
+- A value of 1500 or less indicates length of encapsulated packet.
+- Value of 1536 or greater indicates type of the encapsulated packet.
+  - IPv4 = 0x0800
+  - IPv6 = 0x86DD
+
+#### FCS
+
+- 4 bytes
+- Detects corrupted data by running `CRC (Cyclic Redundancy Check)` algorithm over the received data.
+
+### MAC (Media Access Control) Address
+
+- 6-byte physical address assigned to the device when it is made
+- also known as `burned-in address` and is globally unique
+- First 3 bytes are `OUI (Organizationally Unique Identifier)`, which is assigned to company making the device.
+- Last 3 bytes are unique to the device itself.
+
+### Finding out MAC Address
+
+- Switch has a `MAC address table`, which saves mapping of interface to source MAC address when it receives data.
+  - When MAC address is saved this way it's called `dynamic / dynamically learned MAC address`.
+  - MAC addresses are removed after 5 minutes of inactivity (`aging`).
+- When switch encounters a MAC address destination not saved in the table, it floods the frame, which is sending the frame to all interfaces except the source.
+  - It's called `unknown unicast frame` when the MAC address is not in the table.
+  - `Unicast frame` is a frame destined for a single target.
+- If the received end doesn't have a matching MAC address, it simply drops the packet, but if it does, it processes it normally.
