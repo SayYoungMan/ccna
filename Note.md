@@ -283,3 +283,37 @@
   - It's called `unknown unicast frame` when the MAC address is not in the table.
   - `Unicast frame` is a frame destined for a single target.
 - If the received end doesn't have a matching MAC address, it simply drops the packet, but if it does, it processes it normally.
+
+## 6. Ethernet LAN Switching (2/2)
+
+### Minimum size of Ethernet Frame
+
+- Minimum size of Ethernet frame is 64 bytes, meaning that minimum payload size is 46 bytes (if don't count preamble and SFD as the header).
+- If payload is less than 46 byes, padding bytes of all 0s are added.
+
+### ARP (Address Resolution Protocol)
+
+- Used to discover MAC address of a known IP address.
+- Consists of two messages:
+  1. `ARP request`: broadcast that is sent to all hosts, it has `FFFF.FFFF.FFFF` destination MAC address which is broadcast MAC.
+  2. `ARP reply`: unicast sent only to the host
+- PC stores ARPs in `ARP table`.
+  - `arp -a` command to view ARP table
+  - Static type is default entry in ARP table and dynamic type is the ones learned via ARP.
+
+### Ping
+
+- A network utility that is used to test reachability
+- Measures round-trip time
+- Uses two messages like ARP:
+  1. `ICMP Echo Request`: sent to specific host not broadcast
+  2. `ICMP Echo Reply`
+- Command: `ping <ip-address>`
+
+### Cisco Commands
+
+- To see ARP table: `show arp`
+- To view MAC address table: `show mac address-table`
+- To remove MAC addresses from table: `clear mac address-table dynamic`
+  - Target specific address: `clear mac address-table dynamic address <mac-address>`
+  - Target specific interface: `clear mac address-table dynamic interface <interface-id>`
