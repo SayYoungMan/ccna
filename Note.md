@@ -317,3 +317,41 @@
 - To remove MAC addresses from table: `clear mac address-table dynamic`
   - Target specific address: `clear mac address-table dynamic address <mac-address>`
   - Target specific interface: `clear mac address-table dynamic interface <interface-id>`
+
+## 7. IPv4 Addressing (1/2)
+
+### IPv4 Addresses
+
+- Consists of 4 groups of 8 bits number (0 - 255)
+- Written in dotted decimal for easier human understanding.
+- `/24` means that first 24 bits represent the network and rest is end host.
+- First end host eddress (host portion is all 0s) is the `network address` so can't be assigned.
+- Last end host eddress (host portion is all 1s) is the `broadcast address` so can't be assigned.
+
+### IPv4 Classes
+
+| **Class** | **First Octet** | **First Octet Range** |
+| :-------: | :-------------: | :-------------------: |
+|     A     |    0XXXXXXX     |        0 - 127        |
+|     B     |    10XXXXXX     |       128 - 191       |
+|     C     |    110XXXXX     |       192 - 223       |
+|     D     |    1110XXXX     |       224 - 239       |
+|     E     |    1111XXXX     |       240 - 255       |
+
+- Class D is reserved for `multicast addresses`.
+- Class E is reserved for `experimental use`.
+
+### Loopback addresses
+
+- Has range between 127.0.0.0 - 127.255.255.255
+- Used to test network stack on local device. If device sends traffic to this address, it's simply processed back up TCP/IP stack as if it were traffic received from another device.
+
+### Netmask
+
+| **Class** | **Prefix Length** |  **Netmask**  |
+| :-------: | :---------------: | :-----------: |
+|     A     |        /8         |   255.0.0.0   |
+|     B     |        /16        |  255.255.0.0  |
+|     C     |        /24        | 255.255.255.0 |
+
+- `Netmask` is older way of telling which part is the network.
