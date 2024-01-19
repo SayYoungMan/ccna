@@ -355,3 +355,36 @@
 |     C     |        /24        | 255.255.255.0 |
 
 - `Netmask` is older way of telling which part is the network.
+
+## 8. IPv4 Addressing (2/2)
+
+### Network number calculation
+
+- Maximum number of hosts per network is `2^n - 2` where n is the number of host bits.
+- First usable address is the address 1 bit after network address.
+- Last usable address is the address 1 bit before the broadcast address.
+
+### `show ip interface brief`
+
+- Gives status of each interface as well as IP addresses.
+- `Interface` column lists network interfaces.
+- `IP address` column shows the IP address but it will be `unassigned` if not configured.
+- `OK?` column is legacy feature to tell if IP address is valid.
+- `Method` column indicates the method by which the interface was assigned with IP address.
+- `Status` column is layer 1 status of interface.
+  - `connected` means it's up
+  - `administratively down` means disabled with `shutdown` command; this is default status of router but not for the switches
+- `Protocol` column is the layer 2 status. Can be up or down.
+
+### Setting up IP address
+
+- Can enter `configuration interface` mode by typing `interface <id>`.
+- `name(config-if)#` at the beginning of the line indicates this mode.
+- Setting up IP address can be done by `ip address <address> <subnet mask>`.
+- `no shutdown` command is required afterwards to enable the interface.
+
+### Other commands
+
+- `show interfaces <interface-id>` shows extensive information mainly about layer 1 and 2 about the interface.
+- `show interfaces description` shows similar information to `show interfaces brief` but has description column that can be manually set about the interface.
+- `description <string>` command sets description of interface in `config-if` mode.
