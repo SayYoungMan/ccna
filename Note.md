@@ -462,3 +462,91 @@
 - `Frame`: frames that have incorrect format due to error.
 - `Input errors`: total number of various counters, such as the above four.
 - `Output errors`: frames that the switch tried to send, but failed due to error.
+
+## 10. IPv4 Header
+
+### Version
+
+- 4 bits
+- Identifies the version of IP used
+- IPv4 = 0100, IPv6 = 0110
+
+### Internet Header Length (IHL)
+
+- 4 bits
+- The options field is variable in length so it's necessary to indicate the total length of the header.
+- Identifies the length of header in 4-byte increments.
+- Minimum value is 5 (=20 bytes) with no options field.
+- Maximum value is 15 (=60 bytes).
+
+### DSCP (Differentiated Services Code Point)
+
+- 6 bits
+- Used for QoS (Quality of Service)
+- Used to prioritize delay-sensitive data (streaming video, voice, etc.)
+
+### ECN (Explicit Congestion Notification)
+
+- 2 bits
+- Provides end-to-end notification of network congestion without droppping packets.
+- Optional feature that requires both endpoints and underlying network infrastructure to support it.
+
+### Total Length
+
+- 16 bits
+- Indicates the total length of the packaet (L3 header + L4 segment) measured in bytes
+- Minimum value is 20
+- Maximum value is 65535
+
+### Identification
+
+- 16 bits
+- If packet is fragmented, it is used to identify which packet the fragment belongs to.
+- All fragments of same packet will have same value in this field.
+- Packets are fragmented if larger than `MTU (Maximum Transmission Unit)`, which is usually 1500 bytes. (Same as maximum size of Ethernet frame).
+- Fragments are reassembled by the receiving host.
+
+### Flags
+
+- 3 bits
+- Bit 0: reserved, always 0
+- Bit 1: `Don't fragment (DF) bit`, used to indicate a packet that should not be fragmented
+- Bit 2: `More fragments (MF) bit`, set to 1 if there are more fragments in the packet, set to 0 for the last fragment.
+
+### Fragment Offset
+
+- 13 bits
+- Used to indicate the position of the fragment within the original unfragmented IP packet.
+- Allows fragmented packets to be reassembled even if the fragments arrive out of order.
+
+### Time to Live
+
+- 8 bits
+- Router will drop a packet with a TTL of 0.
+- Used to prevent infinite loops.
+- Originally designed to indicate the packet's maximum lifetime in seconds.
+- In practice, it indicates `hop count`, each time the packet arrives at a router, the router decreases TTL by 1.
+- Recommended default is 64.
+
+### Protocol
+
+- 8 bits
+- Indicates the protocol of the encapsulated L4PDU.
+- TCP = 6, UDP = 17, ICMP = 1, OSPF(dynamic routing protocol) = 89
+
+### Header Checksum
+
+- 16 bits
+- Used to check for errors in IPv4 header
+- When router receives packet, it calculates the checksum of header and compares with it.
+- If they do not match, router drops the packet.
+
+### Source / Destination IP Address
+
+- 32 bits
+- Contains IPv4 address of sender and receiver of the packet
+
+### Options
+
+- 0 - 320 bits
+- Rarely used
