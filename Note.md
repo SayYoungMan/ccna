@@ -388,3 +388,77 @@
 - `show interfaces <interface-id>` shows extensive information mainly about layer 1 and 2 about the interface.
 - `show interfaces description` shows similar information to `show interfaces brief` but has description column that can be manually set about the interface.
 - `description <string>` command sets description of interface in `config-if` mode.
+
+## 9. Switch Interfaces
+
+- Switches have way more interfaces especially RJ45 ports than routers because it's where the end hosts are connected to.
+
+### `show ip interface brief`
+
+- Switch interfaces don't have the shutdown command defined so they will be up / up state by default.
+- down state is different from administratively down because it means it's not connected.
+
+### `show interfaces status`
+
+- `Port` field lists interfaces.
+- `Name` field is description of the interface.
+- `Status` field will show connected / not connected.
+- `VLAN` field will show the VLAN which can be used to divide LANs into smaller ones.
+- `Duplex` field will show duplex status.
+  - It's auto by default meaning it will negotiate with the neighbouring device and use full if possible.
+  - `a-` means it's chosen automatically.
+- `Speed` field shows the speed of the transmission and it's also `auto` by default.
+  - It will negotiate with the device and use the fastest speed possible.
+- `Type` field are all RJ45 interfaces for copper UTP cables but if they were SFP, you would see here too.
+
+### Configuring speed and duple
+
+- First enter `config-if` mode by entering `interfaces <id>`.
+- `speed <speed>` command can set the speed.
+- `duplex <mode>` command can set the duplex mode.
+- `description <string>` command can set the name field.
+
+### `interface range <range>`
+
+- This command can enter `config-if-range` mode where my changes apply to all interfaces in this range.
+- `f0/5 - 12` can apply my changes to all between 5 and 12.
+- It doesn't have to be consecutive, e.g. `f0/5 - 6, f0/9 - 12`.
+
+### Full / Half Duplex
+
+- `Half duplex`: The device can't send and receive data at the same time. If it is receiving a frame, it must wait before sending a frame.
+- `Full duplex`: The device can send and receive data at the same time. It doesn't have to wait.
+
+### LAN Hubs
+
+- Before switches were used, hubs were used in the old days.
+- The hubs are simple repeaters that flood any frame they receive and they operate at layer 1.
+- The problem with it is that when it receives frames at the same time, it will try to send them at the same time resulting in collision.
+- `CSMA/CD` (Carrier Sense Multiple Access with Collision Detection) is a mechanism used to prevent this.
+  - Before sending frames, devices listen to the collision domain until they detect that other devices are not sending.
+  - If a collision does occur, the device sends a jamming signal to inform other devices that collision happened.
+  - Each device will wait a random period of time before sending frames again.
+- Devices connected together via Hub is said to belong to the same `collision domain`.
+  - Switches don't try to send the message at the same time so the connected hosts are in separate collision domains.
+  - This makes full-duplex possible so switch is used in these days.
+
+### Speed / Duplex Autonegotiation
+
+- Interfaces that can run at different speeds have default settings of speed auto and duplex auto.
+- Interfaces advertise their capabilities to the neighbouring device, and they negotiate the best speed and duplex settings they are both capable of.
+- If autonegotiation is disabled:
+  - The switch will try to sense the speed other device is operating at.
+    - If failed to sense, it will use the slowest speed.
+  - If speed is 10 or 100 Mbps, it will use half duplex.
+  - If speed is 1000 Mbps or higher, it will use full duplex.
+- If PC operates at full jduplex but switch operate at half duplex or vise versa, duplex mismatch happens and collisions will occur.
+
+### Interface Errors
+
+- The following errors can be viewed via `show interfaces <interface-id>` command.
+- `Runts`: frames that are smaller than the minimum frame size (64 bytes).
+- `Giants`: frames that are larger than the maximum frame size (1518 bytes).
+- `CRC`: frames that failed the CRC check.
+- `Frame`: frames that have incorrect format due to error.
+- `Input errors`: total number of various counters, such as the above four.
+- `Output errors`: frames that the switch tried to send, but failed due to error.
