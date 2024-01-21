@@ -550,3 +550,41 @@
 
 - 0 - 320 bits
 - Rarely used
+
+## 11-1. Routing Fundamentals
+
+### What is routing?
+
+- `Routing` is a process that routers use to determine the path that IP packets should take over a network to reach their destination.
+  - Routers store routes to all of known destinations in a `routing table`.
+- 2 routing methods (methods that routers use to learn routes):
+  - `Dynamic routing`: routers use dynamic routing protocols to share routing information with each other automatically and build their routing tables.
+  - `Static routing`: Admins manually configure routes on the router.
+- A route basically tells the router: to send packet to X, send it to next hop Y.
+  - If destination is directly connected to router, send it to the destination.
+  - If destination is router's own IP, receive the packet.
+
+> `WAN (Wide Area Network)` is a network that extends over a large geographical area.
+
+### `show ip route`
+
+- `show ip route` in previleged mode of router shows the routing table.
+  - Codes legend lists different protocols which routers can use to learn routes.
+  - When you configure IP address and enable it with `no shutdown`, connected and local routes will automatically be added.
+
+### Connected and Local Routes
+
+- `Connected Route (C)` is a route to the network the interface is connected to.
+  - It provides route to all hosts in that network.
+- `Local Route (L)` is a route to the exact IP address configured on the interface.
+  - /32 netmask is used to specify the exact IP address of the interface.
+  - /32 means all 32 bits are fixed, so they can't change.
+
+### Route Selection
+
+- When there are more than one route that matches the destination IP address, it will choose the most specific matching route.
+  - Most specific matching route = matching route with longest prefix length
+- You will see in `show ip route`, `192.168.1.0/24 is variably subnetted 2 subnets, 2 masks`
+  - This means that there are two routes to subnets that fit within the network with two different netmasks.
+
+> Unlike switches, if router doesn't have the route in the routing table it will just drop the packet instead of flooding.
