@@ -616,3 +616,11 @@
 - Often used to direct traffic to Internet.
 - When not set, routing table will display `gateway of last resort is not set`.
 - Setting default route is done by `ip route 0.0.0.0 0.0.0.0 <next-hop>`
+
+## 12. Life of a Packet
+
+> Each interface in device has a unique MAC address
+
+- When PC is sending a packet to another network, it first sends it to router but when it doesn't know the MAC address of the router, it sends ARP request to find out.
+- When router receives a packet it de-encapsulates and encapsulates with header of new destination MAC address.
+- At each stage, if the device doesn't know the MAC address of next hop, it must send ARP first.
