@@ -551,7 +551,7 @@
 - 0 - 320 bits
 - Rarely used
 
-## 11-1. Routing Fundamentals
+## 11.1. Routing Fundamentals
 
 ### What is routing?
 
@@ -569,8 +569,8 @@
 ### `show ip route`
 
 - `show ip route` in previleged mode of router shows the routing table.
-  - Codes legend lists different protocols which routers can use to learn routes.
-  - When you configure IP address and enable it with `no shutdown`, connected and local routes will automatically be added.
+- Codes legend lists different protocols which routers can use to learn routes.
+- When you configure IP address and enable it with `no shutdown`, connected and local routes will automatically be added.
 
 ### Connected and Local Routes
 
@@ -588,3 +588,31 @@
   - This means that there are two routes to subnets that fit within the network with two different netmasks.
 
 > Unlike switches, if router doesn't have the route in the routing table it will just drop the packet instead of flooding.
+
+## 11.2. Static Routing
+
+### Default Gateway
+
+- End hosts can send packets directly to destinations in connected network.
+- But to send packets outside local network, they must send to default gateway.
+- Also called default route.
+- The packet sent to another network will have detination IP address of host in another network but MAC address of default gateway. which can be learned via ARP request.
+
+### Static Route Configuration
+
+- Each router in the path need both routes of source and destination network, to ensure `two-way reachability` (can send packets both ways).
+- From global config mode type `ip route <ip-address> <netmask> <next-hop>` to configure the static routes.
+- Configuration can be tested via ping command and if successful, it means there is two-way reachability.
+- You can configure static route with exit-interface instead of next-hop as well
+  - This tells which interface it should send the packet out of.
+  - Both exit-interface and next-hop can be configured (recommended).
+  - Static routes with only exit-interface rely on a feature called `Proxy ARP`.
+
+### Default Route
+
+- If the router doesn't have any more specific routes that match a packet's destination IP address, the router will forward the packet using default route.
+- It's set as a route to 0.0.0.0/0
+  - It is least specific route possible because it includes all IP addresses.
+- Often used to direct traffic to Internet.
+- When not set, routing table will display `gateway of last resort is not set`.
+- Setting default route is done by `ip route 0.0.0.0 0.0.0.0 <next-hop>`
