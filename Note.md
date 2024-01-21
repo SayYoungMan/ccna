@@ -624,3 +624,20 @@
 - When PC is sending a packet to another network, it first sends it to router but when it doesn't know the MAC address of the router, it sends ARP request to find out.
 - When router receives a packet it de-encapsulates and encapsulates with header of new destination MAC address.
 - At each stage, if the device doesn't know the MAC address of next hop, it must send ARP first.
+
+## 13. Subnetting (Part 1)
+
+### IPv4 Address Classes
+
+- The IANA (Internet Assigned Numbers Authority) awssigns IPv4 addresses to companies based on size.
+  - Large company receive a class A network and small for class C.
+- But this led to many wasted IP addresses
+- A direct, dedicated connection between two routers is called `point-to-point network`, but it only uses two hosts so it's wasted.
+
+### CIDR (Classless Inter-Domain Routing)
+
+- The requirements of class networks were removed and it can be any prefix length.
+- This allowed larger networks to be split into smaller networks, allowing greater efficiency.
+- These smaller networks are called `subnets`.
+- It is possible to use /31 subnet for point-to-point network because there is no need for network or broadcast address.
+- /number notation is called `CIDR notation`.
