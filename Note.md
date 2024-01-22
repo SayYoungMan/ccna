@@ -651,3 +651,18 @@
 - When given the number of subnets to make, find the least number of borrowed bits whose number of subnets is more than required.
 - Finding network address of host, based on its IP address can be done by converting all host bits to 0.
   - Similarly, broadcast address can be found by converting all host bits to 1.
+
+## 15. Subnetting (Part 3)
+
+### VLSM (Variable-Length Subnet Masks)
+
+- All subnetting in part 1 and 2 were `FLSM (Fixed-Length Subnet Masks)` meaning that all the subnets use the same prefix length.
+- VLSM, on the other hand, is the process of creating subnets of different sizes, to make use of network addresses more efficiently.
+
+### VLSM - Steps
+
+1. Assign the largest subnet at the start of address space.
+2. Assign the second largest subnet after.
+3. Repeat the process until all subnets have been assigned.
+
+> For CCNA test, use /30 prefix length instead of /31, for point-to-point network connection.
