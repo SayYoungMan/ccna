@@ -641,3 +641,13 @@
 - These smaller networks are called `subnets`.
 - It is possible to use /31 subnet for point-to-point network because there is no need for network or broadcast address.
 - /number notation is called `CIDR notation`.
+
+## 14. Subnetting (Part 2)
+
+### Subnetting Tricks
+
+- By adding the least bit of network portion of the octet repeatedly, we can find the network addresses of each subnet.
+- `2^x = number of subnets` where x = number of borrowed bits.
+- When given the number of subnets to make, find the least number of borrowed bits whose number of subnets is more than required.
+- Finding network address of host, based on its IP address can be done by converting all host bits to 0.
+  - Similarly, broadcast address can be found by converting all host bits to 1.
