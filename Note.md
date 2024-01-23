@@ -666,3 +666,36 @@
 3. Repeat the process until all subnets have been assigned.
 
 > For CCNA test, use /30 prefix length instead of /31, for point-to-point network connection.
+
+## 16. VLANs (Part 1)
+
+### What is a LAN?
+
+- `LAN` is a signle broadcast domain, including all devices in that broadcast domain.
+- `Broadcast domain` is the group of devices which will receive a broadcast frame sent by any one of the members.
+
+### What is a VLAN?
+
+- Lots of unnecessary broadcast traffic in LAN can reduce network performance.
+- Even within the same LAN, you might want to limit who has access to what. This can be applied in a router / firewall so can't be done in a same LAN.
+- To address these issues, you can configure VLANs on switch interfaces so that switch cannot forward traffic between LVANs, including broadcast.
+- The switch does not perform inter-VLAN routing so it must send the traffic through the router first.
+
+- `VLANs`
+  - are configured on switches on a per-interface basis.
+  - logically separate end hosts at Layer 2.
+
+### VLAN configuration
+
+- You can see VLAN configurations by `show vlan brief`.
+- VLANs 1, 1002 - 1005 exist by default and can't be deleted.
+- To configure VLAN, first enter config-if-range mode of all interfaces that you want to group.
+- Then, use `switchport mode access` command to change the ports to access port.
+- Then `switchport access vlan <number>` to assign VLAN to the range of ports.
+- Can enter `vlan <number>` to create a VLAN or enter `config-vlan` mode of existing VLAN.
+  - Then inside, you can type `name <name>` to assign a name to the VLAN.
+
+### Switchport modes
+
+- `Access port` is a switchport which belongs to a single VLAN, and usually connects to end hosts like PCs.
+- `Trunk ports` are switchports which carry multiple VLANs.
