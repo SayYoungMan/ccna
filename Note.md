@@ -699,3 +699,80 @@
 
 - `Access port` is a switchport which belongs to a single VLAN, and usually connects to end hosts like PCs.
 - `Trunk ports` are switchports which carry multiple VLANs.
+
+## 17. VLANs (Part 2)
+
+### Trunk Ports
+
+- You can use `trunk ports` to carry traffic from multiple VLANs over a single interface.
+- Switches will tag all frames that they send over a turnk link.
+  - This allows the receiving switch to know which VLAN the frame belongs to.
+  - This is why: Trunk ports = tagged ports, access ports = untagged ports
+
+### VLAN Tagging
+
+- There are two main trunking protocols:
+  - `ISL (Inter-Switch Link)` is an old Cisco proprietary protocol created before but not used anymore.
+  - `IEEE 802.1Q (dot1Q)` is an industry standard protocol.
+
+### 802.1Q Tag
+
+- Dot1q tag is inserted between the source MAC address and the type/length field of the Ethernet frame.
+- Tag is 4 bytes in length.
+- It has two fields: `Tag Protocol Identifier (TPID)` and `Tag Control Information (TCI)`.
+
+#### TPID
+
+- 16 bits
+- Always set to `0x8100`, indicating it's 802.1Q-tagged.
+
+#### TCI
+
+- Consists of 3 parts
+
+- `PCP (Priority Code Point)`
+  - 3 bits
+  - Used for Class of Service (CoS), which prioritizes important traffic in congested networks.
+- `DEI (Drop Eligible Indicator)`
+  - 1 bit
+  - Indicate frame that can be dropped if network is congested.
+- `VID (VLAN ID)`
+  - 12 bits
+  - Identifies the VLAN the frame belongs to
+
+### VLAN Ranges
+
+- VLANs 0 and 4095 are reserved and can't be used.
+- Actual range of VLAN is 1 - 4094.
+- `Normal VLANs`: 1 - 1005
+- `Extended VLANs`: 1006 - 4094
+  - Some older switches might not use extended VLAN range.
+
+### Native VLAN
+
+- The native VLAN is VLAN 1 by default on all trunk ports.
+- Can be configured via `switchport trunk native vlan <no.>`
+- The switch does not add an 802.1Q tag to frames in the native VLAN.
+- When a switch receives an untagged frame on a trunk port it assumes the frame belongs to the native VLAN.
+- Therefore, it's important that the native VLAN matches between switches.
+
+### Trunk Configuration
+
+- `swtichport mode trunk` sets the interface as the trunk port.
+  - You must first set the encapsulation to 802.1Q if it supports ISL as well, done by `switchport trunk encapsulation dot1q`.
+- `switchport trunk allowed vlan <range>` can configure the allowed VLANs. This is for security and performance.
+  - `switchport trunk allowed vlan add <no>` adds VLAN to allowed list.
+  - `switchport trunk allowed vlan remove <no>` removes VLAN from allowed list.
+  - `switchport trunk allowed vlan all` allows all VLANs (default state).
+  - `switchport trunk allowed vlan except <range>` allows all VLANs except the ones specified.
+  - `switchport trunk allowed vlan none` does not allow any VLAN.
+- For security, it's best to change native VLAN to unused VLAN, and make it match between switches.
+- `show vlan brief` only shows access ports assigned so use `show interfaces trunk` to view trunk ports.
+
+### Router on a Stick (ROAS)
+
+- You can divide one interface to `subinterfaces` so that each VLANs can each connect to router via subinterface.
+- You can enter config-subif mode via `interface <interface-id>.<subinterface-number>` command.
+- It is recommended to match subinterface number with VLAN number.
+- `encapsulation dot1q <vlan-number>` command tells subinterface to behave as if it arrived on interface if frame is tagged with the VLAN number.
+- Then, you must assign IP address to the subinterface.
