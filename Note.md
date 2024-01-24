@@ -812,3 +812,67 @@
 - VLAN must eist on the switch
 - Switch must have at least one access or trunk port in the VLAN in up / up state
 - VLAN and SVI must not be shutdown
+
+## 19. DTP / VTP
+
+### DTP (Dynamic Trunking Protocol)
+
+- It's a Cisco proprietary protocol that allows, Cisco switches to dynamically determine their interface status without manual configuration.
+- With DTP, we don't need to manually configure with switchport mode.
+- For security, manual configuration is recommended. It should be disabled on all switchports.
+- DTP will not form a trunk with a router, PC, etc. It will be in access mode by default.
+- Enabled by default on all Cisco switch interfaces.
+- Older switch defaults to dynamic desirable but newer ones default to dynamic auto.
+- Negotiation is enabled by default and ISL is favoured in negotiation.
+  - DTP frames are sent in VLAN1 in ISL or in native VLAN when using 802.1Q.
+- Can disable DTP by:
+  1. `switchport nonegotiate`
+  2. Configuring it to an access port
+
+#### DTP dynamic modes
+
+- A switchport in `dynamic desirable` mode will actively try to form a trunk with other Cisco switches, i.e. if connected to other switchport with trunk, dynamic desirable or dynamic auto.
+- A switchport in `dynamic auto` mode will not actively try to form a trunk with other switches but it will form a trunk if other switch is actively trying to form a trunk, i.e. if connected to trunk or dynamic desirable.
+
+### Static and Dynamic Access
+
+- `Static access` means an access port that belongs to a single VLAN that does not change.
+- `Dynamic access` port is where a server automatically assigns the VLAN depending on the MAC address of the connected device.
+
+### VTP (VLAN Trunking Protocol)
+
+- VTP allows you to configure VLANs on a central VTP server switch and other switches (VTP clients) will synchronize their VLAN database to the server.
+- Designed for large networks with many VLANs, so there is no need to configure each VLAN on every switch.
+- Like DTP, it's not recommended to be used for security reasons.
+- Cisco switches operate in VTP server by default.
+- `show vtp status` reveals useful information about VTP
+- Only VTPv3 supports VLANs in extended range
+
+#### VTP Servers
+
+- Can add/modify/delete VLANs
+- Store VLAN database in NVRAM, so it's persisted even after turning off
+- Will increase revision number everytime VLAN is added/modified/deleted
+- Will advertise the latest version of database on trunk interfaces and VTP clients will sync their VLAN database.
+- VTP servers will sync to another server with higher revision number.
+
+#### VTP Clients
+
+- Cannot add/modify/delete VLANs
+- Does not store VLAN database in NVRAM (unless VTPv3)
+- Will sync VLAN database to the server with highest revision number in VTP domain
+- Will advertise and forward VTP advertisements to other clients over their trunk ports
+
+#### VTP Transport
+
+- Does not participate in VTP domain (does not sync)
+- Maintains its own VLAN database in NVRAM. It can add/modify/delete VLANs, but they won't be advertised.
+- Will forward advertisements
+
+#### VTP Domain
+
+- `vtp domain <name>` command changes the VTP domain name
+- If a switch with no VTP domain receives a VTP advertisement with a VTP domain name, it will automatically join that domain.
+- If a switch receives a VTP advertisement in the same VTP domain with a higher revision number, it will update its VLAN database to match.
+
+> Changing VTP domain to unused domain or changing VTP mode to transparent will reset the revision number to 0.
