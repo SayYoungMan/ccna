@@ -776,3 +776,39 @@
 - It is recommended to match subinterface number with VLAN number.
 - `encapsulation dot1q <vlan-number>` command tells subinterface to behave as if it arrived on interface if frame is tagged with the VLAN number.
 - Then, you must assign IP address to the subinterface.
+
+## 18. VLANs (Part 3)
+
+### Native VLAN on a router (ROAS)
+
+- There are 2 ways to configure native VLAN on a router:
+  1. Use `encapsulation dot1q <vlan-id> native` on the router subinterface.
+  2. Configure the IP address for the native VLAN on the router's physical interface.
+
+### Layer 3 (Multilayer) Switch
+
+- Capable of both switching and routing (layer 3 aware)
+- Can assign IP addresses to its interfaces
+- Can create virtual interfaces for each VLAN and assign IP addresses to those interface
+- Can configure routes on it, like a router and can be used for inter-VLAN routing
+- Preferred over ROAS for inter-VLAN routing in large network because lots of traffic in one interface can cause congestion.
+
+### SVIs (Switch Virtual Interfaces)
+
+- Virtual interfaces you can assign IP addresses to in a multilayer switch.
+- Configure each PC to use as their gateway address
+- To send traffic to different subnets / VLANs, the PCs will send traffic to the switch and it will route the traffic.
+
+### Inter-VLAN routing via SVI
+
+- `ip routing` command enables layer 3 routing on the switch
+- `no switchport` configures the interface as routed port (layer 3 port)
+- Then, assign ip address to the interface just like the router interface
+- Also configure default route as the router's interface
+- SVIs are shutdown by default so you need to `no shutdown`
+
+#### Conditions required for SVI to be up / up status
+
+- VLAN must eist on the switch
+- Switch must have at least one access or trunk port in the VLAN in up / up state
+- VLAN and SVI must not be shutdown
