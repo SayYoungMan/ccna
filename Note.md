@@ -930,3 +930,94 @@
 - 100 Mbps = 19
 - 1 Gbps = 4
 - 10 Gbps = 2
+
+## 21. Spanning Tree Protocol (Part 2)
+
+### Spanning Tree Port States
+
+- Root / Designated ports remain stable in forwarding state.
+- Non-designated ports remain stable in blocking state.
+- Listning / Learning are transitional states which are passed through when interface is activated or when blocking port must transition to forwarding due to change in topology.
+
+#### Blocking State
+
+- Effectively disabled to prevent loops
+- Not send / receive network traffic
+- Receive but not forward STP BPDUs
+- Not learn MAC address
+
+#### Listening State
+
+- Only designated or root ports enter this state
+- 15 seconds by default, determined by forward delay timer
+- Only forwards / receives STP BPDUs
+- Not send / receive regular traffic
+- Not learn MAC address
+
+#### Learning State
+
+- Same as listening state but only difference is it learns MAC address
+
+#### Forwarding state
+
+- sends / receives BPDUs
+- sends / receives regular traffic
+- Learns MAC address
+
+### Spanning Tree Timers
+
+- STP timers on root bridge determine it for the entire network.
+
+#### Hello
+
+- How often the root bridge sends hello BPDUs
+- Every 2 seconds
+
+#### Forward Delay
+
+- How long switch will stay in listening / learning states
+- 15 seconds
+
+#### Max Age
+
+- How long will interface wait to change the STP topology after ceasing to receive Hello BPDUs
+- 20 seconds (10 \* hello)
+
+### STP Toolkit
+
+#### Portfast
+
+- Allows port to move immediately to forwarding state
+- Must be enabled only on ports to end hosts
+- `(config-if)# spanning-tree portfast` will enable it for the interface
+- `(config)# spanning-tree portfast default` will enable it to all access ports
+
+#### BPDU Guard
+
+- Enabled interface will be shutdown on receiving BPDU to prevent loop from forming
+- `(config-if)# spanning-tree bpduguard enable` enables it
+- `(config)# spanning-tree portfast bpduguard default` enables it on all portfast ports
+
+#### Root Guard
+
+- Even if superior BPDU received, switch will not accept that as root bridge and interface will be disabled.
+
+#### Loop Guard
+
+- Even if the interface stops receiving BPDUs, it will not start forwarding. The interface will be disabled.
+
+### Configure STP
+
+- `(config)# spanning-tree mode <mode>` sets the mode of STP
+- `(config)# spanning-tree vlan <number> root primary/secondary` sets the switch as primary or secondary root bridge for particular VLAN.
+- `(config)# spanning-tree vlan <number> priorty <number>` manually sets the STP priority.
+
+### STP Load-balancing
+
+- Selecting Different root bridge per VLAN is recommended
+- This is to make different interfaces used per VLAN and networks are less congested
+
+### STP Port Settings
+
+- `(config-if)# spanning-tree vlan <number> cost` configures root cost
+- `(config-if)# spanning-tree vlan <number> port-priority` configures the port priority
