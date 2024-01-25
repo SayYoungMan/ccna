@@ -876,3 +876,57 @@
 - If a switch receives a VTP advertisement in the same VTP domain with a higher revision number, it will update its VLAN database to match.
 
 > Changing VTP domain to unused domain or changing VTP mode to transparent will reset the revision number to 0.
+
+## 20. Spanning Tree Protocol (Part 1)
+
+### Network redundancy
+
+- If one network component fails, you must ensure that other components will take over with little or no downtime.
+- Most PCs only have a single NIC, so they can be plugged to one switch. However, important servers have multiple NICs so they can be plugged into multiple switches for redundancy.
+
+### Broadcast Storm
+
+- Ethernet headers don't have a TTL field, so some broadcast frames will loop around the network indefinitely for some network topologies.
+- If enough of these accumulate, the network will be too congested for legitimate traffic. This is called `broadcast storm`.
+
+### MAC Address Flapping
+
+- When frames with same source MAC address arrive repeatedly from different interfaces, MAC address table is continuously updated.
+- This is called `MAC address flapping`.
+
+### Spanning Tree Protocol
+
+- STP prevents layer 2 loops by placing redundant parts in a `blocking state`, essentially disabling the interfaces.
+- These interfaces act as backups that can enter a `forwarding (normal) state`, if an active interface fails.
+- Interfaces in a blocking state only send or receive `BPDUs (Bridge Protocol Data Units)`
+- By selecting which ports are forwarding and which are blocking, STP creates a single path to/from each point in network, preventing layer 2 loops.
+
+### Root bridge
+
+- Switches use lowest `Bridge ID` field to elect a root bridge for the network.
+- All ports on root bridge are put in forwarding state, and other switches must have a path to reach the root bridge.
+- Bridge ID consists of:
+  - 4 bits of `bridge priority`
+  - 12 bits of VLAN ID
+  - 48 bits of MAC address
+- When a switch is first turned on, it assumes it's the root bridge until it recevies lower bridge ID BPDU.
+- Once the topology converge and all switches agree on root bridge, only root bridge sends BPDUs and others will just forward BPDUs.
+
+### STP Steps
+
+1. The switch with lowest bridge ID is elected as the root bridge and all its ports are designated ports (forwarding state).
+2. Remaining switches will select the interface with lowest root cost to be root port (in forwarding state).
+
+- If same, use lowest neighbour bridge ID.
+- If same, use lowest neighbour port ID.
+
+3. Every collision domain must have a single STP designated port. Thus, each remaining collision domain will select one interface to be designated.
+
+- One with lowest root cost or lowest bridge ID.
+
+### Root Cost
+
+- 10 Mbps = 100
+- 100 Mbps = 19
+- 1 Gbps = 4
+- 10 Gbps = 2
