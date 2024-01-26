@@ -1021,3 +1021,67 @@
 
 - `(config-if)# spanning-tree vlan <number> cost` configures root cost
 - `(config-if)# spanning-tree vlan <number> port-priority` configures the port priority
+
+## 22. Rapid Spanning Tree Protocol
+
+### Spanning Tree Versions
+
+- `Spanning Tree Protocol` (802.1D) from IEEE
+  - Original STP
+  - All VLANs share one STP so no load balancing
+- `Per-VLAN Spanning Tree Plus (PVST+)` from Cisco
+  - Each VLAN has its own STP instance
+  - Can load balance by blocking different ports in each VLAN
+- `Rapid Spanning Tree Protocol` (802.1w) from IEEE
+  - Much faster at converging / adapting to network changes
+  - All VLANs share one STP so can't load balance
+- `Rapid PVST` from Cisco
+  - Upgrade from Rapid STP to have each VLAN with STP
+- Multiple Spanning Tree Protocol (802.1s)
+  - Can group multiple VLANs into different instances to perform load balancing
+
+### Rapid Spanning Tree Protocol
+
+- Similarities between STP and RSTP
+  - Both block specific ports to prevent layer 2 loops
+  - Elect root bridge, root ports and designated ports with the same rules
+- New root cost: 10 Mbps = 2 million, 100 Mbps = 200k, 1 Gbps = 20k...
+- New Port States
+  - `Discarding state` is new name for blocking state
+  - Learning and forwarding states are only remaining in RSTP
+- New Port Roles
+  - Root port and designated port role remain the same
+  - Non-designated port is split into alternate and backup port
+
+### Functionalities Built into RSTP
+
+- `BackboneFast`: allows switch to expire the max age timers on its interface and rapidly forward superior BPDUs.
+- `UplinkFast`: allows backup port to be immediately made to root port when the root port fails
+
+### Alternate port role
+
+- Discarding port that receives a superior BPDU from another switch
+- Functions as a backup to root port
+
+### Backup port role
+
+- Discarding port that receives a superior BPDU from another interface on the same switch
+- Only happens when two interfaces are connected to same collision domain via a hub
+- Functions as a backup for a designated port
+
+### RSTP BPDU
+
+- Version and type field of value 2
+- Uses all 8 bits of flagsfor a negotitation process that allows STP to converge much faster
+- All switches originate and send their own BPDUs from designated ports
+
+### RSTP Protocol
+
+- All switches send BPDU every hello time (2 seconds)
+- Considers a neighbour lost if it misses 3 BPDUs, then flush all MAC addresses learned on that interface.
+
+### RSTP Link Types
+
+- `Edge`: a port connected to end host. Moves directly to forwarding
+- `Point-to-point`: a direct connection between two switches
+- `Shared`: connection to a hub. Must operate in half-duplex mode
