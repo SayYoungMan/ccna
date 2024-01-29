@@ -1085,3 +1085,58 @@
 - `Edge`: a port connected to end host. Moves directly to forwarding
 - `Point-to-point`: a direct connection between two switches
 - `Shared`: connection to a hub. Must operate in half-duplex mode
+
+## 23. Etherchannel
+
+- `Access layer switch`: a switch that end hosts connect to
+- `Distribution layer switch`: a switch that access layer switches connect to
+- When the bandiwdth of the interfaces connected to end hosts is greater than the bandwidth of the connection to the distribution switches, it is called `oversubscription`.
+
+### Etherchannel
+
+- It groups multiple interfaces together to act as a single interface.
+- STP will treat this group as single interface while receiving redundancy and increased bandwidth for having multiple interfaces.
+- Other names: `port channel` and `LAG (Link Aggregation group)`
+
+### Etherchannel load-balancing
+
+- A `flow` is a communication between two nodes in the network.
+- Frames in the same flow will be forwarded using same physical interface.
+  - If frames of same flow are forwarded using different interface, they may arrive out of order.
+- Source / destination MAC address or source / destination IP addresses are some inputs that can be used for interface selection calculation.
+
+### Etherchannel configuration
+
+- `# show etherchannel load-balance` shows current load balancing method
+- `(config)# port-channel load-balance <method>` sets the load balancing method
+- `(config-if-range)# channel-group <number> mode <mode>` to set etherchannel for range of interfaces
+- `(config-if-range)# channel-protocol <pagp|lacp>` also exists to set protocol but it's not used
+- `# show etherchannel port-channel` shows a virtual port-channel interface information
+- `# show etherchannel summary` shows summary of etherchannel information
+
+- Port configuration applied to an Etherchannel is applied to all of its ports.
+- Member interfaces must have matching configurations for it to be valid.
+
+#### Three Methods of Etherchannel Configuration
+
+- `PAgP (Port Aggregation Protocol)`
+  - Cisco proprietary
+  - Dynamically negotiates creation / maintenance of etherchannel
+  - Up to 8 interfaces can be formed into a Etherchannel
+  - `auto` and `desirable` modes to configure it
+- `LACP (Link Aggregation Control Protocol)`
+  - Industry standard protocol
+  - Dynamically negotiates creation / maintenance of etherchannel
+  - Up to 16 interfaces can be formed into a Etherchannel but 8 active and 8 standby
+  - `active` and `passive` modes to configure it
+- `Static Etherchannel`
+  - Interfaces are statically configured
+  - Usually avoided
+  - Up to 8 interfaces can be formed into a Etherchannel
+  - `on` mode to configure it
+
+#### Layer 3 Etherchannel
+
+- Ports that will form layer 3 Etherchannel needs to be `routed ports` by entering `#(config-if-range) no switchport`
+- Then, `(config-if-range)# channel-group <number> mode <mode>` will set them as Etherchannel
+- Lastly, assign IP address to it by going to its interface configuration mode and entering `ip address`
