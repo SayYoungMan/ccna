@@ -1207,3 +1207,62 @@
 - By changing the AD of static route, you can make it less preferred than the routes learned dynamically.
 - This is called `floating static route`
 - The route will be inactive unless the route dynamically learned is removed.
+
+## 25. RIP & EIGRP
+
+### RIP (Routing Information Protocol)
+
+- Distance vector IGP
+- Uses hop count as its metric and the maximum can be 15
+- Has two message types:
+  - Request: to ask neighbor routers to send their routing table
+  - Response: to send the local router's routing table to neighbour
+- Will share the routing table every 30 seconds
+
+#### RIPv1 vs RIPv2
+
+- v1 only advertises classful IP addresses but v2 can support VLSM or CIDR
+- This is because v1 does not include subnet mask in advertisements and assumes classes
+- v1 sends messages in broadcast but in v2 it's sent as multicast to 224.0.0.9
+
+### RIP Configuration
+
+- `(config)# router rip` to use RIP
+- `(config-router)# version <version>` to set RIP version
+- `(config-router)# no auto-summary` to disable auto conversion to classful networks
+- To stop continuous RIP advertisements to connection with RIP neighboursm the interface should be configured as a passive interface
+  - `(config-router)# passive-interface <interface>`
+- `(config-router)# default-information originate` command advertises default route info to neighbours
+
+### Network Command
+
+- `(config-router)# network <ip-address>`
+- Router to look for interfaces with IP address in specified range
+- Activate RIP on the interfaces that fall in the range
+- Form adjacencies with connected RIP neighbors
+
+### EIGRP (Enhanced Interior Gateway Routing Protocol)
+
+- Considered advanced distance vector routing protocol
+- Faster than RIP in reacting to changes in the network
+- No hop count limit
+- Sends messages to multicast address 224.0.0.10
+- Only IGP that can perform unequal-cost load-balancing
+
+### EIGRP Config
+
+- `(config)# router eigrp <as-number>` to set EIGRP
+  - AS number must match between routers to form adjacency
+- EIGRP uses a wildcard mask instead of a regular subnet mask
+
+#### Wildcard Mask
+
+- Inverted subnet mask: all 1s are 0 in wildcard mask and vice versa
+- Shortcut is to subtract each octet of subnet mask from 255
+- 0 = must match, 1 = does not have to match
+
+#### Router ID order of priority
+
+1. Manual configuration
+2. Highest IP on loopback interface
+3. Highest IP on physical interface
