@@ -1140,3 +1140,70 @@
 - Ports that will form layer 3 Etherchannel needs to be `routed ports` by entering `#(config-if-range) no switchport`
 - Then, `(config-if-range)# channel-group <number> mode <mode>` will set them as Etherchannel
 - Lastly, assign IP address to it by going to its interface configuration mode and entering `ip address`
+
+## 24. Dynamic Routing
+
+- `Network route`: a route to a network / subnet (mask length < /32)
+- `Host route`: a route to a specific host (/32 mask)
+
+### Dynamic routing
+
+- Routers can use dynamic routing protocols to advertise information about the routes to other routers.
+- They form `adjacencies` with neighbour routers to exchange this information
+
+### Types of Dynamic Routing Protocols
+
+#### IGP (Interior Gateway Protocol)
+
+- Used to share routes within a signle autonomous system, which is like a single organization.
+- Has two algorithm types:
+  - `Distance Vector`
+    - has following protocols:
+      - `RIP (Routing Information Protocol)`
+      - `EIGRP (Enhanced Interior Gateway Routing Protocol)`
+    - Send their known destination networks and metrics to reach the known destinations to their directly connected neighbors
+    - Routers doesn't know about the network beyond its neighbors (routing by rumor)
+  - `Link State` has following protocols:
+    - has following protocols:
+      - `OSPF (Open Shortest Path First)`
+      - `IS-IS (Intermediate System to Intermediate System)`
+    - Every router creates connectivity map of the network.
+    - Each router advertises about its interfaces to its neighbours and passed along until all routers develop the same map of the network.
+    - Each router independently uses this map to calculate best routes to each destination.
+    - Use more resources on router.
+    - Faster in reacting to changes in the network than distance vector.
+
+#### EGP (Exterior Gateway Protocol)
+
+- Used to share routes between different autonomous system
+- Only algorithm used is `Path Vector` and it has `BGP (Border Gateway Protocol)`
+
+### Metrics
+
+- Routers use metric value of routes to determine which is the best.
+- Lower metric value is better.
+- If multiple routes of same protocol, destination and metric are in routing table, traffic will be load balanced (`ECMP (Equal Cost Multi-Path)`).
+
+| **Protocol** |            **Metric**             |                           **Explanation**                           |
+| :----------: | :-------------------------------: | :-----------------------------------------------------------------: |
+|     RIP      |             Hop count             |                   Each router in path is one hop.                   |
+|    EIGRP     | Metric based on bandwidth & delay | Bandwidth of slowest link and the total delay of all links are used |
+|     OSPF     |               Cost                |                    Calculated based on bandwidth                    |
+|    IS-IS     |               Cost                |           Cost of each link is not calculated by default            |
+
+### Administrative Distance
+
+- If multiple IGPs are used together, AD is used to determine which routing protocol should be preferred.
+- Lower AD is preferred
+- Values:
+  - Directly connected = 0, Static = 1
+  - Eternal BGP = 20, EIGRP = 90, IGRP =100
+  - OSPF = 110, IS-IS = 115, RIP = 120
+  - External EIGRP = 170, IBGP = 200, Unusable route = 255
+- You can also configure the AD of routing protocol and change AD of a static route.
+
+### Floating Static Routes
+
+- By changing the AD of static route, you can make it less preferred than the routes learned dynamically.
+- This is called `floating static route`
+- The route will be inactive unless the route dynamically learned is removed.
