@@ -1266,3 +1266,53 @@
 1. Manual configuration
 2. Highest IP on loopback interface
 3. Highest IP on physical interface
+
+## 26. OSPF (1/3)
+
+### OSPF
+
+- Uses `Shortest Path First algorithm` (`Dijkstra's Algorithm`)
+- OSPFv1 is not in use, v2 is used for IPv4 and v3 for IPv6
+- Routers store information about the network in `LSAs (Link State Advertisements)` which are organized in a structure called `LSDB (Link State Database)`.
+- Routers will flood LSAs until all routers in OSPF area develop the same map of the network.
+- Each LSA has an aging timer (30 minutes by default). The LSA will be flooded again after timer expires.
+
+#### Steps
+
+1. Become neighbours with other routers connected to same segment
+2. Exchange LSAs with neighbour routers
+3. Calculate the best routes to each destination and insert them to routing table
+
+### OSPF Area
+
+- OSPF uses `areas` to divide up the network.
+- In large network a single-area design can have negative effects:
+  - Algorithm takes more time and processing power to calculate routes
+  - Larger LSDB takes up more memory
+  - Any small change in network causes every router to flood LSAs and run SPF again
+- Area is a set of routes and links that share the same LSDB.
+- `Backbone area` (area 0) is where all the other areas must connect to
+- Routers with all interfaces in the same area are called `internal routers`
+- Routers with interfaces in multiple areas are called `area border routers (ABRs)`
+  - ABRs maintain a separate LSDB for each area.
+  - Recommended to a maximum of 2 areas to reduce its burden.
+- Routers connected to the backbone area is called `backbone router`
+- `Intra-area route` is a route to a destination in the same OSPF area.
+- `Interarea route` is a route to a destination in a different OSPF area
+- OSPF area should be contiguous
+- All OSPF areas must have one ABR connected to backbone area
+- OSPF interfaces in the same subnet must be in the same area
+- `Autonomous system boundary router (ASBR)` is an OSPF router that connects OSPF network to external network
+
+### Basic OSPF Configuration
+
+- `(config)# router ospf <process-id>` to enter OSPF config mode
+  - OSPF `process ID` is logically significant so routers with different process IDs can become OSPF neighbours.
+- `(config-router)# network <ip> <mask> area <number>` will enable the OSPF on the interface in the specified area.
+- `(config-router)# passive-interface <interface-id>`
+  - tells router to stop sending OSPF hello messages out that interface
+  - will continue sending LSAs about the subnet configured on that interface
+  - should always use it on interfaces with no OSPF neighbours
+- `(config-router)# router-id <id>` manually configures router ID
+- OSPF supports ECMP load-balancing and maximum paths is 4 by default
+  - `(cofig-router)# maximum-paths <number>` to configure it
