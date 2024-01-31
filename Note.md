@@ -1316,3 +1316,43 @@
 - `(config-router)# router-id <id>` manually configures router ID
 - OSPF supports ECMP load-balancing and maximum paths is 4 by default
   - `(cofig-router)# maximum-paths <number>` to configure it
+
+## 27. OSPF (2/3)
+
+### OSPF Cost
+
+- Calculated by `reference bandwidth / interface bandwidth`
+- Default reference bandwidth is 100 mpbs
+  - You should change this value with `(config-router)# auto-cost reference-bandwidth <number>`
+  - Should have same value on all OSPF routers
+- All value less than 1 will be converted to 1
+- OSPF cost to a destination is the total cost of exit interfaces
+- Loopback interface is also calculated with a cost of 1
+- `(config-if)# ip ospf cost <cost>` manually configures the cost on the interface
+- `# show ip ospf interface brief` gives convenient summary of OSPF interfaces
+
+### OSPF Neighbors
+
+- When OSPF is activated on interfaces, the router starts sending `OSPF hello messages` out of the interfaces at intervals (default 10 seconds).
+
+  - Hello messages are multicast to 224.0.0.5
+  - Encapsulated in IP header with the value of 89 in protocol field
+
+- When interface doesn't know any neighbors yet, neighbor state is in `down`.
+- `Init state` is when it received a hello packet without its own router ID included.
+- When routers receive a hellow packet with its own RID they go to `2-way state`, when they are now ready to share LSAs.
+- Then, routers enter `Exstart state` where router with higher RID becomes the `master` that initiates exchange and lower RID becomes the `slave`.
+- In `exchange state`, the routers exchange DBDs which contain basic info about LSAs in their LSDB.
+  - Routers then compare it with their own LSDB to determine which LSAs they need to receive.
+- In `loading state`, routers send `LSR (Link State Request)` to request that their neighbors send any LSAs they don't have.
+  - LSAs ar4e sent in `Link State Update (LSU)` messages
+  - The routers then send `LSAck` messages to acknowledge that they received LSAs
+- In `full state` the routers have a full OSPF adjacency and identical LSDBs.
+  - They continue to send and listen for hello packets to maintain the neighbor adjacency
+  - Every time a hello packet is received, the `dead timer` (40 seconds) is reset.
+  - If dead timer counts down to 0, the neighbour is removed
+
+### OSPF Config
+
+- `(config-if)# ip cost <process-id> area <area>` can activate OSPF directly on an interface.
+- `(config-router)# passive-interface default` configures all interfaces as passive interfaces.
