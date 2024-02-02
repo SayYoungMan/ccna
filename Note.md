@@ -1479,3 +1479,121 @@
   - Active router is determined first by high priority (default 100) and then use highest IP
 - `(config-if)# standby <group-number> preempt` causes the router to take the role of active router
 - `# show standby` to view HSRP status
+
+## 30. TCP & UDP
+
+### Layer 4 (Transport Layer)
+
+- Provides transparent transfer of data between end hosts
+- Can provide various servies to applications including:
+  - Reliable data transfer
+  - Error recovery
+  - Data sequencing
+  - Flow control
+- Provides layer 4 addressing (`port numbers`)
+  - Identify the application layer protocol
+  - Provides session multiplexing
+
+### Port numbers / Session multiplexing
+
+- `Session` is an exchange of data between two or more communicating devices.
+- Source port number is randomly selected by the PC to help identify the session.
+- Destination port number identifies application layer protocol.
+- Port ranges have been designated by IANA:
+  - `Well-known` port number: 0 - 1023
+  - `Registered` port number: 1024 - 49151
+  - `Ephemeral / private / dynamic` port number: 49152 - 65535
+
+### TCP (Transmission Control Protocol)
+
+- `Connection-oriented`: before sending data, two hosts communicate to establish a connection first, then data exchange begins
+- Provides reliable communication:
+  - The destination host must acknowledge that it received each TCP segment.
+  - If a segment isn't acknowledged, it's sent again.
+- Provides sequencing: sequence number in TCP header allow destination hosts to put segments in correct order.
+- Flow control: destination host can tell the source host to increase / decrease the rate data is sent.
+
+### TCP header
+
+- `Source / destination port` contains port numbers
+- `Sequence number / acknowledgement number` provide sequencing and reliable communication
+- `Flag bits`: ACK, SYN, FIN are used to establish and terminate connection
+- `Window size` is used for flow control
+
+### Three-way Handshake
+
+- Used to establish a connection between two hosts
+
+```mermaid
+sequenceDiagram
+  participant PC
+  participant Server
+  PC->>Server: SYN
+  Server->>PC: SYN & ACK
+  PC->>Server: ACK
+```
+
+### Four-way Handshake
+
+- Used to terminate the connection
+
+```mermaid
+sequenceDiagram
+  participant PC
+  participant Server
+  PC->>Server: FIN
+  Server->>PC: ACK
+  Server->>PC: FIN
+  PC->>Server: ACK
+```
+
+### Sequencing
+
+- Hosts set a random initial sequence number
+- `Forward acknowledgement` is used to indicate the sequence number of the next segment the host expects to receive.
+
+### TCP Retransmission
+
+- If the host doesn't receive ACK, it will retransmit that specific segment.
+
+### Flow Control: Window Size
+
+- Acknowledging every segment is inefficient.
+- Window size field allows more data to be sent before an ACK is required.
+- `Sliding window` can be used to dynamically adjust how large the window is.
+  - Window gradually increases until segment is dropped and then it decreases in size and increased again.
+
+### UDP (User Datagram Protocol)
+
+- Not connection-oriented: doesn't establish connection
+- No reliable communication: even if segment is lost, UDP doesn't retransmit
+- No sequencing
+- No flow control
+
+### TCP vs UDP
+
+- TCP provides more features at the cost of additional overhead
+- For applications that require reliable communications, TCP is preferred
+- For applications like real-time video, UDP is preferred
+- There are some applications that use UDP, but provide reliability within application itself
+
+### Port numbers
+
+- TCP
+  - 20: FTP data
+  - 21: FTP control
+  - 22: SSH
+  - 23: Telnet
+  - 25: SMTP
+  - 80: HTTP
+  - 110: POP3
+  - 443: HTTPS
+- UDP
+  - 67: DHCP server
+  - 68: DHCP client
+  - 69: TFTP
+  - 161: SNMP agent
+  - 162: SNMP manager
+  - 514: Syslog
+- TCP & UDP
+  - 53: DNS
