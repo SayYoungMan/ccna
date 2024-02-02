@@ -1597,3 +1597,31 @@ sequenceDiagram
   - 514: Syslog
 - TCP & UDP
   - 53: DNS
+
+## 31. IPv6 (1/3)
+
+### Why IPv6?
+
+- There aren't enough IPv4 addresses available
+- VLSM, private IPv4 addresses and NAT have been used to conserve the use of IPv4 address space but not enough
+
+### IPv6
+
+- 128 bits address
+- Written in hexadecimal characters
+- 8 groups of 4 characters divided by colon
+- Always use prefix length instead of subnet mask
+- Leading 0s is each group can be removed
+- Consecutive quartets of all 0s can be replcaed with double colon and it can only be done once in address
+
+### Global Unicast Addresses
+
+- Typically an enterprise requesting IPv6 addresses from their ISP will receive a /48 block
+- Typically, IPv6 subnets using a /64 prefix length
+- Therefore, last 64-bit interface identifier is the host portion of the address
+
+### Configuring IPv6 Addresses
+
+- `(config)# ipv6 unicast-routing` allows the router to perform IPv6 routing
+- `(config-if)# ipv6 address <ip-address/prefix>` to assign address to interface
+- `# show ipv6 interface brief` to see summary of addresses assigned
