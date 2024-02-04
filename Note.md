@@ -1785,3 +1785,51 @@ sequenceDiagram
 - `Directly attached static route`: only exit interface is specified and can't be used if interface is Ethernet interface
 - `Recursive static route`: only next hop is specified
 - `Fully specified static route`: both exit-interface and next hop are specified. This is required for link-local next hop
+
+## 34. Standard ACLs
+
+### What are ACLs?
+
+- Acts as packet filter, instructing the router to permit or discard specific traffic
+- Can filter traffic based on IP, layer 4 ports, etc.
+
+### How ACLs work
+
+- ACLs are configured globally on the router
+- They are an ordered sequence of `ACEs (Access Control Entries)`
+- ACL must be applied to an interface to take effect
+- ACLs are applied either inbound or outbound
+- When router checks a packet against the ACL, it processes ACEs in order, from top to bottom
+  - When one is matched, the router takes the action and stops
+- Maximum of 1 ACL can be applied to a single interface per direction
+
+### Implicit Deny
+
+- It tells the router to deny all traffics that doesn't match any configured entries in the ACL.
+- It's located at the end of all ACLs
+
+### ACL Types:
+
+- `Standard ACLs`: Match based on source IP address only
+- `Extended ACLs`: Match based on source / destination IP address, Port, etc.
+
+### Standard Numbered ACLs
+
+- Numbered ACLs are identified with a number
+- Different types of ACLs have a different range of numbers that can be used.
+  - Standard ACLs can use 1-99 and 1300-1999
+- Command to configure is `(config)# access-list <number> {deny|permit} <ip> <wildcard-mask>`
+  - Can use `host <ip>` instead of wildcard mask to configure on single host
+  - Similarly can use `any` can configure for IP
+  - `(config)# access-list <number> remark <remark>` can be put to ACL to help remember it
+- `#show access-lists` displays all configured ACLs
+- `#show ip access-lists` displays only IP ACLs
+- `(config-if)# ip access-group <number> {in|out}` to apply ACL to the interface
+
+> Standard ACLs should be applied as close to the destination as possible.
+
+### Standard Named ACLs
+
+- Named ACLs are identified with a name
+- Configured by entering standard named ACL config mode by `(config)#ip access-list standard <acl-name>`
+- Then, configure the entry by `(config-std-nacl)# [entry-number] {deny|permit} <ip> <wildcard-mask>`
