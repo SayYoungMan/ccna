@@ -1706,3 +1706,82 @@ sequenceDiagram
   - Used to test protocol stack on local device
   - Messages sent to this address are processed within local device
   - IPv4 equivalent: 127.0.0.0/8 address range
+
+## 33. IPv6 (3/3)
+
+### IPv6 Header
+
+- `Version`
+  - 4 bits in length
+  - Indicates version of IP
+  - Always 6 for IPv6
+- `Traffic Class`
+  - 8 bits in length
+  - Used for QoS, to indicate high-priority traffic
+- `Flow Label`:
+  - 20 bits
+  - Used to identify specific traffic flows
+- `Payload Length`:
+  - 16 bits
+  - Indicates the length of the payload in bytes
+- `Next Header`:
+  - 8 bits
+  - Indicates the type of next header
+  - Same function as IPv4 header's protocol field
+- `Hop Limit`:
+  - 8 bits
+  - The value is decreased by 1 by each router that forwards it. If it reaches 0, packet is discarded.
+- `Source / Destination`:
+  - 128 bits each
+  - IPv6 addresses of source and destination
+
+### Solicited-Node Multicast Address
+
+- Calculated from a unicast address
+- `ff02::1:ff + Last 6 Hex digits of unicast address`
+
+### Neighbour Discovery Protocol
+
+- Various functions, including replacing ARP in IPv6
+- Uses ICMPv6 and solicited-note multicast addresses to learn MAC
+- Two message types are used:
+
+  1. `Neighbour Solicitation (NS)`: ICMPv6 type 135
+
+  - It has destination IP of solicited-node multicast address and destination MAC of multicast MAC based on solicited-node address.
+
+  2. `Neighbour Advertisement (NA)`: ICMPv6 type 136
+
+- Another function of NDP allows hosts to automatically discover routers on the local network.
+- Two messages are used for this:
+  1. `Router Solicitation (RS)`: ICMPv6 type 133
+  - Sent to `FF02::2` (all routers)
+  - Asks all routers on local link to identify themselves
+  - Sent when an interface is enabled / host is connected to network
+  2. `Router Advertisement (RA)`: ICMPv6 type 134
+  - Sent to `FF02::1` (all nodes)
+  - Router announces its presence, as well as other information about the link
+  - Sent in response to RS but also sent periodically without RS
+
+> IPv6 neighbour table (same as ARP table in IPv4) can be viewed via `#show ipv6 neighbor`
+
+### SLAAC (Stateless Address Auto-Configuration)
+
+- Hosts use RS/RA to learn IPv6 prefix of local link and then automatically generate IPv6 address.
+- The device will use EUI-64 to generate the interface ID.
+- `(config-if)# ipv6 address autoconfig` to enable it
+
+### DAD (Duplicate Address Detection)
+
+- Allows hosts to check if other devices on the local link are using the same IPv6 address
+- Any time IPv6-enabled interface initializes, or IPv6 address is configured on interface, it performs DAD.
+- Host will send an NS to its own IPv6 address and if it gets no reply, it knows the address is unique.
+
+### IPv6 Static Routing
+
+- If IPv6 routing is disabled, the router will be able to send/receive IPv6 traffic, but will not route IPv6 traffic.
+- `(config)#ipv6 route <destination/prefix> {next-hop|exit-interface [next-hop]} [ad]` is used to configure IPv6 static route.
+
+- `Directly attached static route`: only exit interface is specified and can't be used if interface is Ethernet interface
+- `Recursive static route`: only next hop is specified
+- `Fully specified static route`: both exit-interface and next hop are specified. This is required for link-local next hop
