@@ -1833,3 +1833,26 @@ sequenceDiagram
 - Named ACLs are identified with a name
 - Configured by entering standard named ACL config mode by `(config)#ip access-list standard <acl-name>`
 - Then, configure the entry by `(config-std-nacl)# [entry-number] {deny|permit} <ip> <wildcard-mask>`
+
+## 35. Extended ACLs
+
+- Configuring numbered ACLs with subcommands is possible the same way as named ACL
+- Can easily delete indicvidual entries in ACL config mode with `no <entry-number>`
+- Whereas from global config mode, you can only delete entire ACL
+- Can insert new entries in between other entries by specifying sequence number
+- `(config)#ip access-list resequence <acl-id> <starting-seq-num> <increment>` to resequence the entries in ACL
+
+### Extended ACLs
+
+- Numbered ACLs have range of 100-199 and 2000-2699
+- Can match traffic based on more parameters
+- `(config)# access-list <number> [permit|deny] <protocol> <src-ip> <dest-ip>` to configure extended ACL based on source and destination IP address
+- `(config)# ip access-list extended {name|number}` to enter external ACL configuration mode
+- `(config-ext-nacl)# [seq-num] [permit|deny] <protocol> <src-ip> <dest-ip>` to set the entry
+- Should be applied as close to the source as possible, to limit how far the packets travel before blocked
+
+### Matching TCP/UDP port numbers
+
+- When matching TCP/UDP, you can optionally specify the source and/or destination port numbers to match
+- `(config-ext-nacl)# [deny|permit] <protocol> <src-ip> <src-port-num> <dest-ip> <dest-port-num>` to configure port number matching
+- If you specify multiple criteria, a packet must match all of these criteria
