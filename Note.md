@@ -1901,3 +1901,64 @@ sequenceDiagram
 - `#show cdp|lldp neighbors` to see CDP/LLDP neighbor table
 - `#show cdp|lldp neighbors detail` to see detailed information about CDP/LLDP neighbours
 - `#show cdp|lldp entry <name>` to see detailed information about specific neighbour
+
+## 37. NTP
+
+### Importance of time
+
+- All devices have internal clock that can be viewed with `#show clock`
+- Default timezone is UTC
+- You can see the time source in `#show clock detail`
+- Internal hardware clock will drift over time so it's not ideal
+- The most important reason to have accurate time is to have accurate logs between devices for troubleshooting
+  - `#show logging` command shows logs on a device
+
+### Manual Time Configuration
+
+- You can configure the time on the device with `#clock set <time> <date>`
+- Hardware clock can be separately configure with `#calendar set <time> <date>`
+- `#clock update-calendar` to sync calendar to clock's time
+- `#clock read-calendar` to sync clock to calendar's time
+- The hardware clock tracks time when the device restarts and it initializes the software clock.
+- Time zone can be configured with `(config)# clock timezone <name> <offset>`
+- Recurring daylight saving time can be configured with `(config)# clock summertime <name> recurring <offset> <start> <end>`
+
+### Network Time Protocol
+
+- Allows automatic syncing of time over a network
+- NTP clients request the time from NTP servers
+- NTP allows accuracy of time within ~1ms if NT server is in the same LAN but otherwise ~50ms
+- The distance of NTP server from original reference clock is called `stratum`.
+- Uses UDP port 123 to communicate
+
+### Reference Clocks
+
+- Usually very accurate time device like atomic clock or GPS clock
+- Are stratum 0 within NTP hierarchy
+- NTP servers directly connected to reference clocks are stratum 1 and are called `primary servers`
+
+### NTP hierarchy
+
+- Stratum 2 servers get time from stratum 1 server and goes on.
+- Stratum 15 is the maximum and anything beyond is considered unreliable
+- Devices can also peer with devices at the same stratum (`symmetric active mode`)
+- NTP client can sync to multiple NTP servers
+- NTP servers which get their time from other NTP servers are called secondary servers
+
+### NTP Configuration
+
+- `(config)# ntp server <ip> [prefer]` to sync with a NTP server
+- `#show ntp associations` to see configured NTP servers
+- `#show ntp status` to view NTP status
+- `(config)# ntp source <interface>` to set the interface to act as NTP server
+- `(config)# ntp master` to make the device act as NTP server
+  - Default stratum of NTP master is 8
+- `(config)# ntp peer <ip>` to make it run in symmetric active mode
+
+### NTP Authentication
+
+- Allows clients to ensure they only sync to intended servers
+- `(config)# ntp authenticate` enables NTP authentication
+- `(config)# ntp authentication-key <number> md5 <key>` creates NTP auth key
+- `(config)# ntp trusted-key <number>` specifies trusted key
+- `(config)# ntp server <ip> key <key>` to connect to server with authentication
