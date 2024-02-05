@@ -1856,3 +1856,48 @@ sequenceDiagram
 - When matching TCP/UDP, you can optionally specify the source and/or destination port numbers to match
 - `(config-ext-nacl)# [deny|permit] <protocol> <src-ip> <src-port-num> <dest-ip> <dest-port-num>` to configure port number matching
 - If you specify multiple criteria, a packet must match all of these criteria
+
+## 36. CDP & LLDP
+
+### Layer 2 Discovery Protocols
+
+- Used to share information with and discover about neighbouring devices
+- Shared information includes host name, IP address, device type, etc.
+- Can be a security risk and often not used
+
+### CDP (Cisco Discovery Protocol)
+
+- Cisco proprietary protocol so it's enabled on Cisco devices by default
+- CDP messages are sent periodically to multicast MAC address of `0100.0CCC.CCCC`
+- When a device receives a CDP message, it processes and discards the message instead of forwarding
+- By default, CDP messages are sent every 60 seconds
+- Default CDP holdtime is 180 seconds. If message isn't received for this period, the neighbour is removed from CDP neighbour table.
+
+### LLDP (Link-Layer Discovery Protocol)
+
+- Industry standard protocol
+- Usually disabled on Cisco devices by default
+- Device can run CDP and LLDP at the same time
+- LLDP messages are periodically sent to multicast MAC of `0180.C200.000E`
+- By default LLDP messages are sent every 30 seconds and holdtime is 120 seconds
+- LLDP has additional timer called `reinitialization delay`. If LLDP is enabled, this timer will delay the initialization. 2 seconds by default
+
+### Configuration Commands
+
+- `(config)# cdp|lldp run` to enable CDP/LLDP globally
+- `(config-if)# cdp enable` to enable CDP on specific interface
+- `(config-if)# lldp transmit` to enable LLDP on Tx
+- `(config-if)# lldp receive` to enable LLDP on Rx
+- `(config)# cdp|lldp timer <seconds>` to configure the timer
+- `(config)# cdp|lldp holdtime <seconds>` to configure the holdtime
+- `(config)# lldp reinit <seconds>` to configure the LLDP reinitialization delay
+- `(config)# cdp advertise-v2` to enable CDPv2
+
+### Verification Commands
+
+- `#show cdp|lldp` to see global configs
+- `#show cdp|lldp traffic` to see counts of transmitted CDP/LLDP
+- `#show cdp|lldp interfaces` to see CDP/LLDP informations about the interfaces
+- `#show cdp|lldp neighbors` to see CDP/LLDP neighbor table
+- `#show cdp|lldp neighbors detail` to see detailed information about CDP/LLDP neighbours
+- `#show cdp|lldp entry <name>` to see detailed information about specific neighbour
