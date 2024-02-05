@@ -1962,3 +1962,28 @@ sequenceDiagram
 - `(config)# ntp authentication-key <number> md5 <key>` creates NTP auth key
 - `(config)# ntp trusted-key <number>` specifies trusted key
 - `(config)# ntp server <ip> key <key>` to connect to server with authentication
+
+## 38. DNS
+
+### Purpose of DNS
+
+- Used to resolve human-readable names to IP addresses so it's easier for us to remember
+- DNS servers can be manually configured or learned via DHCP
+
+### DNS (Domain Name Server)
+
+- DNS `A record` = Used to map names to IPv4 address
+- DNS `AAAA record` = Used to map names to IPv6 address
+- Standard DNS queries/responses typically use UDP. TCP is used for DNS messages greater than 512 bytes.
+- Devices will save DNS server's responses to a local DNS cache.
+
+### DNS is Cisco IOS
+
+- Cisco router can be configured as a DNS server/client
+- `(config)#ip dns server` makes router to act as a DNS server
+- `(config)#ip host <name> <ip>` configures a hostname to IP mapping
+- `(config)#ip name-server <ip>` configures DNS server to query from if requested a record that isn't in the table
+- `(config)#ip domain lookup` to perform DNS queries
+- `#show hosts` to see all hosts that were configured or learned
+- `(config)#ip domain name <domain>` configures the default domain name
+  - This will automatically be appended to any hostnames without specified domain.
