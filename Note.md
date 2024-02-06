@@ -1987,3 +1987,53 @@ sequenceDiagram
 - `#show hosts` to see all hosts that were configured or learned
 - `(config)#ip domain name <domain>` configures the default domain name
   - This will automatically be appended to any hostnames without specified domain.
+
+## 39. DHCP (Dynamic Host Configuration Protocol)
+
+### Purpose of DHCP
+
+- Allows hosts to automatically learn various aspects of their network configuration
+  - Such as IP, subnet mask, default gateway, DNS server, etc.
+- Typically used for client devices because routers, servers, etc. are manually configured
+- In small networks, router is typically the DHCP server.
+- In larger networks, DHCP server is usually Windows/Linux server.
+
+### Basic functions of DHCP
+
+- DHCP server leases IP to clients and client must give up the address at the end of the lease
+- `ipconfig /release` releases DHCP leased address
+- `ipconfig /renew` asks for a new IP address
+- DHCP servers use UDP 67 and clients use UDP 68
+
+### DHCP messages in renew process
+
+- `DHCP Discover`: asking server if there is available IP address
+- `DHCP Offer`: server offering an IP address to client
+- `DHCP Request`: client telling the server that it wants to use the offered IP
+- `DHCP Ack`: server confirming client that it can use the address
+- Discover and Request is broadcast and Offer and Ack can be either unicast or broadcast.
+
+### DHCP Relay
+
+- If server is centralized, the server might not receive clients' broadcast DHCP message because broadcast can't leave local subnet.
+- We can set a router to act as `DHCP relay agent` which will forward broadcast DHCP messages to remote DHCP server as unicast.
+
+### DHCP Server Configuration
+
+- `(config)# ip dhcp excluded-address <start-ip> <end-ip>` to specify a range of addresses that won't be given to DHCP clients
+- `(config)# ip dhcp pool <pool-name>` to create a DHCP pool and enter dhcp-config mode
+- `(dhcp-config)# network <ip> <mask>` to specify the subnet of addresses to be assigned to clients
+- `(dhcp-config)# dns-server <ip>` to specify the DNS server that DHCP clients should use
+- `(dhcp-config)# domain-name <domain>` to specify the domain name of the network
+- `(dhcp-config)# default-router <ip>` to specify the default gateway
+- `(dhcp-config)# lease <time>|infinity` to specify the lease time
+- `#show ip dhcp binding` dhows all DHCP clients connected
+
+### DHCP Relay Agent Configuration
+
+- Configure the interface connected to the subnet of the client devices
+- `(config-if)# ip helper-address <ip>` configures the IP address of the DHCP server as helper address
+
+### DHCP Client Configuration
+
+- `(config-if)# ip address dhcp` to tell the router to use DHCP to learn its IP address
