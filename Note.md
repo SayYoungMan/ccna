@@ -2037,3 +2037,57 @@ sequenceDiagram
 ### DHCP Client Configuration
 
 - `(config-if)# ip address dhcp` to tell the router to use DHCP to learn its IP address
+
+## 40. SNMP
+
+### SNMP (Simple Network Management Protocol)
+
+- Used to monitor the status of devices, make config change, etc.
+- Two main types of devices:
+  1. `Managed Devices`: devices being managed using SNMP
+  2. `Network Management Station (NMS)`: devices managing managed devices
+
+### SNMP Operations
+
+1. Managed devices can notify the NMS of events
+2. NMS can ask managed devices for information about their current status
+3. NMS can tell managed devices to change aspects of their configuration
+
+### SNMP Components
+
+- `SNMP Manager` is software on NMS that interacts with the managed devices
+- `SNMP Application` provides interface for the network admin to interact with
+- `SNMP Agent` is SNMP software running on the managed devices that interacts with the SNMP manager on NMS
+- `MIB(Management Information Base)` is the structure that contains the variables that are managed by SNMP
+  - Each variable is identified with `OID(Object ID)`
+  - SNMP Object IDs are organized in a hierarchical structure
+
+### SNMP Versions
+
+- SNMPv1: original version of SNMP
+- SNMPv2c:
+  - Allows NMS to retrieve large amount of information in single request
+  - c refers to community strings used as passwords
+- SNMPv3: secure version with strong encryption and authentication
+
+### SNMP Message Classes
+
+- `Read`:
+  - Sent by NMS to read information from managed devices
+  - Includes Get, GetNext and GetBulk messages
+- `Write`:
+  - Messages sent by NMS to change information on managed device
+  - Includes Set message
+- `Notification`:
+  - Messages sent by managed devices to alert the NMS
+  - Includes Trap and Inform messages
+- `Response`:
+  - Messages sent in reposponse to previous request
+
+> SNMP Agent = UDP 161, SNMP Manager = UDP 162
+
+### SNMPv2c Configuration
+
+- `(config)# snmp-server community <password> <permission>` to configure SNMP community strings
+- `(config)# snmp-server host <ip> version 2c <community-string>` specifies NSM, version and community
+- `(config)# snmp-server enable traps` to configure trap messages
