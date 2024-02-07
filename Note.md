@@ -2139,3 +2139,69 @@ seq:time-stamp:%facility-severity-MNEMONIC:description
   - `(config)# logging trap <level>` to set level for external logging
 
 > `(config)# service timestamps/sequence-numbers` can configure timestamps and sequence-numbers
+
+## 42. SSH (Secured Shell)
+
+### Console Port Security
+
+- By default, no password is needed to access the CLI of a Cisco IOS device via console port.
+- You can configure a password on the console line.
+
+  - `(config)# line console 0` to enter console line config mode
+    - There is only a single console line so number is always 0
+  - `(config-line)# password <password>` configures console line's password
+  - `(config-line)# login` tells the device to require a user to enter configured password to access the CLI via console port.
+
+- Alternatively, you can configure console line to require users to login using one of the configured usernames on the device
+  - `(config-line)# login <user-name>` tells the device to require a user to login using one of the configured usernames on the device.
+  - `(config-line)# exec-timeout <time>` logs the user out after defined time of inactivity.
+
+### Layer 2 Switch Management IP
+
+- You can assign IP to SVI to allow remote connections to the CLI of the switch.
+- You need to configure default gateway such that it can connect to the PC if it's not in the same LAN.
+
+### Telnet
+
+- Protocol used to remotely access the CLI of a remote host
+- Now it's replaced by SSH
+- Sends data in plain text
+- Telnet server listens for Telnet traffic on TCP port 23
+
+### Telnet/SSH Configuration
+
+- Need to enable password/secret to enter privileged exec mode from remote hosts
+- `(config)# access-list` to limit which devices can connect
+- `(config)# line vty` to configure VTY lines
+- `(config-line)# transport input <protocol>` to allow which protocols to allow
+- `(config-line)# access-class <number>` to apply ACL to VTY
+
+### SSH (Secured Shell)
+
+- Provides security features such as data encryption and authentication
+- SSH server listens for SSH traffic on TCP port 22
+- `#show version` to check IOS image and if it has K9 in name, it supports SSH
+- `#show ip ssh` shows details about SSH configuration
+
+### RSA Keys
+
+- To enable SSH, you must generate RSA public and private key pair used
+- `FQDN (Fully Qualified Domain Name)` of device is used to name RSA keys
+  - Made up of `<host-name>.<domain-name>`
+- `(config)# crypto key generate rsa` generates RSA keys
+
+### SSH Configuration Requirements
+
+1. Configure host name
+2. Configure DNS domain name
+3. Generate RSA key pair
+4. Configure enable PW, username/PW
+5. Enable SSHv2
+
+- `(config)# ip ssh version 2`
+
+6. Configure VTY lines
+
+- `(config-line)# login local` to enable user authentication
+
+- `ssh <username>@<ip>` to connect via SSH from remote host
