@@ -2091,3 +2091,51 @@ sequenceDiagram
 - `(config)# snmp-server community <password> <permission>` to configure SNMP community strings
 - `(config)# snmp-server host <ip> version 2c <community-string>` specifies NSM, version and community
 - `(config)# snmp-server enable traps` to configure trap messages
+
+## 41. Syslog
+
+### Syslog
+
+- Industry standard protocol for message logging
+- On network devices, Syslog can be used to log events such as changes in interface status.
+- Messages can be displayed in CLI, saved in RAM or sent to external server
+
+### Syslog Message Format
+
+```
+seq:time-stamp:%facility-severity-MNEMONIC:description
+```
+
+- `Sequence number`: order of messages
+- `Timestamp`: time the message was generated
+- `Facility`: which process generated the message
+- `Severity`: severity of logged event
+- `Mnemonic`: short code for the message, indicating what happened
+- `Description`: detailed information about the event being reported
+
+### Syslog Severity Levels
+
+0. Emergency
+1. Alert
+2. Critical
+3. Error
+4. Warning
+5. Notice / Notification
+6. Informational
+7. Debugging
+
+### Syslog Logging Locations
+
+- `Console line`: Syslog messages displayed in CLI when connected to device via console port
+  - `(config)# logging console <level>`
+- `VTY lines`: Syslog messages will be displayed in the CLI when connected via Telnet/SSH
+  - `(config)# logging monitor <level>`
+  - `#terminal monitor` is required on remote host everytime to display the logging
+- `Buffer`: Syslog messages will be saved to RAM
+  - `(config)# logging buffered [size] <level>`
+- `External Server`: Can configure the device to send messages to and external server
+  - Syslog servers will listen for messages on UDP port 514
+  - `(config)# logging host? <server-ip>`
+  - `(config)# logging trap <level>` to set level for external logging
+
+> `(config)# service timestamps/sequence-numbers` can configure timestamps and sequence-numbers
