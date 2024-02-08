@@ -2266,3 +2266,39 @@ TFTP file transfers have three phases:
 - `(config)# boot system <filepath>` will use the new version of IOS
 - `#delete <file-path>` can delete the old file
 - `(config)# ip ftp username/password` configures the FTP username/password that device will use when connecting to an FTP server
+
+## 44. NAT (1/2)
+
+### Private IPv4 Addresses
+
+- RFC 1918 specifies following IPv4 address ranges as private:
+  - `10.0.0.0/8`
+  - `172.16.0.0/12`
+  - `192.168.0.0/16`
+- You are free to use these addresses in your networks and they don't have to be globally unique.
+
+### Network Address Translation (NAT)
+
+- Used to modify the source and/or destination IP addresses of packets
+- Allows hosts with private IP addresses to communicate with other hosts over the Internet
+
+### Static NAT
+
+- Involves statically configuring one-to-one mapping of private IP addresses to public IP addresses
+- An inside local IP address is mapped to an inside global IP address
+- Allows devices with private IP to communicate over internet but doesn't help preserve IP
+
+- `Inside local`: IP of the inside host from the perspective of the local network
+- `Inside global`: IP of the inside host from the perspective of outside hosts
+- `Outside local`: IP of the outside host from the perspective of the local network
+- `Outside global`: IP of outside host from the perspective of the outside network
+- Unless destination NAT is used, outside local and outside global addresses are the same
+
+### Static NAT Configuration
+
+- `(config-if)# ip nat inside` defines inside interfaces connected to the internal network
+- `(config-if)# ip nat inside` defines outside interfaces connected to the external network
+- `(config)# ip nat inside source static <inside-local-ip> <inside-global-ip>` configures the one-to-one IP mapping
+- `#show ip nat translations` shows NAT entries
+- `#clear ip nat translation *` will clear all dynamic NAT entries
+- `#show ip nat statistics` show useful metrics
