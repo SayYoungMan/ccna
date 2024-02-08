@@ -2205,3 +2205,64 @@ seq:time-stamp:%facility-severity-MNEMONIC:description
 - `(config-line)# login local` to enable user authentication
 
 - `ssh <username>@<ip>` to connect via SSH from remote host
+
+## 43. FTP & TFTP
+
+### FTP & TFTP
+
+- Both are industry standard protocols used to transfer files over a network.
+- Both use client-server model
+- You can use FTP/TFTP to download the newer version of IOS from a server.
+
+### TFTP (Trivial File Transfer Protocol)
+
+- Only allows a client to copy a file to or from a server
+- No authentication, so servers will respond to all TFTP requests
+- No encryption
+- Best used in controlled environment to transfer small files quickly
+- TFTP servers listen on UDP port 69
+  - Every TFTP data message is acknowledged
+  - Timers are used and if message isn't received in time, it will resend the message (`lock-step` connection)
+
+### TFTP Connections
+
+TFTP file transfers have three phases:
+
+1. `Connection`: TFTP client sends a request to the server and server responds back, initializing the connection.
+2. `Data transfer`: The client and server exchange TFTP messages
+3. `Connection Termination`: After the last data message has been sent, a final acknowledgement is sent to terminate the connection
+
+### TFTP TID
+
+- When the client sends the first message, source port is random ephemeral port
+- This random port is called `Transfer Identifier (TID)` and identifies the data transfer
+- The server then also selects random TID to use as the source port
+- When the client sends the next message, the destination port will now be server's TID
+
+### FTP (File Transfer Protocol)
+
+- Uses TCP ports 20 and 21
+- Usernames and passwords are used for authentication but no encryption
+- For greater security, FTPS/SFTP can be used
+- Clients can also navigate file directories, add/remove directories, etc.
+- Client sends FTP commands to server to do this
+
+### FTP Control Connections
+
+- `FTP control connection` (TCP 21) is established and used to send FTP commands and replies.
+- When files or data are to be transferred, separate `FTP data connections` (TCP 20) are established and terminated as needed
+- Default method of establishing FTP data connections is `FTP active mode`, where server initiates TCP connections
+- In `FTP passive mode`, the client initiates the data connection. It is Often necessary when the client is behind a firewall
+
+### IOS file systems
+
+- A `file system` is a way of controlling how data is stored and retrieved
+- You can view file system via `#show file systems`
+
+### Upgrading Cisco IOS
+
+- You can view the contents of flash with `#show flash`
+- `#copy ftp:/tftp: flash:` is the command to copy the file using FTP or TFTP
+- `(config)# boot system <filepath>` will use the new version of IOS
+- `#delete <file-path>` can delete the old file
+- `(config)# ip ftp username/password` configures the FTP username/password that device will use when connecting to an FTP server
