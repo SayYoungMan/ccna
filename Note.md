@@ -2302,3 +2302,34 @@ TFTP file transfers have three phases:
 - `#show ip nat translations` shows NAT entries
 - `#clear ip nat translation *` will clear all dynamic NAT entries
 - `#show ip nat statistics` show useful metrics
+
+## 45. NAT (2/2)
+
+### Dynamic NAT
+
+- The router dynamically maps inside local addresses to inside global addresses as needed.
+- ACL is used to identify which traffic should be translated
+  - If source IP is permitted by ACL, source IP will be translated
+  - If source IP is denied, it won't be translated (but not dropped)
+- A `NAT pool` is used to define the available inside global addresses that can be used.
+- Although they are dynamically assigned, the mappings are still one-to-one.
+- If there aren't enough inside global IP addresses available, it is called `NAT pool exhaustion`
+  - If a packet from another inside host arrives and needs NAT but no addresses are avilable, the router will drop the packet.
+  - The host will be unable to access outside network
+  - Dynamic NAT entries will time out or you can clear them manually
+
+### Dynamic NAT Configuration
+
+- `(config)# access-list <number> permit <network> <wildcard>` to define the traffic that should be translated
+- `(config)# ip nat pool <pool-name> <start-ip> <end-ip> prefix-length|netmask <length|mask>` to define the pool of inside global IPs
+- `(config)# ip nat inside source list <acl-number> pool <pool-name>` to configure dynamic NAT by mapping ACL to the pool
+- Dynamic maps time out in 24 hours by default
+
+### PAT (NAT Overload)
+
+- Translates both the IP address and port number
+- By using a unique port number for each connection flow, a single public IP can be used by many different internal hosts.
+- The router will keep track of which inside local address is using which inside global address and port.
+- Useful for preserving public IP addresses
+- Configured by adding overload when configuring dynamic NAT when mapping ACL to the pool
+- You can configure PAT by mapping ACL to interface and enabling overload as well
