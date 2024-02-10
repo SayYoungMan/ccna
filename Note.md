@@ -2333,3 +2333,50 @@ TFTP file transfers have three phases:
 - Useful for preserving public IP addresses
 - Configured by adding overload when configuring dynamic NAT when mapping ACL to the pool
 - You can configure PAT by mapping ACL to interface and enabling overload as well
+
+## 46. QoS (1/2)
+
+### IP Phones
+
+- Uses `VoIP (Voice over IP)` to enable phone calls over an IP network
+- Connected to a switch just like any other host
+- Have an internal 3-port switch
+  - One is uplink to external switch
+  - One is downlink to the PC
+  - One connects internally to phone itself
+- This allows the PC and IP phone share a single switch port
+- Recommended to separate `voice traffic` and `data traffic` by placing them in separate VLANs
+- `(config-if)# switchport voice vlan <id>` to tag phone's traffic in VLAN ID
+
+### Power over Ethernet (PoE)
+
+- Allows `Power Sourcing Equipment (PSE)` to provider power to `Powered Devices (PD)` over an Ethernet cable
+- The PSE receives AC power from the outlet, converts it to DC power and supplies it to PDs.
+- PoE has a process to determine if a connected device needs power and how much power it needs
+- `Power policing` can be configured to prevent a PD from taking too much power.
+
+### Quality of Service (QoS)
+
+- Modern networks are typically converged networks where all things share the same IP network to enable cost savings and some advanced features.
+- However, different kinds of traffic now have to compete for bandwidth
+- QoS is used to manage the following characteristics of network traffic:
+  1. `Bandwidth`: overall capacity of the link
+  2. `Delay`: Amount of time it takes the traffic to travel
+  3. `Jitter`: The variation in one-way delay between packets sent by the same application
+  4. `Loss`: % of packets sent that do not reach the destination
+- Following standards are recommended for acceptable interactive audio quality:
+  - One-way delay: less than 150ms
+  - Jitter: less than 30ms
+  - Loss: less than 1%
+
+### Queuing
+
+- If device receives messages faster than it can forward, messages are placed in a queue
+- Queued messages are forwarded in FIFO manner
+- If queue is full, new packets are dropped (`tail drop`)
+- It can lead to `TCP global synchronization`:
+  - All TCP hosts sending traffic will slow down the rate at which they send traffic as the sliding window size decreases.
+  - They will all then increase the rate of sending traffic, which leads to more congestion and dropped packets
+- TCP global synchronization is solved by `Random Early Detection (RED)`
+  - When the amount of traffic in queue reaches the threshold, the device will start randomly dropping packets.
+- An improved version, `Weighted Random Early Detection (WRED)` allows to control which packets are dropped depending on the traffic class.
