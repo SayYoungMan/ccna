@@ -2449,3 +2449,98 @@ TFTP file transfers have three phases:
 - `Shaping` buffers traffic in a queue if the traffic rate goes over the configured rate
 - `Policing` drops traffic if the traffic rate goes over the configured rate
   - Burst traffic over the configured rate can be allowed for a short period of time, to accommodate bursty data applications
+
+## 48. Security Fundamentals
+
+### CIA Triad form the foundation of security
+
+- `Confidentiality`: only authorized users should be able to access data
+- `Integrity`:
+  - Data should not be tempered with by unauthorized users
+  - Data should be correct and authentic
+- `Availability`: the network should be operational and accessible to authorized users
+
+### Terminologies
+
+- `Vulnerability` is any potential weakness that can compromise the CIA of a system
+- `Exploit` is something that can potentially be used to exploit the vulnerability
+- `Threat` is the potential of a vulnerability to be exploited
+- `Mitigation` technique is something that can protect against threats
+
+### Common Attacks
+
+#### DoS (Denial-of-service) attacks
+
+- Threaten the availability of a system
+- `TCP SYN flood`
+  - sends countless TCP SYN messages but doesn't send ack thereby filling up TCP connection table
+  - In a `DDos (Distributed DoS)`, the attacker infects many target computers with malware and use them to initiate DoS attack.
+  - This group of infected computers is called `botnet`
+
+#### Spoofing Attack
+
+- To spoof an address is to use a fake source address
+- `DHCP exhaustion attack`: attacker uses spoofed MAC to flood DHCP discover messages, then the target server's DHCP pool becomes full, resulting in a DoS to other devices
+
+#### Reflection / Amplification
+
+- In a `reflection attack`, attacker sends traffic to reflector (i.e. DNS server) and spoofs source address of its packets using target's IP so reflector replies to target. When it's large enough, it can result in DoS.
+- `Applification attack` is when amount of traffic sent by attacker is small, but it triggers a large amount of traffic to be sent to the target.
+
+#### Man-in-the-middle Attack
+
+- Attacker places himself between the source and destination to eaves drop on communications, or to modify traffic before it reaches destination
+- `ARP spoofing (ARP poisoning)`
+  - Attacker sends ARP reply after legitimate replier, overwriting ARP entry
+  - So when legitimate host sends the message it will be forwarded to attacker instead
+
+#### Reconnaissance Attacks
+
+- Not attacks themselves but they are used to gather information about a target
+- `nslookup` to learn the IP address or `whois` query to learn email, phone number, etc.
+
+#### Malware
+
+- Refers to a variety of harmful programs that can infect a computer
+- `Viruses` infect other software. It spreads as the software is shared by users. They typically corrupt or modify files on the target computer.
+- `Worms` do not require host program. They are standalone and can spread without user interaction. They can congest the network and its payload can harm target devices.
+- `Trojan Horses` are harmful software that is disguised as legitimate software. They are spread through user interaction.
+
+#### Social Engineering Attacks
+
+- Involve psychological manipulation to make the target reveal confidential information or perform some action
+- `Phishing` involves fraudulent emails that appear to come from a legitimate business.
+- `Watering hole` attacks compromise sites that the target victim frequently visits.
+- `Tailgating` involves entering secured areas by walking behind an authorized person.
+
+#### Password-related Attacks
+
+- `Dictionary attack`: runs through list of common passwords
+- `Brute force`: a program tries every possible combination of characters
+
+### Multi-factor authentication
+
+- Involves providing multiple ways to prove identity
+- Composes of two or more of:
+  - What you know
+  - What you have
+  - Who you are
+
+### Digital Certificates
+
+- Another form of authentication used to prove the identity of the holder of the certificate
+- Used to verify if the website is legitimate
+- Sending CSR (Certificate Signing Request) to CA will generate and sign the certificate
+
+### AAA
+
+- A framework for controlling and monitor users of a computer system
+- `Authentication` is the process of verifying user's identity
+- `Authorization` is process of granting user the appropriate access and permissions
+- `Accounting` is the process of recording user's activities on the system
+
+### Security Program Elements
+
+- `User awareness programs` are designed to make employees aware of potential security threats and risks
+- `User training programs` are more formal than user awareness programs
+- `Physical access control` protects equipment and data from potential attackers by only allowing authorized users into protected areas
