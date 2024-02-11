@@ -2380,3 +2380,72 @@ TFTP file transfers have three phases:
 - TCP global synchronization is solved by `Random Early Detection (RED)`
   - When the amount of traffic in queue reaches the threshold, the device will start randomly dropping packets.
 - An improved version, `Weighted Random Early Detection (WRED)` allows to control which packets are dropped depending on the traffic class.
+
+## 47. QoS (2/2)
+
+### Classification
+
+- Organizes network traffic into traffic classes
+- To give priority to certain types of traffic, you have to identify which types of traffic to give priority to
+- Many methods of classifying traffic:
+  - ACL: traffic permitted by ACL will be given certain treatment
+  - `NBAR (Network Based Application Recognition)`: performs a deep packet inspection up to layer 7 to identify the traffic
+  - PCP field of 802.1Q tag can be used to identify high/low priority traffic
+  - DSCP field of IP header can also be used to identify high/low priority traffic
+
+### PCP/CoS
+
+- 3 bits so value between 0 - 7
+- The lower value the lower priority and regular traffic has 0
+- IP phones mark call signaling traffic as PCP3 and actual voice traffic as PCP5
+- Can only be used over: trunk links, access links with a voice VLAN
+
+### IP ToS Byte
+
+- 6 bits of DSCP and 2 bits of ECN
+- Old version has 3 bits of `IPP (IP Precedence)` and functions similarly to PCP
+
+### DSCP (Differentiated Services Code Point)
+
+- New standard markings introduced on top of IPP
+- `Default Forwarding (DF)` = best effort traffic (0)
+- `Experidated Forwarding (EF)` = low loss / latency / jitter (46)
+- `Class Selector (CS)` = A set of 8 standard values to provide backward compatibility with IPP
+- `Assured Forwarding (AF)` = Set of 12 standard values
+  - AF defines 4 traffic classes and all packets in the same class have the same priority
+  - Within each class, there are three levels of drop precedence (last 2 bits of DSCP)
+  - Higher drop precedence = more likely to drop the packet during congestion
+  - Formula to convert from AF to decimal DSCP: `8 * Class + 2 * Drop Precedence`
+
+### RFC 4954 Recommends
+
+- Voice traffic = EF
+- Interactive video = AF4x
+- Streaming video = AF3x
+- High priority data = AF2x
+- Best effort = DF
+
+### Trust Boundary
+
+- Defines where devices trust / don't trust the QoS markings of received messages
+- If trusted, the device will forward the message without changing the markings
+- If not, the device will change the markings according to the configured policy
+- If IP phone is connected to swtichport, it is recommended to move the trust boundary to the IP phones.
+
+### Queuing / Congestion Management
+
+- QoS uses multiple queues, and based on classification, traffic is placed in appropriate queue
+- `Scheduler` is used to decide which queue traffic is forwarded from next
+  - `Prioritization` allows the scheduler to give certain queues more priority than others
+- Common scheduling method is weighted round-robin
+- `CBWFQ (Class-Based Weighted Fair Queuing)` is popular method of scheduling, using a weighted round-robin scheduler while guaranteeing each queue a certain % of interface's bandwidth during congestion
+- Round-robin is not ideal for voice/video because it can add delay as even high priority queues have to wait their turn in scheduler
+- `LLQ (Low Latency Queuing)` is used for video/voice as it designates some queues as strict priority queues so if there is traffic in that queue, the scheduler will always empty that queue first.
+  - Downside of potentially starving other queues
+
+### Shaping / Policing
+
+- Both used to control the rate of traffic
+- `Shaping` buffers traffic in a queue if the traffic rate goes over the configured rate
+- `Policing` drops traffic if the traffic rate goes over the configured rate
+  - Burst traffic over the configured rate can be allowed for a short period of time, to accommodate bursty data applications
