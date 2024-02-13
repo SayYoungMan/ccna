@@ -2544,3 +2544,79 @@ TFTP file transfers have three phases:
 - `User awareness programs` are designed to make employees aware of potential security threats and risks
 - `User training programs` are more formal than user awareness programs
 - `Physical access control` protects equipment and data from potential attackers by only allowing authorized users into protected areas
+
+## 49. Port Security
+
+### Port Security
+
+- Allows you to control which source MAC are allowed to enter the switchport.
+- If an unauthorized source MAC enters the port, action will be taken
+  - Default action is to place the interface in err-disabled state
+- When you enable port security on interface with default settings, one MAC is allowed
+  - If you don't configure manually, the switch will allow the first source MAC that enters the interface.
+  - You can change the maximum number of MAC address allowed
+
+### Why port security?
+
+- Allows network admins to control which devices are allowed to access the internet
+- However, since MAC spoofing is easy, port security's ability to limit the number of MAC allowed on an interface is rather more useful
+
+### Enabling port secuirty
+
+- Port security can be enabled on access ports or trunk ports, but they must be statically configured as access or trunk.
+- `(config-if)# switchport port-security` enables port security on switchport with default settings
+- `#show port-security interface <interface>` can view the port security configured on the interface
+
+### ErrDiable Recovery
+
+- If `err-disable recovery` has been enabled for the cause of the interface's disablement, all err-disabled interfaces will be re-enabled, every 5 minutes (by default),
+- `(config)# errdiable recovery cause psecure-violation` to re-enable the interfaces disabled by port security automatically.
+- `(config)# errdisable recovery interval <seconds>` to configure the timer interval
+
+### Violation Modes
+
+1. `Shutdown`
+
+- Effectively shuts down the port by placing it in an err-disabled state
+- This is the default violation mode
+- Generates a log as Syslog/SNMP message, when interface is disabled
+- Increments the violation counter by 1
+
+2. `Restrict`
+
+- Discards traffic from unauthorized MAC address
+- Interface is not disabled
+- Generates a log and increment violation counter for each unauthorized frame
+
+3. `Protect`
+
+- Discards traffic from unauthorized MAC address
+- Interfaces is not disabled
+- No log or increment of the violation counter
+
+- `(config-if)# switchport port-security mac-address <address>` to manually configure allowed MAC
+- `(config-if)# switchport port-security violation <mode>` to set the violation mode
+
+### Secure MAC address aging
+
+- By default, secure MAC will not age out (configured as 0 mins)
+  - Can be configured with `(config-if)# switchport port-security aging time <mins>`
+- Default aging type is absolute:
+  - `Absolute`: after secure MAC address is learned, the aging timer starts and MAC is removed after the timer expires, even if switch continues receiving frames from it.
+  - `Inactivity`: after secure MAC address is learned, the aging timer starts but resets every time a frame from that source MAC address is received
+- Aging type is configured with `(config-if)# switchport port-security aging type {absolute | inactivity}`
+- Secure static MAC aging is disabled by default
+  - Can be enabled with `(config-if)# switchport port-security aging static`
+- `#show port-security` shows useful overview of port securities defined in different interfaces
+
+### Sticky Secure MAC Addresses
+
+- When enabled, dynamically-learned secure MAC will be added to running config like this: `switchport port-security mac-address sticky <address>`
+- Sticky secure MAC learning can be enabled with: `(config-if)# switchport port-security mac-address sticky`
+- Sticky secure MAC addresses will never age out
+
+### MAC Address Table
+
+- Sticky and static secure MAC will have type of `STATIC`
+- Dynamically-learned secure MAC will have type of `DYNAMIC`
+- You can view all the secure MAC addresses with `#show mac address-table secure`
