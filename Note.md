@@ -2620,3 +2620,62 @@ TFTP file transfers have three phases:
 - Sticky and static secure MAC will have type of `STATIC`
 - Dynamically-learned secure MAC will have type of `DYNAMIC`
 - You can view all the secure MAC addresses with `#show mac address-table secure`
+
+## 50. DHCP Snooping
+
+### DHCP Snooping
+
+- Security feature of switches used to filter DHCP messages received on untrusted ports
+- Only filters DHCP messages
+- All ports are untrusted by default
+  - Usually, uplink ports are configured as trusted ports and downlink ports remain untrusted.
+
+### DHCP Poisoning
+
+- Spurious DHCP server replies to clients' DHCP discover messages and assigns them IP addresses but makes the clients use the spurious server's IP as default gateway.
+- The attacker then examine/modify the traffic before forwarding it to the legitimate default gateway.
+
+### DHCP Messages
+
+- When DHCP snooping filters messages it differentiates server and client messages.
+- Sent by DHCP servers:
+  - OFFER
+  - ACK
+  - NAK = used to decline a client's REQUEST
+- Sent by DHCP clients:
+  - DISCOVER
+  - REQUEST
+  - RELEASE = used to tell the server that client no longer needs IP
+  - DECLINE = used to decline IP offered by server
+
+### DHCP Snooping Operations
+
+- If message is received on trusted port, it is forwarded without inspection.
+- If message is received on untrusted port, inspect it and act as the following:
+  - If it's DHCP server message, discard it.
+  - If it's DHCP client message:
+    - DISCOVER/REQUEST: check if source MAC address and CHADDR fields match
+    - RELEASE/DECLINE: check if source IP address and receiving interface match the entry in DHCP snooping binding table
+- When a client successfully leases IP from a server, create a new entry in DHCP snooping binding table.
+
+### DHCP Snooping Configuration
+
+- `(config)# ip dhcp snooping` to enable it globally
+- `(config)# ip dhcp snooping vlan <id>` to enable it for a VLAN
+- `(config-if)# ip dhcp snooping trust` to mark the interface as trusted
+- `#show ip dhcp snooping binding` to view DHCP snooping binding table
+
+### Rate-limiting
+
+- DHCP snooping can limit the rate at which DHCP messages are allowed to enter an interface.
+- If the rate of DHCP messages cross the limit, the interface is err-disabled.
+- `(config-if)# ip dhcp snooping limit rate <number-per-sec>` to set rate limiting
+- `(config)# errdisable recovery cause dhcp-rate-limit` to configure recovery for rate limiting
+
+### Information Option
+
+- `Option 82 (DHCP relay agent information option)` is one of DHCP options
+- It provides additional information about which DHCP relay agent received the client's message, on which interface, etc.
+- With DHCP snooping enabled, by default Cisco switches will add option 82 to DHCP messages they receive from clients, even if the switch isn't acting as a DHCP relay agent.
+- By default, Cisco switches will drop DHCP messages with Option 82 that are received on an untrusted port.
+- `(config)# no ip dhcp snooping information option` can prevent this.
