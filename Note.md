@@ -2679,3 +2679,61 @@ TFTP file transfers have three phases:
 - With DHCP snooping enabled, by default Cisco switches will add option 82 to DHCP messages they receive from clients, even if the switch isn't acting as a DHCP relay agent.
 - By default, Cisco switches will drop DHCP messages with Option 82 that are received on an untrusted port.
 - `(config)# no ip dhcp snooping information option` can prevent this.
+
+## 51. Dynamic ARP Inspection
+
+### Gratuitous ARP
+
+- It is an ARP reply that is sent without receiving ARP request.
+- Sent to broadcast MAC address
+- Allows other devices to learn the MAC of sending device without having to send ARP requests
+- Some devices automatically send GARP when interface is enabled, IP/MAC addressed is changed, etc.
+
+### Dynamic ARP Inspection (DAI)
+
+- Security feature of switches that is used to filter ARP messages received on untrusted ports
+- Only filters ARP messages
+- All ports are untrusted by default
+  - Typically all ports connected to other network devices should be configured as trusted, while interfaces connected to end hosts should be untrusted
+
+### ARP Poisoning
+
+- Involves an attacker manipulating targets' ARP tables so that traffic is sent to the attacker
+- To do this, the attacker can send GARP message using another device's IP
+- Other devices in the network will receive GARP and update their ARP tables, causing them to send traffic to the attacker.
+
+### DAI Operations
+
+- DAI inspects the sender MAC and IP fields of ARP messages received on untrusted ports and checks that there is a matching entry in the DHCP snooping binding table.
+- ARP ACLs can be manually configured to map IP/MAC for DAI to check
+  - Useful for hosts not using DHCP
+- DAI supports rate-limiting to prevent attackers from overwhelming the switch with ARP
+  - Attacker can still overload switch CPU with ARP messages
+
+### DAI Configuration
+
+- `(config)# ip arp inspection vlan <id>` to enable DAI for a specific VLAN
+- `(config-if)# ip arp inspection trust` to mark the interface as trusted
+- `#show ip arp inspection interfaces` to show all DAI configured on interfaces
+
+### DAI Rate Limiting
+
+- DAI has `burst interval` that allows you to configure rate limiting as x packets per y seconds.
+- `(config-if)# ip arp inspection limit rate <messages-count> burst interval <seconds>` to set rate limit
+  - If burst interval is not specified, it defaults to 1 second
+- If rate limit is reached, the interface will be err-disabled
+
+### DAI Optional Checks
+
+- `(config)# ip inspection validation {dst-mac | ip | src-mac}` to enable optional checks
+  - `dst-mac`: validates destination MAC against target MAC in ARP responses
+  - `ip`: validates ARP body for invalid/unexpected IP
+  - `src-mac`: validates source MAC against sender MAC in ARP body for request/response
+- Must enter all validation checks you want in single command
+
+### ARP ACLs
+
+- `(config)# arp access-list <name>` to enter ARP ACL config mode
+- `(config-arp-nacl)# permit ip host <ip> mac host <mac>` to create an entry
+- `(config)# ip arp inspection filter <name> vlan <id>` to apply ACL to a VLAN
+- This is required to manually allow IP/MAC mapping not found in DHCP snooping binding table.
