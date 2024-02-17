@@ -2792,3 +2792,77 @@ TFTP file transfers have three phases:
 
 - `Small Office / Home Office`(SOHO) refers to the office of a small company, or a small home office with few devices.
 - All networking functions are typically provided by a single device, often called `wireless router`.
+
+## 53. WAN Architectures
+
+- `WANs` are used to connect geographically separate LANs
+- Over public networks like Internet, VPNs can be used to create private WAN connections.
+
+### Leased Lines
+
+- Dedicated physical link, typically connecting two sites
+- Use serial connections
+- There are variable standards that provide different speeds in various countries
+- Due to higher cost, time and slower speed, Ethernet WAN are becoming more popular
+
+### MPLS (Multi Protocol Label Switching)
+
+- Similar to the Internet, service providers' MPLS networks are shared infrastructure because many customer enterprises connect to and share the same infra to make WAN connections.
+- Label switching in the name of MPLS allows VPNs to be created over MPLS infra through the use of labels.
+- CE = Customer Edge, P = Provider Core, PE = Provider Edge
+- When PE routers receive a frame from CE routers, they add label to the frame.
+- These labels are used to make forwarding decisions within the service provider network.
+- When using `Layer 3 MPLS VPN`, CE and PE routers peer using OSPF, for example, to share routing information.
+- In `Layer 2 MPLS VPN`, the CE and PE routers do not form peerings, but in between CE routers.
+  - The service provider network is entirely transparent to the CE routers.
+- Many different technologies can be used to connect to a service provider's MPLS network for WAN.
+
+### Internet connections
+
+- Countless ways to connect to the Internet
+- `DSL (Digital Subscriber Line)`
+  - Provides Internet connectivity to customers over phone lines.
+  - `Modem` is required to convert data into a format suitable to be sent over the phone lines.
+- `Cable Internet`
+  - Provides Internet access via the same CATV lines used for TV service
+  - Modem is also required
+
+#### Redundant Internet Connection
+
+- 1 connection to 1 ISP = `Single Homed`
+- 2 connection to 1 ISP = `Dual Homed`
+- 1 connection to each of 2 ISP = `Multihomed`
+- 2 connection to each of 2 ISP = `Dual Multihomed`
+
+### Internet VPNs (Virtual Private Networks)
+
+- Used to provide secure communications over the Internet
+
+#### Site-to-Site VPNs (IPSec)
+
+- Between two devices and is used to connect two sites together over the Internet.
+- `VPN tunnel` is created between two devices by encapsulating original IP packet with VPN header and new IP header.
+- When using IP sec, original packet is encrypted.
+- Limitations:
+  - Only support unicast (solved with GRE over IPsec)
+  - Configuring full mesh of tunnels is a labor-intensive task as OSPF can't be used without multicast (solved with Cisco's DMVPN)
+
+#### GRE over IPsec
+
+- GRE creates tunnels like IPsec but does not encrypt original packet
+- Advantage of being able to encapsulate variety of layer 3 protocols
+- GRE over IPsec encapsulates original packet by GRE header and new IP header and then GRE packet is encrypted and encapsulated with IPsec VPN header and new IP header
+
+#### DMVPN
+
+- Allows routers to dynamically create a full mesh of IPsec tunnels without having to manually configure them.
+- Simplified operation steps:
+  1. Configure IPsec tunnels to a hub site
+  2. Hub router gives each router information about how to form IPsec tunnel with other routers
+
+#### Remote-Access VPNs
+
+- Allow end-devices to access the company's internal resources securely over Internet
+- Typically use `TLS (Transport Layer Security)`
+- VPN client software is installed on end devices and they form secure tunnels to one of the company's routers/firewalls acting as a TLS server.
+- This allows end users to securely access resources on company's internal network without being directly connected to company network.
