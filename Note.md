@@ -2737,3 +2737,58 @@ TFTP file transfers have three phases:
 - `(config-arp-nacl)# permit ip host <ip> mac host <mac>` to create an entry
 - `(config)# ip arp inspection filter <name> vlan <id>` to apply ACL to a VLAN
 - This is required to manually allow IP/MAC mapping not found in DHCP snooping binding table.
+
+## 52. LAN Architectures
+
+### Common Topologies
+
+- `Star`: when several devices all connect to one central device
+- `Full Mesh`: when each device is connected to each other device
+- `Partial Mesh`: when decices are connected to each other but not all
+
+### Two-tier campus LAN Design
+
+- Consists of two hierarchical layers: access layer and distribution layer
+- Also called a `collapsed-core design` because it omits a core layer in 3-tier design
+
+- `Access Layer`:
+
+  - Layer that end hosts connect to
+  - Typically access layer switches have lots of ports for end hosts
+  - QoS marking typically done here
+  - Security services are typically performed here
+  - Switchports might be PoE-enabled for wireless APs, IP phones, etc.
+
+- `Distribution Layer`:
+  - aggregates connections from the access layer switches
+  - typically is the border between layer 2 and 3
+  - connects to services such as Internet, WAN, etc.
+  - sometimes called `aggregation` layer
+
+### Three-tier Campus LAN Design
+
+- `Core Layer`:
+  - Connects distribution layers together in large LAN
+  - Focus is on speed
+  - CPU-intensive operations should be avoided
+  - Connections are all layer 3, so no spanning tree
+  - Should maintain connectivity throughout LAN even if devices fail
+
+### Spine-leaf Architecture
+
+- `Data centers` are dedicated spaces/buildings used to store computer systems such as servers and network devices.
+- Traditional data center designs used a 3-tier architecture when most traffic was north-south.
+- With precedence of virtual servers, applications are deployed in a distributed manner, which increases the amount of east-west traffic.
+- Therefore, traditional architecture led to bottlenecks in bandwidth and variability in the server-to-server latency
+- `Spine-leaf` architecture solves this problem
+
+- Every leaf switch is connected to every spine switches and vice versa.
+- Leaf switches do not connect to other leaf switches and same for spine switches
+- End hosts only connect to leaf switches
+- Path taken by traffic is randomly chosen to balance the traffic load among the spine switches.
+- Each server is separated by same number of hops, providing consistent latency.
+
+### SOHO Networks
+
+- `Small Office / Home Office`(SOHO) refers to the office of a small company, or a small home office with few devices.
+- All networking functions are typically provided by a single device, often called `wireless router`.
