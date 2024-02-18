@@ -2949,3 +2949,19 @@ TFTP file transfers have three phases:
 - Speed / Agility: services are provided on demand quickly
 - Productivity: Remove the need for many time-consuming tasks
 - Reliability: Easy to back up in the cloud
+
+## 54.2 Containers
+
+### Containers
+
+- Software packages that contain an App and all dependencies for the contained App to run
+- Run on a `Container Engine` that runs on a host OS
+- Lightweight and include only dependencies required to run the specific App
+- `Container orchestrator` is a software platform for automating the deployment, management, scaling, etc. of containers
+
+### VMs vs Containers
+
+- VMs can take minutes to boot up as each VM runs its own OS whereas containers can boot up in milliseconds.
+- VMs take up more disk space than containers
+- VMs use more CPU/RAM resources than containers
+- VMs are more isolated because each VM runs its own OS
