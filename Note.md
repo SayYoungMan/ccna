@@ -2866,3 +2866,86 @@ TFTP file transfers have three phases:
 - Typically use `TLS (Transport Layer Security)`
 - VPN client software is installed on end devices and they form secure tunnels to one of the company's routers/firewalls acting as a TLS server.
 - This allows end users to securely access resources on company's internal network without being directly connected to company network.
+
+## 54-1. Virtualization & Cloud
+
+### Servers before Virtualization
+
+- One-to-one relationship between a physical server and an OS.
+- This is inefficient because:
+  - Each physical server is expensive and takes up space, power, etc.
+  - The resources are typically under-used
+
+### Virtualization
+
+- Allows multiple OSs to run on a single physical server
+- Each instance is called a `VM (Virtual Machine)`
+- `Hypervisor` is used to manage and allocate hardware resources to each VM.
+- The type of hypervisor which runs directly on top of hardware is called a `Type 1 hypervisor / bare-metal hypervisors`. It's used in data center.
+- `Type 2 hypervisors` run as a program on an operating system like a regular computer program
+  - OS running directly on hardware is `Host OS` and OS running in a VM is `guest OS`
+  - Commonly used on personally used devices
+
+### Why Virtualization?
+
+- Partitioning
+  - Run multiple OS in one machine
+  - Divide system resources between VMs
+- Isolation
+  - Fault & security isolation at hardware level
+  - Preserve performance with advanced resource controls
+- Encapsulation
+  - Save entire state of VM to files
+- Hardware Independence
+  - Provision or migrate any VM to any physical server
+
+### Connecting VMs to Network
+
+- VMs are connected to each other and external network via virtual switch running on hypervisor.
+- Interfaces on the vSwitch connect to physical NIC of the server to communicate with external network.
+
+### Cloud Services
+
+#### Traditional IT Infrastructure
+
+- Traditional IT infrastructure deployments were some combination of the following:
+  - On-premises:
+    - All servers, network devices, and other infrastructure are located on company property
+    - All equipment is purchased and owned by the company using it
+    - Company is responsible for necessary space, power and cooling
+  - Colocation:
+    - Data centers rent out space for customers to put their infrastructure
+    - Data center provides the spcae, electricity and cooling
+
+#### Cloud Computing
+
+- A model for enabling ubiquitous, convenient, on-demand network access to a shared pool of configurable computing resources and that can be rapidly provisioned and released with minimal management effort or service provider interaction.
+
+#### Five Essential Characteristics of cloud computing
+
+1. `On-demand self-service`: customer is able to use the service freely without direct communication to the service provider
+2. `Broad network access`: service is available through standard network connections, and can be accessed through many kinds of devices
+3. `Resource pooling`: When a customer requests a service, the resources are allowed from a shared pool
+4. `Rapid Elasticity`: Customers can quickly expand/reduce the services from a pool of resources
+5. `Measured Service`: Provider measures the customer's usage of resources and customers can measure their own as well
+
+#### Three Service Models of Cloud
+
+1. `Software as a Service (SaaS)`: Capability provided to consumer is to use provider's applications on a cloud infrastructure
+2. `Platform as a Service (Paas)`: Capability provided to consumer is to deploy onto the cloud infra, consumer-created applications
+3. `Infrastructure as a Service (Iaas)`: Capability provided to consumer is to provision a fundamental computing resources where the consumer is able to deploy and run arbitrary software.
+
+#### Four deployment models of cloud
+
+1. `Private Cloud`: exclusive use by a single organization comprising multiple consumers
+2. `Community Cloud`: exclusive use by specific community of consumers from orgs with shared concerns
+3. `Public Cloud`: provisioned for open use by the general public
+4. `Hybrid Cloud`: composition of two or more distinct cloud infra that remain unique entities but bound together by a technology that enables data and application portability
+
+#### Benefits of Cloud Computing
+
+- Cost: CapEx of buying hardware and software are reduced or eliminated
+- Global scale: services can be offered to customers from a geographic location close to them
+- Speed / Agility: services are provided on demand quickly
+- Productivity: Remove the need for many time-consuming tasks
+- Reliability: Easy to back up in the cloud
