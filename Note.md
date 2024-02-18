@@ -2950,7 +2950,7 @@ TFTP file transfers have three phases:
 - Productivity: Remove the need for many time-consuming tasks
 - Reliability: Easy to back up in the cloud
 
-## 54.2 Containers
+## 54-2. Containers
 
 ### Containers
 
@@ -2965,3 +2965,25 @@ TFTP file transfers have three phases:
 - VMs take up more disk space than containers
 - VMs use more CPU/RAM resources than containers
 - VMs are more isolated because each VM runs its own OS
+
+## 54-3. VRF
+
+### VRF (Virtual Routing and Forwarding)
+
+- Used to divide a single router into multiple virtual routers
+- Does this by allowing a router to build multiple separate routing tables
+  - Interfaces and routes are configured to be in a specific VRF
+  - Router interfaces, SVIs and routed ports on multilayer switches can be configured in a VRF
+- Traffic in one VRF cannot be forwarded out of an interface in another VRF.
+  - `VRF leaking` can be configured to allow traffic to pass between VRFs.
+- Commonly used to facilitate MPLs
+- Commonly used by service providers to allow one device to carry traffic from multiple customers
+  - Each customer's traffic is isolated from the others
+  - Customer IP can overlap without issues
+
+### VRF Configuration
+
+- `(config)# ip vrf <name>` to create VRF
+- `#show ip vrf` to see all VRFs configured on a router
+- `(config-if)# ip vrf forwarding <vrf-name>` to assign interface to VRF
+- `#show ip route vrf <name>` to view the routing table for VRF
