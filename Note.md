@@ -2987,3 +2987,95 @@ TFTP file transfers have three phases:
 - `#show ip vrf` to see all VRFs configured on a router
 - `(config-if)# ip vrf forwarding <vrf-name>` to assign interface to VRF
 - `#show ip route vrf <name>` to view the routing table for VRF
+
+## 55. Wireless Fundamentals
+
+### Wireless Networks
+
+Have some issues that need to be dealt with:
+
+1. All devices within range receive all frames
+
+- Privacy of data is concern so it needs encryption
+- CSMA/CA is used to facilitate
+
+2. Wireless communications are regulated by various international and national bodies
+3. Wireless signal coverage area must be considered
+
+- Signal absorption, reflection, refraction, diffraction and scattering can affect the signal
+
+4. Other devices using the same channels can cause interference
+
+### Radio Frequency
+
+- To send wireless signals, the sender applies an alternating current to antenna, creating electromagnetic fields which propagate out as waves.
+- Radio frequency range is from 30Hz to 300GHz
+- Wi-Fi uses two main bands:
+  1. 2.4 GHz band
+  2. 5 GHz band
+- 2.4 GHz band typically provides further reach in open space and better penetration of obstacles
+
+### Channels
+
+- Each band is divided up into multiple `channels`
+- Devices are configured to transmit and receive traffic one or more of channels
+- In larger WLANs with multiple APs, it's important that adjacent APs don't use overlapping channels to avoid interference.
+- In 2.4 GHz band, it's recommended to use channels `1, 6 and 11`, because you can place APs in a honeycomb pattern to provide complete coverage of an area without interference between channels
+
+### Service Sets
+
+- 802.11 defines different kinds of service sets which are groups of wireless network devices
+  - Independent
+  - Infrastructure
+  - Mesh
+- All devices in a service set share the same `SSID (Service Set Identifier)`
+- SSID is a human-readable name which identifies the service set
+  - SSID does not have to be unique
+
+### IBSS (Independent Basic Service Set)
+
+- Wireless network in which two or more wireless devices connect directly without using an AP
+- Also called ad hoc network
+- Can be used for file transfer (i.e. Airdrop)
+- Not scalable beyond a few devices
+
+### BSS (Basic Service Set)
+
+- Kind of Infrastructure Service Set in which clients connect to each other via an AP
+- A `BSSID` is used to uniquely identify the AP
+  - BSSID is the MAC of AP's radio
+- The area around an AP with signal is called `BSA (Basic Service Area)`
+- Clients must communicate via AP, not directly with each other
+
+### ESS (Extended Service Set)
+
+- APs with their own BSSs are connected by a wired network
+- Clients can pass between APs without having to reconnect, providing a seamless experience (`roaming`)
+- BSAs should overlap about 10-15%
+
+### MBSS (Mesh Basic Service Set)
+
+- Used where it's difficult to run Ethernet connection to every AP
+- Two radios:
+  - One to provide BSS to clients
+  - One to form backhaul network, used to bridge traffic from AP to AP
+- At least one AP is connected to wired network, called `RAP (Root Access Point)`
+- Others are called `MAPs (Mesh Access Points)`
+
+### Distribution System
+
+- In 802.11, the upstream wired neetwork is called the `DS (Distribution System)`
+- Each wireless BSS or ESS is mapped to VLAN in the network
+- It's possible for an AP to provide multiple wireless LANs, each with unique SSID
+- Each WLAN is mapped to a separate VLAN and connected to the wired network via a trunk
+- Each WLAN uses a unique BSSID
+
+### Additional AP Operational Modes
+
+- AP in `repeater` mode can extend the range of BSS
+  - Will simply retransmit any signal it receives from AP
+- A `work group bridge (WGB)` operates as a wireless client of another AP, and can be used to connect wired devices to the wireless network
+  - `Universal WGB (uWGB)` is 802.11 standard that allows one device to be bridged
+  - WGB is Cisco-proprietary that allows multiple wired clients to be bridged
+- Outdoor bridge can be used to connect networks over long distances without a physical cable
+  - Specialized antennas that focus most of the signal power in one direction, which allows the wireless connection to be made over longer distances than normally possible
