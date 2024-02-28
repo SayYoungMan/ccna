@@ -3079,3 +3079,102 @@ Have some issues that need to be dealt with:
   - WGB is Cisco-proprietary that allows multiple wired clients to be bridged
 - Outdoor bridge can be used to connect networks over long distances without a physical cable
   - Specialized antennas that focus most of the signal power in one direction, which allows the wireless connection to be made over longer distances than normally possible
+
+## 56. Wireless Architectures
+
+### 802.11 Frame Format
+
+- `Frame Control`: 2 bytes, provides information such as the message type and subtype
+- `Duration/ID`: 2 bytes, can indicate the time channel will be dedicated for transmission of the frame and identifier for the association
+- `Addresses`: 6 bytes each, up to 4 addresses
+  - `Destination Address (DA)`: final recipient
+  - `Source Address (SA)`: original sender
+  - `Receiver Address (RA)`: immediate recipient
+  - `Transmitter Address (TA)`: immediate sender
+- `Sequence Control`: 2 bytes, used to reassemble fragments and eliminate duplicate frames
+- `QoS Control`: 2 bytes, used in QoS to prioritize certain traffic
+- `HT (High Throughput) control`: 4 bytes, enables HT operations
+- `FCS`: 4 bytes, used to check for errors
+
+### 802.11 Association Process
+
+- The station must be authenticated and associated with the AP to send traffic
+- 2 ways a station can scan for a BSS:
+  - `Active scanning`: station sends probe requests and listens for a probe response from an AP
+  - `Passive scanning`: station listens for beacon messages from an AP. Beacon messages are sent periodically by APs to advertise the BSS
+- 3 request/response between station and AP:
+  1. Probe request/response
+  2. Authentication request/response
+  3. Association request/response
+
+### 802.11 Message Types
+
+- `Management`: used to manage the BSS
+- `Control`: used to control access to the medium. Assists with delivery of management and data frames
+- `Data`: used to send actual data packets
+
+### Autonomous APs
+
+- Self-contained systems that don't rely on a WLC
+- Configured individually by CLI or GUI
+  - IP address for remote management should be configured
+  - RF parameters must be manually configured
+  - Security policies handled individually by each AP
+  - QoS rules, etc. are configured individually on each AP
+- No central monitoring or management of APs
+- Connect to the wired network with a trunk link to separate management and data traffic in different VLANs
+- Data traffic from wireless clients has direct path to the wired network or to other clients associated with the same AP
+- Each VLAN has to stretch across the entire network which is bad practice because:
+  - Large broadcast domain
+  - Spanning tree will disable links
+  - Configuring VLANs is very labor-intensive
+- Not viable in medium to large networks
+
+### Lightweight APs
+
+- Can handle real-time operations like transmitting/receiving RF traffic, encryption/decryption of traffic, etc.
+- Other functions are carried out by WLC (Wireless LAN Controller), such as RF/Security/QoS management, client authentication/association, etc.
+- Called `split-MAC architecture`
+- WLC is also used to centrally configure lightweight APs
+- WLC can be located in the same subnet/VLAN as the lightweight APs it manages or in different subnet/VLAN
+- WLC and lightweight APs authenticate each other using digital certificates installed on each device
+- They use CAPWAP protocol to communicate
+- 2 tunnels are created between each AP and WLC:
+  - `Control tunnel`: UDP 5246, used to configure APs and control/manage operations. All traffic here is encrypted by default
+  - `Data tunnel`: UDP 5247, all traffic from wireless clients is sent through this tunnel to the WLC. You can configure it to be encrypted with DTLS
+- Because all traffic from wireless clients is tunneled to WLC with `CAPWAP`, APs connect to switch access ports, not trunk ports.
+- Key benefits:
+  - Scalability
+  - Dynamic channel assignment
+  - Transmit power optimization
+  - Self-healing wireless coverage
+  - Seamless roaming
+  - Client load balancing
+  - Security/QoS management
+
+#### Lightweight AP Modes
+
+- `Local`: default mode where the AP offers a BSS for clients to associate with
+- `FlexConnect`: offers one or more BSSs for clients to associate with. However, it allows the AP to locally swtich traffic between wired and wireless networks if the tunnel to the WLC go down
+- `Sniffer`: does not offer BSS for client. Dedicated to capturing 802.11 frames and sending them to a device running software such as Wireshark
+- `Monitor`: No BSS. Dedicated to receiving frames to detect rogue devices and deassociate them
+- `Rogue Detector`: AP does not even use radio. Only listens to traffic on wired network, but it receives a list of suspected rogue clients and AP MAC from WLC. By listening to ARP on the wired network, it can detect rogue devices.
+- `SE-Connect`: No BSS for clients. Dedicated to RF spectrum analysis on all channels
+- `Bridge/Mesh`: Dedicated bridge between sites or a mesh between two APs
+- `Flex plus bridge`: Allows wireless APs to locally forward traffic even if connectivity to WLC is lost
+
+### Cloud-based APs
+
+- Basically autonomous APs that are centrally managed in the cloud
+- `Cisco Meraki` is a popular cloud-based Wi-Fi solution
+- Meraki dashboard can be used to configure APs, monitor network, generate performance reports, etc.
+- Data traffic is sent directly to wired network and only management/control traffic is sent to cloud
+
+### WLC deployments
+
+In split-MAC architecture, there are 4 main WLC deployment models:
+
+- `Unified`: WLC is hardware appliance in a central location of the network
+- `Cloud-based`: WLC is a VM running on a server, typically in a private cloud in a data center
+- `Embedded`: WLC is embedded within a switch
+- `Cisco Mobility Express`: WLC is embedded within an AP
