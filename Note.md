@@ -3178,3 +3178,132 @@ In split-MAC architecture, there are 4 main WLC deployment models:
 - `Cloud-based`: WLC is a VM running on a server, typically in a private cloud in a data center
 - `Embedded`: WLC is embedded within a switch
 - `Cisco Mobility Express`: WLC is embedded within an AP
+
+## 57. Wireless Security
+
+- Important because wireless signals can be received by any device in security
+- Thus, it's very important to encrypt traffic sent between the wireless clients and the AP
+
+### Authentication
+
+- All clients must be autheticated before associating with AP
+- Clients should also authenticate AP to avoid associating with malicious AP
+- Multiple ways to authenticate such as password, username/password, certificates
+
+### Encryption
+
+- Many possible protocols that can be used to encrypt traffic
+- Each client will use a unique encryption/decryption key so that other devices can't read its traffic
+- `Group key` is used by AP to encrypt traffic that it wants to send to all of its clients
+  - All clients associated with the AP keep that key
+
+### Integrity
+
+- `MIC (Message Integrity Check)` is added to messages to help protect their integrity
+
+1. Sender caculates MIC of message and attach it
+2. Sender encrypts message and MIC
+3. Recipient decrypts the message
+4. Recipient independently calculates MIC of message
+5. Compare two MICs
+
+### Authentication Methods
+
+#### Open Authentication
+
+- AP accepts all authentication request
+- After the client is authenticated and associated, it's possible to require user to auth by other methods before giving access to network.
+
+#### WEP (Wired Equivalent Privacy)
+
+- Used to provide both auth and encryption of wireless traffic
+- For encryption, WEP uses `RC4` algorithm
+- It's a shared key protocol, requiring sender and receiver to have the same key
+- Encryption however is not secure and can be cracked
+
+1. AP sends `challenge phrase`
+2. Client encrypts callenge phrase using WEP key and sends it back
+3. AP compares client's encrypted challenge phrase with AP's encrypted challenge phrase
+
+#### EAP (Extensible Authentication Protocol)
+
+- An authentication framework
+- Defines a standard set of authentication functions that are used by the various EAP methods
+- Integrated with `802.1X`, which provides port-based network access control
+  - 802.1X is used to limit network access for clients until they authenticate
+  - 3 main entities in 802.1X:
+    1. `Supplicant`: device that wants to connect
+    2. `Authenticator`: device that provides access
+    3. `Authentication Server (AS)`: device that receives client credentials and permits/denies access
+
+#### LEAP (Lightweight EAP)
+
+- It's an improved version of WEP by Cisco
+- Clients must provide a username and password to authenticate
+- Mutual authentication is provided by both client and server sending a challenge phrase to each other
+- Dynamic WEP keys are used, meaning WEP keys are changed frequently
+- Considered vulnerable
+
+#### EAP-FAST (EAP Flexible Authentication via Secure Tunneling)
+
+1. A `PAC (Protected Access Credential)` is generated and passed from server to client
+2. A secure TLS tunnel is established between the client and authentication server
+3. Inside of secure TLS tunnel, client and server communicate further to authenticate/authorize client
+
+#### PEAP (Protected EAP)
+
+- Establishes a secure TLS tunnel
+- Instead of PAC, server has a digital certificate
+- Client uses digital certificate to authenticate to server
+- Certificate is also used to establish TLS tunnel
+- Because only server provides certificate, the client must be authenticated within secure tunnel
+
+#### EAP-TLS
+
+- Requires a certificate on the AS and on every single client
+- No need to authenticate the client within TLS tunnel but it is still used to exchange encryption key information
+- Most secure method but more difficult to implement
+
+### Encryption and Integrity Methods
+
+#### TKIP (Temporal Key Integrity Protocol)
+
+- Used to add security to devices using WEP
+- MIC added to protect the integrity
+- Key mixing algorithm to create unique WEP key for every frame
+- Initialization vector doubled in length to make brute-force more difficult
+- MIC includes sender MAC to identify
+- Timestamp added to MIC to prevent replay attacks
+- TKIP sequence number to keep track of frames sent from each MAC. Also protects against replay attacks
+
+#### CCMP (Counter/CBC-MAC Protocol)
+
+- AES counter mode encryption
+- CBC-MAC is used as MIC to ensure integrity
+
+#### GCMP (Galois/Counter Mode Protocol)
+
+- More efficient method allowing higher data throughput than CCMP
+- AES counter mode encryption
+- GMAC is used as MIC
+
+### WiFi Protected Access (WPA)
+
+- To be WPA-certified, equipment must be tested in authrized testing labs
+- Two auth modes:
+
+  1. `Personal mode`: A `pre-shared key (PSK)` is used for authentication
+  2. `Enterprise mode`: 802.1X is used with an authentication server
+
+- WPA was developed after WEP was proven to be vulnerable
+  - TKIP provides encryption/MIC
+  - 802.1X auth or PSK
+- WPA2 uses:
+  - CCMP for encryption/MIC
+  - 802.1X auth or PSK
+- WPA3 includes:
+  - GCMP for encryption/MIC
+  - 802.1X auth or PSK
+  - `PMF (Protected Management Frames)` to protect 802.11 frames from eavesdropping/forging
+  - `SAE (Simultaneous Authentication of Equals)` protects the four-way handshake when using personal mode authentication
+  - `Forwarded secrecy` prevents data from being decrypted after being transmitted over the air
