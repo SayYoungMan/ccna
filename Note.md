@@ -3307,3 +3307,21 @@ In split-MAC architecture, there are 4 main WLC deployment models:
   - `PMF (Protected Management Frames)` to protect 802.11 frames from eavesdropping/forging
   - `SAE (Simultaneous Authentication of Equals)` protects the four-way handshake when using personal mode authentication
   - `Forwarded secrecy` prevents data from being decrypted after being transmitted over the air
+
+## 58. Wireless Configuration
+
+### WLC Ports/Interfaces
+
+- WLC ports are the physical ports that cables connect to
+- WLC interfaces are the logical interfaces within the WLC
+- WLCs have a few different kinds of ports:
+  - `Service port`: A dedicated management port. Used for out-of-band management. Must connect to a switch access port because it only supports one VLAN. This port can be used to connect to the device while it is booting, perform system recovery, etc.
+  - `Distribution system port`: These are the standard network ports that connect to the distribution system (wired network) and are used for data traffic. These ports usually connect to switch trunk ports, and if multiple distribution ports are used they can form a LAG.
+  - `Console port`: This is a standard console port, either RJ45 or USB
+  - `Redundancy port`: This port is used to connect to another WLC to form a high availability (HA) pair
+- WLCs have a few different kinds of interfaces:
+  - `Management interface`: Used for management traffic such as Telnet, SSH, HTTPS, etc. CAPWAP tunnels are also formed to/from the WLC's management interface.
+  - `Redundancy management interface`: When two WLCs are connected by their redundancy ports, one WLC is active and the other is standby.
+  - `Virtual interface`: This interface is used when communicating with wireless clients to relay DHCP requests, perform client web authentication, etc.
+  - `Service port interface`: If the service port is used, this interface is bound to it and used for out-of-band management.
+  - `Dynamic interface`: These are the interfaces used to map a WLAN to a VLAN. For example, traffic from the internal WLAN will be sent to the wired network from the WLC's internal dynamic interface.
