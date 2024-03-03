@@ -3415,3 +3415,47 @@ In split-MAC architecture, there are 4 main WLC deployment models:
 - A `REST (Representational State Transfer) API` is used on the controller as an interface for apps to interact with it.
 - Data is sent in a structured (serialized) format such as JSON or XML.
   - This makes it much easier for programs to use the data.
+
+## 60. JSON, XML & YAML
+
+### Data Serialization
+
+- `Data serialization` is the process of converting data into a standardized format that can be stored or transmitted and reconstructed later.
+- This allows the data to be communicated between applications in a way both applications understand.
+
+### JSON
+
+- `JSON (JavaScript Object Notation)` is an open standard file format and data interchange format that uses human-readable text to store and transmit data objects.
+- Whitespace is insignificant
+- Can represent four primitive data types:
+  - string: text value surrounded by double quotes
+  - number: numeric value
+  - boolean: has only true or false
+  - null: represents the intentional absence of any object value
+- Has two structured data types:
+  - Object: an unordered list of key-value pairs
+    - Surrounded by curly brackets
+    - Key is a string and value is any valid JSON data type
+    - Key and value are separeted by a colon
+    - Multiple key-value pairs are separated by a comma
+    - Sometimes called a dictionary
+  - Array: a series of values separated by commas
+    - The values don't have to be the same data type
+    - Surrounded by square brackets
+
+### XML
+
+- `XML (Extensible Markup Language)` was developed as a markup language, but is now used as a general data serialization language.
+  - Markup launguages are used to format text
+- Whitespace is insignificant
+- Often used by REST APIs
+- Has a format of `<key>value</key>`
+
+### YAML
+
+- `YAML` originally meant Yet Another Markup Launguage, but to distinguish its purpose as a data-serialization language rather than a markup language, it was repurposed to YAML Aint Markup Language.
+- Used by the network automation tool Ansible
+- Whitespace is significant and indentation is very important
+- YAML files start with ---
+- \- is used to indicate a list
+- Keys are values are represented as `key: value`
