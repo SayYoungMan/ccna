@@ -3459,3 +3459,66 @@ In split-MAC architecture, there are 4 main WLC deployment models:
 - YAML files start with ---
 - \- is used to indicate a list
 - Keys are values are represented as `key: value`
+
+## 61. REST APIs
+
+### APIs
+
+- An `API (Application Programming Interface)` is a software interface that allows two applications to communicate with each other.
+- In SDN architecture, APIs are used to communicate between apps and the SDN controller (via the NBI), and between the SDN controller and the network devices (via the SBI).
+
+### CRUD
+
+- `CRUD (Create, Read, Update, Delete)` refers to the operations we perform using REST APIs.
+- Create operations are used to create new variables and set their initial values.
+- Read operations are used to retrieve the value of a variable.
+- Update operations are used to change the value of a variable
+- Delete operations are used to delete variables.
+- HTTP uses verbs (methods) that map to these CRUD operations.
+  - Create = POST
+  - Read = GET
+  - Update = PUT, PATCH
+  - Delete = DELETE
+
+### HTTP Request
+
+- When an HTTP client sends a request to an HTTP server, the HTTP header includes information like:
+  - An HTTP Verb
+  - A URI, indicating the resource it is trying to access
+- The HTTP request can include additional headers which pass additional information to the server
+- An example would be an `Accept` header, which informs the server about the types of data that can be sent back to the client.
+
+### HTTP Response
+
+- The server's response will include a status code indicating if the request succeeded or failed, as well as other details.
+- The first digit indicates the class of the response:
+  - `1xx`: informational - the request was received, continuing process
+    - `102 Processing` indicates that the server has received the request and is processing it, but the response is not yet available
+  - `2xx`: successful - the request was successfully received, understood and accepted
+    - `200 OK` indicates that the request succeeded
+    - `201 Created` indicates that the request succeeded and a new resource was created
+  - `3xx`: redirection - further action needs to be taken in order to complete the request
+    - `301 Moved Permanently` indicates that the requested resource has been moved, and the server indicates its new location
+  - `4xx`: client error - the request contains bad syntax or cannot be fulfilled
+    - `403 Unauthorized` means the client must authenticate to get a response
+    - `404 Not Found` means the requested resource was not found
+  - `5xx`: server error - the server failed to fulfill an apparently valid request
+    - `500 Internal Server Error` means the server encountered something unexpected that it doesn't know how to handle
+
+### REST
+
+- Stands for `Representational State Transfer`
+- Also known as REST-based APIs or RESTful APIs
+- The six constraints of RESTful architecture are:
+  1. Uniform Interface
+  2. Client-server
+  - The separation between the client and server means they can both change and evolve independently of each other
+  - The interface between them must not break during the changes
+  3. Stateless
+  - Each API exchange is a separate event, independent of all past exchanges between the client and server.
+  - The server does not store information about previous requests from the client to determine how it should respond to new requests.
+  4. Cacheable or non-cacheable
+  - Must support caching of data
+  - Not all resources have to be cacheable, but cacheable resources must be declared as cacheable
+  5. Layered System
+  6. Code-on-demand (optional)
