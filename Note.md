@@ -3522,3 +3522,60 @@ In split-MAC architecture, there are 4 main WLC deployment models:
   - Not all resources have to be cacheable, but cacheable resources must be declared as cacheable
   5. Layered System
   6. Code-on-demand (optional)
+
+## 62. Software-Defined Networking
+
+### SDN Architecture
+
+- `Software-Defined Networking (SDN)` is an approach to networking that centralizes the control plane into an application called a controller.
+- `Application Layer` contains scripts/applications that tell the SDN controller what network behaviours are desired.
+- `Control Layer` contains the SDN controller that receives and processes instructions from the application layer.
+- `Infrastructure Layer` contains the network devices that are responsible for forwarding messages across the network.
+
+### SD-Access
+
+- Cisco `SD-Access` is Cisco's SDN solution for automating campus LANs.
+- Cisco `DNA (Digital Network Architecture) Center` is the controller at the center of SD-Access.
+- The `underlay` is the underlying physical network of devices and connections which provide IP connectivity.
+  - Purpose is to support the VXLAN tunnels of the overlay.
+  - 3 different roles for switches in SD-Access:
+    1. `Edge nodes`: Connect to end hosts
+    2. `Border nodes`: Connect to devices outside of the SD-Access domain, i.e. WAN routers
+    3. `Control nodes`: Use LISP to perform various control plane functions
+  - You can add SD-Access on top of an existing network (`brownfield deployment`) if your network hardware and software supports it.
+  - A new deployment (`greenfield deployment`) will be configured by DNA center to use optimal SD-Access underlay.
+    - All switches are layer 3 and use IS-IS as their routing protocol.
+    - All links between switches are routed ports. So STP is not needed.
+    - Edge nodes (access switches) act as the default gateway of end hosts (routed access layer)
+- The `overlay` is the virtual network built on top of the physical underlay network.
+  - LISP provides the control plane of SD-Access.
+    - A list of mappings of EIDs (endpoint indentifiers) to RLOCs (routing locators) is kept.
+    - `EIDs` identify end hosts connected to edge switches
+    - `RLOCs` identify the edge switch which can be used to reach the end host.
+  - Cisco TrustSec (CTS) provides policy control
+  - VXLAN provides the data plane of SD-Access
+- The `fabric` is the combination of the overlay and underlay; the physical and virtual network as a whole.
+
+### Cisco DNA center
+
+- Has 2 main roles:
+  1. The SDN controller in SD-Access
+  2. A network manager in a traditional network
+- Is an application installed on Cisco UCS server hardware
+- It has REST API which can be used to interact with DNA center.
+- Enables `Intent-Based Networking (IBN)`
+  - The goal is to allow the engineer to communicate their intent for network behaviour to DNA center, and then DNA Center will take care of the details of the actual configurations and policies on devices.
+
+### DNA Center vs Traditional Network Management
+
+- Traditional network management:
+  - Devices are configured one-by-one manually
+  - Configurations and policies are managed per-device (distributed)
+  - New network deployments can take a long time due to manual labour
+  - Errors and failures are more likely due to increased manual effort
+- DNA Center-based network management:
+  - Devices are centrally managed and monitored
+  - The administrator communicates their intended network behaviour to DNA Center, which changes those intentions into configs on the managed network devices
+  - Configurations and policies are centrally managed
+  - Software versions are also centrally managed
+  - New network deployments are quicker as new devices can automatically receive their configs.
