@@ -3579,3 +3579,65 @@ In split-MAC architecture, there are 4 main WLC deployment models:
   - Configurations and policies are centrally managed
   - Software versions are also centrally managed
   - New network deployments are quicker as new devices can automatically receive their configs.
+
+## 63. Ansible, Puppet & Chef
+
+### Configuration Drift
+
+- It's when individual changes made over time cause a device's configuration to deviate from the standard configurations as defined by the company.
+- Event without automation tools, it's best to have standard configuration management practices
+
+### Configuration Provisioning
+
+- Refers to how configuration changes are applied to devices.
+- Traditionally, it's done by connecting to devices one-by-one via SSH
+- Configuration management tools like Ansible, Puppet, and Chef allow us to make changes to devices on a mass scale with a fraction of time.
+- Two essential components: `templates` and `variables`
+
+### Configuration Management tools
+
+- Network automation tools that facilitate the centralized control of large number of network devices.
+- Were originally developed after the rise of VMs but they are also widely used to manage network devices.
+- These tools can be used to:
+  - Generate configurations for new devices on a large scale
+  - Perform configuration changes on devices
+  - Check device configurations for compliance with defined standards
+  - Compare configurations between devices, and between different versions of configurations on the same device
+
+### Ansible
+
+- Owned by Red Hat
+- Written in Python
+- `Agentless`: doesn't require any special software to run on the managed devices
+- Uses SSH to connect devices, make config changes, etc.
+- Uses `push model`. The Ansible server uses SSH to connect to managed devices and push configuration changes to them
+- After installing Ansible itself, you must create several text files:
+  - `Playbooks`: These files are blueprints of automation. They outline the logic and actions of the tasks that Ansible should do. Written in YAML.
+  - `Inventory`: These files list the devices that will be managed by Ansible, as well as characteristics of each device such as their device role. Written in INI, YAML, or other formats.
+  - `Templates`: These files represent a device's configuration file, but specific values for variables are not provided. Written in Jinja2 format.
+  - `Variables`: These files list variables and their values. These values are substituted into the templates to create complete configuration files. Written in YAML.
+
+### Puppet
+
+- Written in Ruby
+- Typically `Agent-based`: specific software must be installed on the managed devices
+  - Can run agentless, in which a proxy agent runs on an external host, and the proxy agent uses SSH to connect to managed devices.
+- The puppet server is called `Puppet master`
+- Uses a pull model. Clients use TCP 8140 to communicate with Puppet master
+- It uses a proprietary language for files, instead of YAML
+- Text files required on the Puppet master include:
+  - `Manifest`: defines the desired configuration state of a network device
+  - `Templates`: similar to Ansible templates. Used to generate Manifests
+
+### Chef
+
+- Written in Ruby
+- Agent-based
+- Uses a pull model
+- The server uses TCP 10002 to send configurations to clients
+- Files use a DSL based on Ruby
+- Text files used by Chef include:
+  - `Resources`: Configuration objects managed by Chef
+  - `Recipes`: Outline the logic and actions of the tasks performed on the resources
+  - `Cookbooks`: A set of related recipes grouped together
+  - `Run-list`: An ordered list of recipes that are run to bring a device to the desired configuration state
