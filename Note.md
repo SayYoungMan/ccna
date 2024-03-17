@@ -334,6 +334,28 @@ Received 1157 broadcasts (0 IP multicasts)
 
 ## 1.6. Configure and verify IPv4 addressing and subnetting
 
+### IPv4 Header
+
+![IPv4 Header](./Media/ipv4_header.png)
+
+- `Version`: IP version number
+- `Header length`: Length of header in 32-bit words. Value of range between 5-15,
+- `Priority and Type of Service`:
+  - `DSCP (Differentiated Services Code Point)`: 6 bits, used for QoS
+  - `ECN (Explicit Congestion Notification)`: 2 bits, provides end-to-end notification of network congestion without dropping packets
+- `Total length`: length of the whole packet measured in bytes. Ranges between 20-65535
+- `Identification`: Unique value used to identify fragmented packets from different datagrams.
+- `Flags`:
+  - Bit 0: reserved, always 0
+  - Bit 1: `Don't fragment (DF) bit`, used to indicate a packet that should not be fragmented
+  - Bit 2: `More fragments (MF) bit`, set to 1 if there are more fragments in the packet, set to 0 for the last fragment.
+- `Fragment Offset`: indicates the position of the fragment within the original unfragmented IP packet to allow them to be reassembled.
+- `Time To Live`: router drops a packet with a TTL of 0. Used to prevent infinite loops.
+- `Protocol`: indicates the protocol of the encapsulated L4PDU (TCP = 6, UDP = 17, ICMP = 1, OSPF = 89)
+- `Header checksum`: used to check for errors via CRC
+- `Source / Destination IP address`
+- `Options`: used for network testing, debugging, security and more
+
 ### Class of IPv4 Addresses
 
 | **Class** | **First Octet** | **First Octet Range** |
@@ -404,6 +426,24 @@ Received 1157 broadcasts (0 IP multicasts)
 - 8 groups of 4 characters divided by colon
 - Leading 0s in each group can be removed
 - Consecutive quartets of all 0s can be replaced with double colon and it can only be done once.
+
+### IPv6 Header
+
+![IPv6 Header](./Media/ipv6_header.png)
+
+- `Version`: version of IP that is 6
+- `Traffic Class`: used for QoS, to indicate high-priority traffic
+- `Flow Label`: used to identify specific traffic flows
+- `Payload Length`: indicates the length of the payload in bytes
+- `Next Header`: indicates the type of next header
+- `Hop Limit`: decreased by 1 by each router that forwards it. If it reaches 0, packet is discarded.
+- `Source / Destination Address`
+
+#### IPv4 Header vs IPv6 Header
+
+- Inter Header Length field was removed because IPv6 header is fixed at 40 bytes.
+- In IPv6, routers no longer process fragmentation so the host is responsible for it.
+- Header Checksum is removed because most Data Link layer technologies already perform checksum.
 
 ### Configuring and Verifying IPv6 Addresses
 
