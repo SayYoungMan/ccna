@@ -33,6 +33,10 @@
 ### 1.1.d. Access points
 
 - A `wireless access point (WAP)` is a networking device that allows wireless-capable devices to connect to a wired network.
+- APs have the following characteristics:
+  - Function as a central junction point for the wireless stations
+  - Function as a bridge to the wired network, giving the wireless station access to the wired network and/or the internet
+  - SOHO APs usually include functions like NAT and DHCP
 
 ### 1.1.e. Controllers (Cisco DNA Center and WLC)
 
@@ -545,3 +549,37 @@ Received 1157 broadcasts (0 IP multicasts)
 - `ifconfig`: used by MAC and Linux to get IP address details of local machine
 - `ipconfig getifaddr en0`: find my IP address if I'm connected to a wireless network or `en1` if I'm connected to Ethernet for MAC and Linux.
 - `curl ifconfig.me`: display my global Internet IP address in terminal for MAC and Linux
+
+## 1.11. Describe wireless principles
+
+### 1.11.a. Nonoverlapping Wi-Fi channels
+
+- Wi-Fi uses two main bands: `2.4 GHz` and `5 GHz` bands.
+  - 2.4 GHz band typically provides further reach in open space and has better penetration of obstacles although bandwidth is lower.
+- Each band is divided up into multiple `channels`, where devices can transmit and receive traffic.
+- It is important the APs don't use overlapping channels because it can cause interference and lower throughput.
+- Therefore, you can place APs in a honeycomb pattern to provide complete coverage of an area without interference between channels.
+- In 2.4 GHz band, it's recommended to use channels `1, 6 and 11`.
+
+### 1.11.b. SSID
+
+- `SSID (Service Set Identifier)` is an ID that consists of 32 characters human readable name that identifies the service set.
+- `BSSID (Basic Service Set Identifier)` is used to uniquely identify the AP and it's derived from the MAC address of the AP's radio interface.
+- `MBSSID (Multiple Basic Service Set Identifier)` is derived from the MAC address of the radio interface if multiple SSIDs are used on the same AP.
+
+### 1.11.c. RF
+
+- To send wireless signals, the sender applies an alternating current to antenna, creating electromagnetic fields which propagate out as waves.
+- There are many characteristics of RF that negatively affect trasmissions:
+  - `Free space path loss`: signla is weakened the further it travels
+  - `Absorption`: signal is absorbed by obstacles
+  - `Multipath`: signals sent from the same AP arrives out of phase due to different paths taken
+  - `Reflection`, `Diffraction` and `Scattering` of signal also takes place when it interacts with the surface
+
+### 1.11.d. Encryption
+
+- Encryption in wireless communication is important because signals can be received by any device in vicinity.
+- Each client will use a unique encryption/decryption key so that other devices can't read its traffic.
+- `Group key` is used by AP to encrypt traffic that it wants to send to all of its clients and all clients associated with the AP keep that key.
+
+## 1.12. Explain virtualization fundamentals (server virtualization, containers, and VRFs)

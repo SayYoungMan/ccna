@@ -1612,7 +1612,7 @@ sequenceDiagram
 - 8 groups of 4 characters divided by colon
 - Always use prefix length instead of subnet mask
 - Leading 0s is each group can be removed
-- Consecutive quartets of all 0s can be replcaed with double colon and it can only be done once in address
+- Consecutive quartets of all 0s can be replaced with double colon and it can only be done once in address
 
 ### Global Unicast Addresses
 
