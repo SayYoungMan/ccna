@@ -451,7 +451,7 @@
     - If failed to sense, it will use the slowest speed.
   - If speed is 10 or 100 Mbps, it will use half duplex.
   - If speed is 1000 Mbps or higher, it will use full duplex.
-- If PC operates at full jduplex but switch operate at half duplex or vise versa, duplex mismatch happens and collisions will occur.
+- If PC operates at full duplex but switch operate at half duplex or vise versa, duplex mismatch happens and collisions will occur.
 
 ### Interface Errors
 

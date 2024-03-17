@@ -207,3 +207,64 @@
 - `Crossover-cable` has reversed pin connections so they are used to connect devices of same pin settings, such as router to host or switch to switch.
 - Modern networking devices have `Auto MDI-X` that allows devices to detect which pins their neighbour is transmitting and adjust which pins they use to transmit and receive data so cable type doesn't matter.
 - `Rollover cable` is used to connect to the console port of a network device.
+
+## 1.4. Identify interface and cable issues (collisions, errors, mismatch duplex, and/or speed)
+
+- `#show interfaces <int-id>` command can reveal important information that helps identify interface and cable issues:
+
+```
+R2#sh int fa0/0
+FastEthernet0/0 is up, line protocol is up
+[output cut]
+Full-duplex, 100Mb/s, 100BaseTX/FX
+ARP type: ARPA, ARP Timeout 04:00:00
+Last input 00:00:05, output 00:00:01, output hang never
+Last clearing of "show interface" counters never
+Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0 Queueing strategy: fifo
+Output queue: 0/40 (size/max)
+5 minute input rate 0 bits/sec, 0 packets/sec
+5 minute output rate 0 bits/sec, 0 packets/sec
+1325 packets input, 157823 bytes
+Received 1157 broadcasts (0 IP multicasts)
+0 runts, 0 giants, 0 throttles
+0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+0 watchdog
+0 input packets with dribble condition detected
+2294 packets output, 244630 bytes, 0 underruns
+0 output errors, 0 collisions, 3 interface resets
+347 unknown protocol drops
+0 babbles, 0 late collision, 0 deferred
+4 lost carrier, 0 no carrier
+0 output buffer failures, 0 output buffers swapped out
+```
+
+#### Speed / Duplex Autonegotiation
+
+- Interfaces that can run at different speeds have default settings of speed auto and duplex auto.
+- Interfaces advertise their capabilities to the neighbouring device and they negotiate the best speed and duplex settings they are both capable of.
+
+#### Duplex Mismatch
+
+- `Half duplex`: The device can't send and receive data at the same time. If it is receiving a frame, it must wait before sending a frame.
+- `Full duplex`: The device can send and receive data at the same time. It doesn't have to wait.
+- This duplex setting must matched between the two connected interfaces, or collisions will occur.
+- `(config-if)#duplex [auto|full|half]` is used to manually configure the duplex settings.
+
+#### Speed Mismatch
+
+- If the speed settings between two interfaces don't match, the connection will not be established between them.
+- `(config-if)#speed <speed-mbps>` is used to manually configure the speed settings.
+
+#### Input/output queue drops
+
+- If the `input queue drops` counter increments, it signifies that more traffic is being delivered to the router than it can process.
+- `Output queue drops` counter indicates that packets were dropped due to interface congestion, leading to packet drops and queuing delays.
+
+#### Interface Errors
+
+- `Runts`: frames that are smaller than the minimum frame size (64 bytes)
+- `Giants`: frames that are larger than the maximum frame size (1518 bytes)
+- `CRC`: frames that failed the CRC check
+- `Frame`: frames that have incorrect format
+- `Input errors`: total number of various error counters
+- `Output errors`: frames that the switch tried to send but failed due to error
