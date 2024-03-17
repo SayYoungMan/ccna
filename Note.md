@@ -331,3 +331,53 @@ Received 1157 broadcasts (0 IP multicasts)
   - 514: Syslog
 - TCP & UDP
   - 53: DNS
+
+## 1.6. Configure and verify IPv4 addressing and subnetting
+
+### Class of IPv4 Addresses
+
+| **Class** | **First Octet** | **First Octet Range** |
+| :-------: | :-------------: | :-------------------: |
+|     A     |    0XXXXXXX     |        0 - 127        |
+|     B     |    10XXXXXX     |       128 - 191       |
+|     C     |    110XXXXX     |       192 - 223       |
+|     D     |    1110XXXX     |       224 - 239       |
+|     E     |    1111XXXX     |       240 - 255       |
+
+- Class D is reserved for multicast addresses.
+- Class E is reserved for experimental use.
+
+### Reserved IP Addresses
+
+|        **Address**        |                 **Function**                  |
+| :-----------------------: | :-------------------------------------------: |
+| Network address of all 0s |       Indicates this network or segment       |
+| Network address of all 1s |            Indicates all networks             |
+|     Network 127.0.0.0     |          Reserved for loopback tests          |
+|  Node address of all 0s   |           Indicates network address           |
+|  Node address of all 1s   |       Indicates all nodes on a network        |
+|   Entire address of 0s    |            Indicates default route            |
+|   Entire address of 1s    | Broadcast to all nodes on the current network |
+
+### CIDR (Classless Inter-Domain Routing)
+
+- Removed the requirements of class networks and it can be any prefix length
+- This allowed larger networks to be split into smaller networks called `subnets`, allowing greater efficiency.
+
+### Subnetting Tricks
+
+- _How many subnets?_ `2^x = number of subnets` where x = number of borrowed bits
+- _How many hosts per subnet?_ `2^y - 2 = number of hosts per subnet` where y is the number of unmasked bits
+- _What are the valid subnets?_ `256 - subnet mask = block size`. Then incrementing by the block size repeatedly gives all the valid subnets
+- _What's the network/broadcast address of each subnet?_ It's the first and last usable address in the subnet
+- _What are the valid hosts?_ All addresses except network and broadcast address are valid host addresses in the subnet
+
+### VLSM (Variable-Length Subnet Masks)
+
+- `VLSM` is the process of creating subnets of different sizes to make use of network addresses more efficiently.
+- Assigning subnet should be done with the largest subnet and with decreasing size of it
+
+### Configuring and verify IPv4 Addresses
+
+- `(config-if)#ip address <ipv4-addr> <subnet-mask>` configures the IPv4 address of an interface
+- `#show ip interfaces brief` is an easy way to check an IP address of interfaces as well as other information about them
