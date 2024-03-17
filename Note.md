@@ -51,7 +51,13 @@
 
 ### 1.1.f. Endpoints
 
-- `Endpoints` are the two ends of a connection for transmitting data. One end is the receiver and the other is the sender.
+- `Endpoints` are basically just something that connects to the network through a wired or wireless connection.
+- Common endpoints include:
+  - Desktops/Laptops
+  - Mobile phones
+  - Access points
+  - IP phones
+  - Internet of Things
 
 ### 1.1.g. Servers
 
@@ -527,3 +533,15 @@ Received 1157 broadcasts (0 IP multicasts)
 - `::1`: Loopback address
   - Used to test protocol stack on local device
   - Messages sent to this address are processed within local device
+
+## 1.10. Verify IP parameters for Client OS (Windows, Mac OS, Linux)
+
+- `ping`: uses ICMP echo request and replies to test if a node IP stack is initialized and alive on the network
+- `traceroute`: displays the list of routers on a path to a network destination (Cisco router only)
+- `tracert`: same as traceroute but Windows only
+- `arp -a`: displays IP-to-MAC mappings on Windows PC
+- `#show ip arp`: displays ARP table on a Cisco router
+- `ipconfig /all`: used by Windows to show PC network configuration
+- `ifconfig`: used by MAC and Linux to get IP address details of local machine
+- `ipconfig getifaddr en0`: find my IP address if I'm connected to a wireless network or `en1` if I'm connected to Ethernet for MAC and Linux.
+- `curl ifconfig.me`: display my global Internet IP address in terminal for MAC and Linux
