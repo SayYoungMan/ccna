@@ -583,3 +583,39 @@ Received 1157 broadcasts (0 IP multicasts)
 - `Group key` is used by AP to encrypt traffic that it wants to send to all of its clients and all clients associated with the AP keep that key.
 
 ## 1.12. Explain virtualization fundamentals (server virtualization, containers, and VRFs)
+
+### Virtualization
+
+- `Virtualization` allows multiple OSs to run on a single physical server.
+- Each instance is called a `VM (Virtual Machine)`
+- `Hypervisor` is used to manage and allocate hardware resources to each VM
+  - The type of hypervisor that runs directly on top of hardware is called `Type 1 hypervisor`
+  - `Type 2 hypervisors` run as a program on OS like a regular computer program
+
+#### Why Virtualization?
+
+- `Partitioning`: Run multiple OS in one machine by dividing system resources between VMs
+- `Isolation`: Fault & security isolation at hardware level
+- `Encapsulation`: Save entire state of VM to files
+- `Hardware Independence`: Provision or migrate any VM to any physical server
+
+### Containers
+
+- `Containers` are software packages that contain an App and all dependencies for the contained App to run.
+- Run on a `container engine` that runs on a host OS
+- Lightweight and include only dependencies required to run the specific App
+- `Container orchestrator` is a software platform for automating the deployment, management, scaling, etc. of containers
+
+#### VMs vs Containers
+
+- VMs can take minutes to boot up but containers can boot up in milliseconds
+- VMs take up more disk space than containers
+- VMs use more CPU/RAM resources than containers
+- VMs are more isolated because each VM runs its own OS
+
+### VRF
+
+- `VRF (Virtual Routing and Forwarding)` are used to divide a single router into multiple virtual routers.
+- Achieved by allowing a router to build separate routing tables
+- Traffic in one VRF cannot be forwarded out of an interface in another VRF unless VRF leaking is configured.
+- Commonly used by service providers to allow one device to carry traffic from multiple customers so that customer's traffic is isolated from the others.
