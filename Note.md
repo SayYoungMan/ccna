@@ -381,3 +381,13 @@ Received 1157 broadcasts (0 IP multicasts)
 
 - `(config-if)#ip address <ipv4-addr> <subnet-mask>` configures the IPv4 address of an interface
 - `#show ip interfaces brief` is an easy way to check an IP address of interfaces as well as other information about them
+
+## 1.7. Describe the need for private IPv4 addressing
+
+- Private IP addresses used to preserve IP addresses on global Internet by allowing devices in local network to be able to communicate with each other by using private IP addresses that can only be used within the network instead of having to assign a global IP address to it.
+
+| **Address Class** | **Address Range** |         **Addresses**         |
+| :---------------: | :---------------: | :---------------------------: |
+|      Class A      |    10.0.0.0/8     |   10.0.0.0 - 10.255.255.255   |
+|      Class B      |   172.16.0.0/12   |  172.16.0.0 - 172.31.255.255  |
+|      Class C      |  192.168.0.0/16   | 192.168.0.0 - 192.168.255.255 |
