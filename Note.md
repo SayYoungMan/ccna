@@ -391,3 +391,22 @@ Received 1157 broadcasts (0 IP multicasts)
 |      Class A      |    10.0.0.0/8     |   10.0.0.0 - 10.255.255.255   |
 |      Class B      |   172.16.0.0/12   |  172.16.0.0 - 172.31.255.255  |
 |      Class C      |  192.168.0.0/16   | 192.168.0.0 - 192.168.255.255 |
+
+## 1.8. Configure and verify IPv6 addressing and prefix
+
+### IPv6
+
+`2001:db8:3c4d:12::1234:56ab`
+
+- It is required because there aren't enough IPv4 addresses available.
+- 128 bits address
+- Written in hexadecimal characters
+- 8 groups of 4 characters divided by colon
+- Leading 0s in each group can be removed
+- Consecutive quartets of all 0s can be replaced with double colon and it can only be done once.
+
+### Configuring and Verifying IPv6 Addresses
+
+- `(config)#ipv6 unicast-routing` allows the router to perform IPv6 routing
+- `(config-if)#ipv6 address <ipv6-addr/prefix>` to assign IPv6 address to interface
+- `#show ipv6 interface brief` to see a summary of IPv6 assigned
