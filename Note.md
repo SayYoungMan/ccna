@@ -619,3 +619,26 @@ Received 1157 broadcasts (0 IP multicasts)
 - Achieved by allowing a router to build separate routing tables
 - Traffic in one VRF cannot be forwarded out of an interface in another VRF unless VRF leaking is configured.
 - Commonly used by service providers to allow one device to carry traffic from multiple customers so that customer's traffic is isolated from the others.
+
+## 1.13. Describe switching concepts
+
+### 1.13.a. MAC learning and aging
+
+- Switch has a `MAC address table`, which saves mapping of interface to source MAC address when it receives a frame.
+- When MAC address is saved this way, it's called dynamically learned MAC address
+- MAC addresses are removed after 5 minutes of inactivity (`aging`)
+
+### 1.13.b. Frame switching
+
+- When switch receives a frame of destination address that is saved in MAC address table, it simply transmit the frame out of the interface.
+
+### 1.13.c. Frame flooding
+
+- If the destination address is not saved in the table, it floods the frame to all interfaces except the source.
+- If the received end doesn't have a matching MAC address, it simply drops the packet.
+
+### 1.13.d. MAC address table
+
+- Switche saves all the MAC addresses it encountered in MAC address table.
+- MAC address table can be viewed via `#show mac address-table`
+- `#clear mac address-table dynamic` can remove MAC addresses
