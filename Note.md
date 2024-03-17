@@ -157,3 +157,53 @@
 - Speed / Agility: services are provided on demand quickly
 - Productivity: Remove the need for many time-consuming tasks
 - Reliability: Easy to back up in the cloud
+
+## 1.3. Compare physical interface and cabling types
+
+### 1.3.a. Single-mode fiber, multimode fiber, copper
+
+- `UTP (Unshielded Twisted Pair) Cables` are copper wire cables under Ethernet standards.
+  - `RJ-45` is the connector used at the ends of a copper Ethernet cable.
+- `Fiber optic cables` send data by sending light over glass fibers.
+  - `SFP (Small Form-Factor Pluggable) transceiver` is used for fiber optic cables.
+  - It consists of 4 layers: `fiber glass core`, where light is transmitted, `cladding`, which reflects the light, `protective buffer` and `outer jacket`.
+
+#### UTP vs Fiber Optic
+
+- UTP is cheaper than fiber optic
+- UTP covers shorter distance than fiber optic
+- UTP is vulnerable to EMI but fiber optic is not
+- UTP emits a faint signal outside the wire, which can be a security risk
+
+#### Multimode vs single-mode
+
+- `Single-mode` has a tighter cladding so it only allows one mode of light down the fiber whereas `multimode` is looser and allows multiple light to travel down the glass.
+  - Single-mode allows longer cable than multimode.
+  - Multimode is cheaper than single-mode because LED based SFP is cheaper than laser based SFP.
+
+### 1.3.b. Connections (Ethernet shared media and point-to-point)
+
+- `Point-to-point` connection/network is formed when exactly two computers are connected to each other with access to full channel bandwidth. It provides security and privacy because communication channel is not shared.
+- `Ethernet` is a collection of network protocols and standards.
+- `Ethernet standard` defines configuration of cables and speeds to be used for communication
+
+| **Speed** | **Common Name**  | **IEEE Standard** | **Informal Name** | **Max Cable Length** |
+| :-------: | :--------------: | :---------------: | :---------------: | :------------------: |
+|  10 Mbps  |     Ethernet     |      802.3i       |     10 BASE-T     |         100m         |
+| 100 Mbps  |  Fast Ethernet   |      802.3u       |    100 BASE-T     |         100m         |
+|  1 Gbps   | Gigabit Ethernet |      802.3ab      |    1000 BASE-T    |         100m         |
+|  10 Gbps  | 10 Gig Ethernet  |      802.3an      |    10G BASE-T     |         100m         |
+
+| **Speed** | **IEEE Standard** | **Informal Name** | **Cable Type** | **Max Cable Length** |
+| :-------: | :---------------: | :---------------: | :------------: | :------------------: |
+|  1 Gbps   |      802.3z       |   1000 BASE-LX    | Multi / Single | 500m (MM) / 5km (SM) |
+|  10 Gbps  |      802.3ae      |    10G BASE-SR    |     Multi      |         400m         |
+|  10 Gbps  |      802.3ae      |    10G BASE-LR    |     Single     |         10km         |
+|  10 Gbps  |      802.3ae      |    10G BASE-ER    |     Single     |         30km         |
+
+#### Ethernet Cabling
+
+- In `Straight-through cable`, pins are connected to the same number pin. It's used to connect host/router to switch or hub.
+- `Crossover-cable` has reversed pin connections so they are used to connect devices of same pin settings, such as router to host or switch to switch.
+- Modern networking devices have `Auto MDI-X` that allows devices to detect which pins their neighbour is transmitting and adjust which pins they use to transmit and receive data so cable type doesn't matter.
+- `Rollover cable` is used to connect to the console port of a network device.
