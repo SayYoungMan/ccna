@@ -450,3 +450,80 @@ Received 1157 broadcasts (0 IP multicasts)
 - `(config)#ipv6 unicast-routing` allows the router to perform IPv6 routing
 - `(config-if)#ipv6 address <ipv6-addr/prefix>` to assign IPv6 address to interface
 - `#show ipv6 interface brief` to see a summary of IPv6 assigned
+
+## 1.9. Describe IPv6 address types
+
+### 1.9.a. Unicast (global, unique local, and link local)
+
+#### Global Unicast Address
+
+![IPv6 Global Unicast Address Format](./Media/ipv6_global_unicast.png)
+
+- Public address which can be used over the Internet
+- Originally defined as the `2000::/3` block but now defined as all addresses which aren't reserveed for other purposes
+
+#### Unique Local Address
+
+- Private addresses which can't be used over Internet
+- Uses address block `FC00::/7` but later update requires 8th bit to be 1, so it starts with `FD`
+
+#### Link-local Addresses
+
+- Automatically generated on IPv6-enabled interfaces
+  - `(config-if)#ipv6 enable` enables IPv6 on an interface
+- Uses address block `FE80::/10`
+- Link-local means that these addresses are used for communication within a single link (subnet)
+- Common uses of link-local addresses:
+  - Routing protocol peerings
+  - Next-hop addresses for static routes
+  - Neighbour discovery protocol
+
+### 1.9.b. Anycast
+
+- `one-to-one-of-many` connection
+- Multiple routers are configured with the same IPv6 anycast address and when hosts send packets, routers will forward it to the nearest router configured with that IP.
+- No specific address range
+- `(config-if)#ipv6 address <ipv6-addr> anycast` to configure anycast address
+
+### 1.9.c. Multicast
+
+- `one-to-many` communication
+- Uses `FF00::/8` address block
+
+|    **Purpose**    | **IPv6 Address** | **IPv4 Address** |
+| :---------------: | :--------------: | :--------------: |
+|     All nodes     |     FF02::1      |    224.0.0.1     |
+|    All routers    |     FF02::2      |    224.0.0.2     |
+| All OSPF routers  |     FF02::5      |    224.0.0.5     |
+| All OSPF DRs/BDRs |     FF02::6      |    224.0.0.6     |
+|  All RIP routers  |     FF02::9      |    224.0.0.9     |
+| All EIGRP routers |     FF02::A      |    224.0.0.10    |
+
+#### Multicast Scopes
+
+- IPv6 defines multiple multicast scopes which indicate how far the packet should be forwarded
+- `Interface-local (FF01)`: the packet doesn't leave the local device
+- `Link-local (FF02)`: the packet remains in the local subnet
+- `Site-local (FF06)`: the packet can be forwarded by routers but should be limited to a single physical domain
+- `Organization-local (FF08)`: Wider scope than site-local
+- `Global (FF0E)`: No boundaries
+
+### 1.9.d. Modified EUI 64
+
+- `EUI-64` is a method of converting MAC address into a 64-bit interface identifier.
+- This interface identifier can then become the host portion of a /64 IPv6 address
+- Conversion steps:
+  1. Divide MAC address in half
+  2. Insert FFFE in the middle
+  3. Invert the 7th bit
+- `(config-if)#ipv6 address <network/prefix> eui-64` to use EUI-64 to generate an IPv6 address
+
+### Other IPv6 Addresses
+
+- `::`: Unspecified address
+  - Can be used when a device doesn't know its IPv6 address
+  - IPv6 default routes are configured to `::/0`
+  - IPv4 equivalent: 0.0.0.0
+- `::1`: Loopback address
+  - Used to test protocol stack on local device
+  - Messages sent to this address are processed within local device
