@@ -268,3 +268,66 @@ Received 1157 broadcasts (0 IP multicasts)
 - `Frame`: frames that have incorrect format
 - `Input errors`: total number of various error counters
 - `Output errors`: frames that the switch tried to send but failed due to error
+
+## 1.5. Compare TCP to UDP
+
+### TCP (Transmission Control Protocol)
+
+- Connection-oriented: before sending data, two hosts communicate to establish a connection first via `three-way handshake`, then data exchange begins. Even when terminating a connection, `four-way handshake` must take place.
+- Provides reliable communication through acknowledging that it received TCP segments. If not acknowledged, they are sent again.
+- Provides sequencing through a sequence number in TCP header which allow hosts to put segments in correct order.
+- Flow control: destination host can tell the source host to increase or decrease the rate at which data is sent.
+
+#### TCP Segment Format
+
+![TCP Segment Format](./Media/tcp_segment_format.png)
+
+- `Source/Destination port` is the port number of the application on the source/destination.
+- `Sequence number`: used by TCP to put the data back in the correct order
+- `Acknowledgement number`: value of TCP octet that is expected next
+- `Header length`: the number of 32-bit words in the TCP header to indicate where the data begins
+- `Reserved`: always set to 0
+- `Code bits/flags`: controls functions used to set up and terminate a session
+- `Window`: the window size the sender is willing to accept in octets
+- `Checksum`: the value of CRC check
+- `Urgent`: Use if urgent pointer in the code bits is set. This value indicates the offset from the current sequence number, in octets.
+
+### UDP (User Datagram Protocol)
+
+- Connectionless: doesn't establish connection
+- No reliable communication: even if segment is lost, doesn't retransmit
+- No sequencing
+- No flow control
+
+![UDP Segment Format](./Media/udp_segment_format.png)
+
+### TCP vs UDP
+
+|       **TCP**       |           **UDP**            |
+| :-----------------: | :--------------------------: |
+|      Sequenced      |         Unsequenced          |
+|      Reliable       |          Unreliable          |
+| Connection-oriented |        Connectionless        |
+|   Virtual circuit   |         Low overhead         |
+| Window flow control | No windowing or flow control |
+
+### Port Numbers
+
+- TCP
+  - 20: FTP data
+  - 21: FTP control
+  - 22: SSH
+  - 23: Telnet
+  - 25: SMTP
+  - 80: HTTP
+  - 110: POP3
+  - 443: HTTPS
+- UDP
+  - 67: DHCP server
+  - 68: DHCP client
+  - 69: TFTP
+  - 161: SNMP agent
+  - 162: SNMP manager
+  - 514: Syslog
+- TCP & UDP
+  - 53: DNS
