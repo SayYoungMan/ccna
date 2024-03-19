@@ -516,7 +516,7 @@ The 'logging trap' command can be used to control logging to a Syslog server - t
 
 - The command to change the native VLAN of a trunk is `(config-if)#switchport trunk native vlan 999`
 
-#### 81. WhenyouchangethenativeVLANofatrunkfromVLAN1toVLAN999andyoureceive the error %CDP-4-NATIVE_VLAN_MISMATCH: Native VLAN mismatch -discovered.... What is the possible problem?
+#### 81. When you change the native VLAN of a trunk from VLAN 1 to VLAN 999 and you receive the error %CDP-4-NATIVE_VLAN_MISMATCH: Native VLAN mismatch -discovered.... What is the possible problem?
 
 - This error is normal if it's the first interface to be changed over to the new native VLAN since the other interfaces has not been changed yet.
 - If the other interface was changed already and received this error, CDP is letting you know that the other side is mismatched.
@@ -532,3 +532,223 @@ The 'logging trap' command can be used to control logging to a Syslog server - t
 #### 96. What is the default value of the LLDP holddown timer for entries?
 
 - The default value of LLDP holddown timer for entries is 120 seconds.
+
+#### 101. Which is a true statement about EtherChannel?
+
+- When `EtherChannel` bonds interfaces together, they act as a single Ethernet link. Therefore, layer 2 and 3 see it as a single link.
+- Etherchannel can aggregate multiple links but the links must have the same speed.
+
+#### 106. Which mode forces the aggregation of links without the use of a control protocol?
+
+- If you configure the EtherChannel to `on mode`, it forces the aggregation of links without the use of a control protocol.
+
+#### 107. Which is a correct statement about aggregating ports together?
+
+- The term `EtherChannel` is a Cisco-centric term so most vendors will not recognize the term.
+
+#### 109. How often does PAgP send messages to control the status of the links in the bundle?
+
+- `PAgP` sends control notifications every 30 seconds to the adjacent switch.
+
+#### 114. What is the effect of configuring a port channel with one side set to on mode and the other side set to on mode?
+
+- When both sides of the port channel are configured with the on mode, an unconditional port channel is created.
+- This means there is no control protocol assisting the port channel.
+
+#### 115. What is the IEEE specification for Spanning Tree Protocol (STP)?
+
+- The IEEE ratified the specification of STP as `802.1D` in 1990.
+- `802.1X` is the IEEE standard for port security that requires end devices authenticate before traffic will be allowed to pass.
+- `802.1w` is the IEEE standard for RSTP.
+- `802.1s` is the IEEE standard for `Multiple Spanning Tree Protocol (MST)`
+
+#### 118. What is the IEEE specification for Rapid Spanning Tree Protocol (RSTP)?
+
+- The original STP specification was revamped in 2004 with RSTP `802.1w`
+- This revamping of STP was to fix problems with the original specification to converge faster to network changes.
+
+#### 124. Which statement is correct about RSTP?
+
+- RSTP has three transition modes and therefore converges faster than STP, which is 50 seconds.
+- It is, however, backward compatible with STP 802.1D
+
+#### 125. How do switches participating in an STP network become aware of topology changes?
+
+- Each switch is responsible for sensing changes to the topology.
+- Whenever the topology changes, a `Topology Change Notification (TCN)` is sent out of all root ports and an acknowledgement is sent back.
+- This happens until the root bridge sends back a notification.
+
+#### 129. Which option is a correct statement about alternate ports in RSTP?
+
+- An alternate port is a port that is in a discarding state.
+- If the root port fails on the switch with the alternate port, then the alternate port becomes the root port for that switch.
+
+#### 134. Which is a correct statement about bridge port roles in STP?
+
+- Every switch in the entwork must have at least one `root port`.
+- This is the port that leads back to the root bridge.
+- The root bridge will have a dsignated port on the adjacent link back to the root bridge.
+
+#### 137. How is the bridge ID calculated for PVST+?
+
+- The PVST+ bridge ID comprises:
+  - 4-bit `bridge priority` calculated in blocks of 4096
+  - 12-bit `sys-ext-id` that is the VLAN ID for the segment
+  - 6-byte MAC address for the switch
+
+#### 138. What is the default bridge priority for all STP switches?
+
+- The default bridge priority for STP is 32768
+
+#### 139. Which is a correct statement about bridge port roles in STP?
+
+- The root bridge always has all of its ports in a designated mode or forwarding mode.
+- If there are redundant links, the adjacent switch to the designated port on the root bridge must be a non-designated or blocking state.
+
+#### 140. Which is a correct statement about backup ports in RSTP?
+
+- A backup port is a port on the same switch in a discarding state. It receives BPDUs from another port on the same switch.
+- If the forwarding port fails, then the backup port will become designated so that connectivity to the segment can be restored.
+
+#### 141. What is the default wait time for STP convergence to complete?
+
+- 802.1D STP convergence takes 50 seconds to complete before the port is put into a state of forwarding or blocking.
+
+#### 147. You receive a call that when computers boot up, they display an error message stating that they cannot reach a domain controller. However, after a few tries, the problem goes away, and the domain controller can be reached. Which command would you enter into the interface if you suspect spanning-tree convergence problems?
+
+- `(config-if)#spanning-tree portfast` will turn on `PortFast` mode which will allow the interface to forward first.
+
+#### 148. On which types of ports should you configure PortFast mode?
+
+- PortFast should only be configured on access links where end devices are plugged in because these devices will not typically create loops in the switch topology.
+- If PortFast is configured on a trunk port, you have a high risk of creating a loop if there is a misconfiguration on the switch being introduced.
+- Voice ports are usually connected to VoIP phones with built-in switches that can be looped.
+
+#### 149. What will the command spanning-tree portfast default entered in global configuration mode do?
+
+- This command turns on PortFast globally for only access ports on the switch.
+
+#### 152. What is the transition of states when PortFast is configured?
+
+- PortFast mode allows an interface to bypass the blocking state and begin forwarding immediately.
+- It then listens and learns of BPDUs on the interface to make a decision to continue to forward frames or enter blocking state.
+
+#### 153. Which command would you use to configure BPDU Guard on an interface?
+
+- `(config-if)#spanning-tree bpduguard enable` is the correct command to configure BPDU guard.
+
+#### 155. Which option is a best practice when configuring links on an access switch?
+
+- Configuring BPDU guard along with PortFast ensures that the end device will always be forwarding.
+- BPDU guard ensures that in the event a BPDU is heard on the interface, the interface will enter into an err-disabled mode.
+
+#### 156. Which command will show you if a port has been configured for PortFast mode?
+
+- `#show spanning-tree interface fa 0/1` will show the spanning tree configuration for an interface.
+
+#### 161. You require a density of 100 wireless clients in a relatively small area. Which design would be optimal?
+
+- To achieve density and bandwidth in a relatively small area, you will need to deploy lightweight WAPs with a WLC.
+- Althgouth Autonomous WAPs would work, it would be problematic due to frequency coordination and roaming.
+
+#### 162. Which mode will allow a Cisco AP to detect interference of Bluetooth devices?
+
+- Cisco WAPs can be placed into:
+  - `Data serving mode`: AP will serve data and act as normal WAP
+  - `Monitoring mode`: AP can scan the wireless spectrum and report on interference
+
+#### 163. Which wireless mode allows for a network connection without a wireless infrastructure in place?
+
+- `Independent Basic Service Set (IBSS)`, aka `ad hoc network`, does not require any wireless infrastructure.
+- Clients connect directly to each other over the 802.11 wireless spectrum.
+
+#### 166. You have three buildings that are separated by a number of public roads but have a relatively close proximity to each other. You need to network them together to a central point. Which type of wireless technology should you deploy?
+
+- A `point-to-multipoint` wireless bridge will allow you to connect all 3 buildings together, tying them back to a central location.
+- `mesh network` is usually designed for endpoints (clients) and not for the interconnection of buiuldings.
+- `Point-to-point` bridges would allow all the buildings to connect to each other, but it would not network them together to a central point.
+
+#### 170. You need to cover a large public area with high speed wireless coverage. Many of the areas are too far away from the wired switching equipment. What should you implement?
+
+- A `mesh wireless network` will allow for converage of the large area.
+- A mesh network will provide the highest bandwidth possible.
+
+#### 172. You need more bandwidth to your wireless controller from the router. Currently you have one Gigabit Ethernet connection in use and both your router and wireless controller have another available Gigabit Ethernet connection. What can you do to get more bandwidth?
+
+- You can build an EtherChannel between routers and WLC to obtain more bandwidth when using ROAS.
+
+#### 174. You are connecting a Cisco WLC to a non-Cisco switch and need to aggregate two ports between the two devices. Which type of link should you research on the non-Cisco device?
+
+- `Link Aggregation (LAG)` must be used between the WLC and the switch, regardless of the brand.
+
+#### 175. How is traffic load-balanced from a WLC to a switch using LAG?
+
+- When a LAG is created between a switch and WLC, the method of load balancing is `hash-based`, using layer 4 source and destination ports.
+
+#### 176. What is the maximum number of ports you can bundle in a LAG between a WLC and a switch?
+
+- Maximum number of ports that can be bundled in a LAG is 8 ports.
+
+#### 177. You company has been contracted to implement a 802.11 wireless system for a small town. Which type of implementation is this considered?
+
+- When a wireless system spans a town or city, it is considered a `Wireless Metro Area Network (WMAN)`.
+- A `Wireless Personal Area Network (WPAN)` is a wireless network designed for personal use, usually for personal connectivity to the Internet through a `hot spot`.
+- `Wireless LAN (WLAN)` is used to describe a campus-sized wireless network and not a network that spans a public area.
+- `Wireless Wide Area Network (WWAN)` is a term used to describe cellular networks and not typical 802.11 wireless.
+
+#### 178. You currently have a WLC with only two physical access ports. One port is used for guest network access and the other port is used for your business communications. You need to add several other networks to the WLC for your manufacturing and quality control departments. What is the simplest and best way to achieve this?
+
+- Converting one of the current access ports to a trunk will allow several VLANs to be carried across the one port to the switching equipment.
+
+#### 180. You have been asked by your manager to configure a port for a new WAP to be installed for your WLC. How should you configure the port?
+
+- When installing a WAP onto a WLC, the port should be configured as a turnk port so that management traffic and data traffic can be tagged.
+
+#### 183. Which port and protocol does TACACS+ use?
+
+- `TACACS+` uses TCP and port 49 for communications between the switch or router and the AAA server.
+
+#### 187. Which authentication system is an open standard originally proposed by the Internet Engineering Task Force (IETF)?
+
+- `RADIUS` is an open standard originally proposed by the IETF
+
+#### 190. What is the connection speed for console access to Cisco equipment?
+
+- The connection for Cisco equipment should be set up as:
+  - 9600 baud
+  - 8 bits of data
+  - No flow control
+  - 1 stop bit
+
+#### 192. Which IEEE specification defines WLAN QoS for wireless data?
+
+- WLAN QoS is defined by IEEE `802.11e`
+- `802.1q` is the wired equivalent called AVVID
+- `802.11r` specification is used for BSS fast transition
+- `802.11k` is used for roaming clients to locate closest WAP
+
+#### 193. You are creating a WLAN in the GUI of the WLC. You need to make sure that only corporate hosts can connect to the newly formed WLAN. How can you achieve this?
+
+- `MAC-based filtering` is the best way to achieve the goal of only allowing corporate hosts to connect to the network.
+- Disabling SSID from broadcasting is scurity through obscurity and only a deterrent.
+- Setting PSK can be leaked out
+- Adding an LDAP server is the first step in setting up the web portal for user auth
+
+#### 194. Which protocol should be enabled on a WLAN to allow a client device to download a list of neighboring WAPs?
+
+- `802.11k` will allow client devices to download a list of neighbouring WAP and their associated wireless bands.
+
+#### 198. Which statement is correct about Flex Connect mode versus Local mode?
+
+- `Local mode` creates a CAPWAP tunnel to the wireless LAN controller to allow switching of VLANs local to the WLC.
+- All traffic in Local mode must traverse back to the WLC to get switched into the respective VLANs.
+- `Flex Connect mode` does not create a CAPWAP tunnel to mode data, only control information.
+
+#### 199. You need to set up a WLAN for connectivity to send and receive large files to roaming clients. The WLAN will exist with other WLAN traffic. Which QoS profile should the new WLAN be associated with?
+
+- The Bronze QoS profile should be used for bulk data transfer.
+
+#### 200. Which type of security can be implemented on a WLAN that requires the host PC to present a certificate before being allowed onto the wireless network?
+
+- `802.1X` is a protocol that can be configured on WLC to allow only hosts that present a valid certificate on the network.
+- The server that arbitrates the authentication is normally RADIUS
