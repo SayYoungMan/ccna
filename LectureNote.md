@@ -678,7 +678,7 @@
 
 - Lots of unnecessary broadcast traffic in LAN can reduce network performance.
 - Even within the same LAN, you might want to limit who has access to what. This can be applied in a router / firewall so can't be done in a same LAN.
-- To address these issues, you can configure VLANs on switch interfaces so that switch cannot forward traffic between LVANs, including broadcast.
+- To address these issues, you can configure VLANs on switch interfaces so that switch cannot forward traffic between VLANs, including broadcast.
 - The switch does not perform inter-VLAN routing so it must send the traffic through the router first.
 
 - `VLANs`
@@ -809,7 +809,7 @@
 
 #### Conditions required for SVI to be up / up status
 
-- VLAN must eist on the switch
+- VLAN must exist on the switch
 - Switch must have at least one access or trunk port in the VLAN in up / up state
 - VLAN and SVI must not be shutdown
 
@@ -1072,7 +1072,7 @@
 ### RSTP BPDU
 
 - Version and type field of value 2
-- Uses all 8 bits of flagsfor a negotitation process that allows STP to converge much faster
+- Uses all 8 bits of flags for a negotitation process that allows STP to converge much faster
 - All switches originate and send their own BPDUs from designated ports
 
 ### RSTP Protocol

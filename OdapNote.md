@@ -380,3 +380,155 @@ The 'logging trap' command can be used to control logging to a Syslog server - t
 #### 197. Which statement is true of an ARP request entering into a switch?
 
 - The destination MAC address for broadcasts is all fs and source MAC address of the frame will be the specific MAC address of the host.
+
+### 2. Network Access
+
+#### 1. You are trying to reprovision a switch in a different part of your network. However, you still see the old VLANs configured from the old network. How can you rectify the problem?
+
+- `vlan.dat` is the database for VLANs configured on a switch either manually or through VTP.
+- It is persistent even if `config.text` (start-up config) is deleted, thus you must manually delete it.
+
+#### 2. What is the normal range for VLANs before you must use extended VLAN IDs?
+
+- The normal usable VLAN range for Cisco is 1-1001
+
+#### 5. What is the extended VLAN range?
+
+- The extended VLAN range is VLAN 1006-4094
+
+#### 9. Static VLANs are being used on a switch’s interface. Which of the following statements is correct?
+
+- `Static VLANs` are VLANs that have been manually configured.
+- `Dynamic VLANs` are configured via a `VLAN Membership Policy Server (VMPS)`
+- A node will not know which VLAN it is assigned to when it is statically set via the command `switchport access vlan`
+
+#### 10. A switch is configured with a single VLAN of 12 for all interfaces. All nodes auto- negotiate at 100 Mb/s full-duplex. What is true if you add an additional VLAN to the switch?
+
+- The addition of another VLAN will increase the effective bandwidth by adding additional broadcast domains.
+
+#### 13. You have changed the name of VLAN 3, and you now want to check your change. Which command will you enter to verify the name change?
+
+- To verify a VLAN name change, you would use the command `#show vlan id 3`
+
+#### 17. You are installing a VoIP phone on the same interface as an existing computer. Which command will allow the VoIP phone to switch traffic onto its respective VLAN?
+
+- `(config-if)#switchport voic vlan 4` will configure the interface to switch traffic with a CoS value of 5 to the voic VLAN of 4.
+
+#### 18. Which type of port removes the VLAN ID from the frame before it egresses the interface?
+
+- All VLAN tagging is removed from the frame before it egresses an access port to the end device.
+
+#### 25. Why is it recommended that you do not use VLAN 1?
+
+- A computer can be plugged into an interface defaulted to VLAN 1 and expose resources such as switch management network.
+
+#### 28. What is the command to verify a VLAN and the port(s) it is associated with?
+
+- The command to verify that a VLAN is created and the port it is associated with is `#show vlan`.
+
+#### 29. You are configuring a Catalyst 9200 switch, a VLAN is not configured yet, and you mistakenly configure it on an interface with the command switch access vlan 12. What will happen?
+
+- When the command is invoked inside of the interface, it will create the VLAN automatically.
+- Traffic will forward without the need of any other configuration.
+
+#### 32. You need to verify that an interface is in the proper VLAN. Which command will display the status of the interface, the VLAN configured, and the operational mode?
+
+- The command `#show interfaces switchport` will display a detail of all ports in respect to VLAN operational status.
+- The command will show the operational mode of the interface.
+
+#### 35. The guest VLAN is not allowing traffic to be routed. What is the cause of the problem?
+
+- `act/lshut` in status column of VLAN database suggests that the VLAN is disabled from forwarding traffic.
+
+#### 39. You have just configured the network in the following exhibit. The commands you have entered configured the VLAN database and assigned the VLAN IDs to the interfaces. You cannot communicate between VLAN 2 and VLAN 4, but communication within VLAN 4 works. What is wrong?
+
+- The broadcast domain / VLAN requires its own unique IP network addressing and a router to route between the networks.
+- Therefore, you need a router for inter-VLAN communications.
+
+#### 42. You have connected a Dell switch to the Cisco switch you are configuring and you cannot get a trunk between the two. What must be changed?
+
+- Since Dell switch cannot support ISL, both switches need to be set up to use 802.1Q.
+- VTP is a Cisco proprietary protocol
+
+#### 43. You need to view all of the trunks on a switch and verify that they have the proper trunking protocols configured. Which command will display the information?
+
+- `#show interfaces trunk` will display all of the configured trunks on the switch.
+
+#### 44. What is the default VTP mode all switches are configured as by default?
+
+- All switches are configured by default as a `VTP server`.
+
+#### 45. You need to verify the VTP mode on a switch. Which command will display the information?
+
+- The command to display the mode settings for VTP is `#show vtp status`
+
+#### 48. You have a list of allowed VLANs over an existing trunk. You need to set the allowed list back to default. Which command will perform this without interruption? Refer to the following exhibit.
+
+- `(config-if)#switchport trunk allowed vlan all` will restore the allowed VLAN list back to default
+
+#### 49. You need to add VLAN 4 to the allowed list on a trunk interface. Currently VLANs 5 through 8 are allowed. Which command will add only this VLAN without interruption to the network?
+
+- `(config-if)#switchport trunk allowed vlan add 4` will add VLAN 4 to the existing list of VLANs allowed.
+
+#### 51. What is the function of the VTP?
+
+- `VLAN Trunking Protocol (VTP)` propagates the VLAN database from an initial master copy of the server to all the clients.
+
+#### 56. When enabling VTP pruning, where does it need to be configured?
+
+- VTP VLAN pruning removes forwarding traffic for VLANs that are not configured on remote switches.
+- This saves bandwidth on trunks because if the remote switch does not have the VLAN configured on it, the frame will not traverse the trunk.
+- VTP pruning needs to be configured only on the server because clients will receive the update and turn on VTP pruning automatically.
+- If VTP pruning is turned on at the client or transparent, the setting will be ignored.
+
+#### 62. How does IEEE 802.1Q tag frames?
+
+- 802.1Q inserts a field containing the 16-bit `Tag Protocol ID` of `0x8100`, 3-bit CoS field, 1-bit `drop-eligible indicator` and 12-bit `VLAN ID`.
+- It is inserted between the source MAC address and the type field.
+
+#### 65. You are setting up a switch. When you perform a show run, you notice that the VLANs are in the running-config. What could be concluded? Refer to the following exhibit.
+
+- When a switch is set up with a mode of transparent, the VLAN information is stored in the running-config in lieu of the `vlan.dat` file.
+
+#### 67. Switch A has default configuration on its interface. You need to configure Switch A for VLAN 5. Which command will configure the interface to become a member of VLAN 5?
+
+- Switch A must change its interface to an access port with `(config-if)#switchport mode access`
+- Then, you configure the access VLAN of 5 on switch A with `(config-if)#switchport access vlan 5`
+
+#### 70. Which command is similar to show interfaces trunk but will show greater detail?
+
+- `#show interfaces switchport` will show greater detail about the trunk than the command `#show interfaces trunk`
+
+#### 73. You are trying to configure a trunk port on an interface for 802.1Q encapsulation. However, after entering the proper command, you receive the error % Invalid input detected at '^' marker. What is wrong?
+
+- This error is common when configuring Cisco switches that only support 802.1Q and configuration is not necessary.
+
+#### 77. How many bytes are used in an 802.1Q frame for tagging of VLANs?
+
+- An 802.1Q frame is a modified Ethernet frame.
+- The type field is related after the 4 bytes used for 802.1Q tagging.
+
+#### 79. Which command will show you the native VLAN for only Fa0/15?
+
+- `#show interface fastethernet 0/15 switchport` will show the operational mode and if configured as a trunk, it will show the native VLAN.
+
+#### 80. You need to change the native VLAN for interface Fa0/23 from VLAN 1 to VLAN 999. Which command would you use?
+
+- The command to change the native VLAN of a trunk is `(config-if)#switchport trunk native vlan 999`
+
+#### 81. WhenyouchangethenativeVLANofatrunkfromVLAN1toVLAN999andyoureceive the error %CDP-4-NATIVE_VLAN_MISMATCH: Native VLAN mismatch -discovered.... What is the possible problem?
+
+- This error is normal if it's the first interface to be changed over to the new native VLAN since the other interfaces has not been changed yet.
+- If the other interface was changed already and received this error, CDP is letting you know that the other side is mismatched.
+
+#### 91. Which command gives information that’s identical to the output of the show cdp neighbors detail command?
+
+- `#sh cdp entry *` commandj will give output that's identical to `#show cdp neighbors detail`
+
+#### 95. You want to disable LLDP from sending advertisements on a single interface. Which command will you use?
+
+- When you use `(config-if)#no lldp transmit`, it will suppress LLDP messages from exiting the interface it's configured on.
+
+#### 96. What is the default value of the LLDP holddown timer for entries?
+
+- The default value of LLDP holddown timer for entries is 120 seconds.
