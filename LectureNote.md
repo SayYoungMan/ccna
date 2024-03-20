@@ -1340,12 +1340,12 @@
 
 - When interface doesn't know any neighbors yet, neighbor state is in `down`.
 - `Init state` is when it received a hello packet without its own router ID included.
-- When routers receive a hellow packet with its own RID they go to `2-way state`, when they are now ready to share LSAs.
+- When routers receive a hello packet with its own RID they go to `2-way state`, when they are now ready to share LSAs.
 - Then, routers enter `Exstart state` where router with higher RID becomes the `master` that initiates exchange and lower RID becomes the `slave`.
 - In `exchange state`, the routers exchange DBDs which contain basic info about LSAs in their LSDB.
   - Routers then compare it with their own LSDB to determine which LSAs they need to receive.
 - In `loading state`, routers send `LSR (Link State Request)` to request that their neighbors send any LSAs they don't have.
-  - LSAs ar4e sent in `Link State Update (LSU)` messages
+  - LSAs are sent in `Link State Update (LSU)` messages
   - The routers then send `LSAck` messages to acknowledge that they received LSAs
 - In `full state` the routers have a full OSPF adjacency and identical LSDBs.
   - They continue to send and listen for hello packets to maintain the neighbor adjacency

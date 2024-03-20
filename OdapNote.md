@@ -752,3 +752,324 @@ The 'logging trap' command can be used to control logging to a Syslog server - t
 
 - `802.1X` is a protocol that can be configured on WLC to allow only hosts that present a valid certificate on the network.
 - The server that arbitrates the authentication is normally RADIUS
+
+### 3. IP Connectivity
+
+#### 2. How are routers managed with interior gateway protocols?
+
+- Routers are grouped in to the same `autonomous system (AS)`.
+- When they are within the same AS, they can exchange information such as routes to destination networks and converge their routing tables.
+
+#### 3. What is the maximum hop count for RIP?
+
+- The maximum hop count for RIP is 15.
+- Hop count over 15 hops is considered unroutable or unreachable.
+
+#### 5. Which multicast address does RIPv2 use for advertising routes?
+
+- RIPv2: `224.0.0.9`
+- OSPF hello messages: `224.0.0.5`
+- OSPF hello messages for DRs and BDRs: `224.0.0.6`
+- Multicast group for all routers: `224.0.0.2`
+
+#### 7. Which routing protocol will not contain a topology of the network?
+
+- RIP does not contain a topology table
+- RIP compiles its table from multiple broadcasts or multicasts in the network from which it learns routes.
+- However, it never has a full topological diagram of the network.
+
+#### 8. Which routing loop avoidance method is used by routers to prevent routing updates from exiting an interface in which they have been learned?
+
+- `Split horizon` prevents routing updates from exiting an interface in which they have been learned.
+- This stops false information from propagating in the network, which can cause a routing loop.
+- `Routing to infinity` is a way of advertising a downed route as unreachable because of the number of hops.
+- `Routie poisoning` is similar to routing to infinity as it advertises a downed route as over the routable hop count.
+- `Holddowns` can help stabilize a network by holding off changes until a specific amount of time has passed.
+
+#### 11. Which command will allow you to verify routes line by line in a subset of the general route statement?
+
+- `#show ip route 160.45.23.0 255.255.255.0 longer-prefixes` will detail all of the specific routes contained in the route for this network.
+
+#### 32. What role does ICMP take in the routing of a packet?
+
+- ICMP notifies the sending host if there is no viable route to the destination.
+- The ICMP message sent to the sending host is a `destination unreachable` message.
+
+#### 39. Which is a correct statement about the subnet mask?
+
+- The subnet mask is used by the host to determine the immediate network and the destination network.
+- It then decides to either route the packet or try to deliver the packet itself without the router's help.
+
+#### 44. How does the sending host know if the destination is local or remote with respect to its immediate network?
+
+- The sending host ANDs its subnet mask against the destination IP address, then against its IP address, and this gives a frame of reference for where it needs to go and where it is.
+- The host compares the remote IP to its internal routing table after the calculation of local versus remote is performed and the host is ready to route the packet.
+
+#### 45. What is the current method Cisco routers use for packet forwarding?
+
+- The current method of packet forwarding used by Cisco routers is `Cisco Express Forwarding (CEF)`.
+- CEF creates several cache tables used for determining the best route for the destination network.
+
+#### 46. What is the process called at layer 2 when a packet hops from router to router and eventually to the host?
+
+- The layer 2 process is called `frame rewrite`.
+- When a packet hops from router to router, the destination frame is rewritten for the next destination MAC address.
+
+#### 50. Which command will display the router’s ARP cache?
+
+- The command to display the router's ARP cache is `#show ip arp`
+
+#### 51. What is the default time an entry will live in the ARP cache?
+
+- By default, all entries have a TTL of 240 seconds.
+- They will be removed if not used during the 240 seconds.
+
+#### 55. Which routing protocol is a distance-vector routing protocol?
+
+- RIP is a `distance-vector` protocol
+- OSPF is a `link-state` protocol
+- EIGRP is a hybrid protocol that more closely resembles a link-state protocol
+- BGP is a `path-vector` protocol used for Internet routing
+
+#### 57. Which statement accurately describes a routing loop?
+
+- `Routing loop` occurs when packets are routed between two or more routers and never make it to their destination.
+
+#### 64. What is a disadvantage of routing between VLANs on a router’s interface?
+
+- Bandwidth is often a consideration because everything you send to the router must come back on the same port for routing to work.
+
+#### 72. What is an advantage of dynamic routing protocols?
+
+- Optimized route selection is a direct advantage of using dynamic routing protocols.
+- Dynamic routing is not easier to configure due to the upfront planning and configuration.
+
+#### 75. What is a characteristic of distance-vector protocols?
+
+- Protocols such as RIP re-advertise routes learned.
+- This can be problematic because routes learned through this method are never tracked for status or double-checked for validity.
+
+#### 78. Which dynamic routing protocol uses the Diffusing Update Algorithm as its routing algorithm?
+
+- EIGRP: `The diffusing update algorithm (DUAL)`
+- RIP: `Bellman-Ford algorithm`
+- OSPF: `Dijkstra algorithm`
+- BGP: `best path algorithm`
+
+#### 81. Which is a design concept used to stop routing loops with distance-vector dynamic routing protocols?
+
+- The use of holddown timers allows the convergence of the network routing tables.
+- This is used to hold down changes to the routing table before convergence can happen and a routing decision is hastily made by RIP.
+- `Counting-to-infinity` is another name for a routing loop
+
+#### 86. Why would you need to use an EGP?
+
+- It is used when you have a `dual-homed connection` between two ISPs.
+- You would need to know the fastest path to the destination network via the Internet connection
+
+#### 92. Which command would allow you to see the next hop information for CEF?
+
+- The command `#show ip cef` will display all of the network prefixes and the next hope that CEF has in the `Forwarding Information Base (FIB)`.
+
+#### 105. You type into the router ip default-gateway 192.168.11.2. Why will traffic not route out the default gateway?
+
+- `ip default-gateway` allows the management plane of the router to egress the network the router is configured upon through a different gateway.
+
+#### 107. When you configure an IP address on a router interface, what happens to the routing table?
+
+- The router will create a summary route for network as well as a route for host.
+- Both of these changes to the routing table will trigger an update on dynamic routing protocol.
+
+#### 110. What is a benefit of static routing?
+
+- `Static routing` is suited for small networks, where the central admin has a good understanding of the network layout.
+- It does reduce router-to-router communications because the overhead of routing dynamic protocols will not use up bandwidth.
+
+#### 111. Where are static routes stored?
+
+- When you configure a static route, it is temporarily stored in the running config.
+- After it is saved by using `copy running-config startup-config`, it is stored in the startup configuration and can survive reboots.
+
+#### 121. What is the purpose of issuing the command no switchport on a layer 3 switch?
+
+- The command `no switchport` turns the port into a `routed interface` in which an IP address can be configured.
+
+#### 125. Which command would configure the interface on the ROAS configuration as the native VLAN?
+
+- The command `(config-subif)#encapsulation dot1q 2` will associate the subinterface with VLAN 2.
+- If you specify `native` tag after the command, it will make this sub interface the native VLAN for the trunk.
+
+#### 126. Which commands would you use to configure an IP address on an SVI?
+
+- You must enter the interface of the VLAN by `(config)#interface vlan 10`
+- Once in the pseudo interface, you enter the `(config-if)#ip address` command and then enter `no shutdown`.
+
+#### 130. Which command must be entered on 2960-XR switches to enable IP routing?
+
+- On 2960-XR switches, you must enable the `Switching Database Manager (SDM)` for LAN base routing to enable routing.
+- This is done by `(config)#sdm prefer lanbase-routing`.
+- The switch is then required to reload before you can configure routable SVIs.
+
+#### 135. Which command will allow you to examine a switch’s port to see if it is routed or switched?
+
+- `#show interface gi 0/2 switchport` will show the state of a port.
+
+#### 137. You have just configured a new VLAN and have configured the SVI with an IP address and no shutdown command on the interface. However, when you perform a show ip route, it does not show a valid directly connected route for the SVI. What is the problem?
+
+- After configuring a VLAN and the respective SVI interface, a route will not show until at least one port is configured with the new VLAN and it is in an up status.
+
+#### 139. Before configuring ROAS, which command should be entered in the interface connecting to the switch?
+
+- When configuring ROAS on a router's interface, you should always issue `no ip address` command
+- No IPs can be configured on the main interface and all IPs are configured on the subinterfaces.
+
+#### 140. You have configured a ROAS and set up the switch to connect to the router. However, you cannot route between VLANs. Which command would you use on the switch to verify operations?
+
+- Verifying the proper operation of the switch would start with verifying that the port is correctly set as a trunk to the router.
+- `#show interface trunk` command will verify this
+
+#### 147. Which type of routing technique allows for route summarization to be computed automatically by routers?
+
+- Most dynamic routing protocols will summarize routes.
+- They do this for efficiency so the least number of route statements will need to exist in the routing table.
+
+#### 160. Why don’t link-state protocols suffer from routing loops as distance-vector protocols do?
+
+- Link-state protocols require all routers to maintain their own topology database of the network which is why routing loops are less likely to occur.
+
+#### 170. How do Cisco routers determine their router ID (RID)?
+
+- Statically set RID is chosen first, then highest loopback interface IP address and then highest IP address on an active interface is chosen.
+
+#### 172. Which statement is correct about adjacency with OSPF on a broadcast network (LAN)?
+
+- Adjacencies are formed between the DR and the neighbors on the same area.
+- This is done to ensure that all neighbor routers have the same LSDB.
+
+#### 173. How is a DR elected for OSPF?
+
+- The designated router is elected by the highest priority in the same area.
+- If the priorities are all the same, then highest RID becomes the tiebreaker.
+- OSPF will elect a DR for each broadcast network to minimize the number of adjacencies formed.
+
+#### 174. In which database can you see all of the routers discovered in the OSPF network in which hello packets were sent and acknowledged?
+
+- The `neighborship database` is where all the routers can be found that have responded to hello packets.
+- It contains all of routers by RID and each router participating in OSPF manages its own neighborship database.
+
+#### 178. What does the command router ospf 20 configure?
+
+- `router ospf 20` configures a process ID of 20.
+- This process identifies the databases for an OSPF process as well as its configuration.
+
+#### 179. Which command will verify the bandwidth of an interface participating in OSPF?
+
+- `#show interface` will display the reported bandwidth or configured bandwidth of an interface
+
+#### 180. Which command will tune the cost of the OSPF metrics for integration with non-Cisco routers to participate in OSPF?
+
+- When you are configuring Cisco routers to participate in OSPF with non-Cisco routers, each interface on the Cisco router needs to be configured.
+- The `(config-if)#ip ospf cost` command can be tuned between 1 to 65535 and will need to be matched with the other vendor.
+
+#### 182. What is the default number of equal-cost routes for OSPF on Cisco routers?
+
+- By default, Cisco routes will load-balance 4 equal-cost routes with OSPF
+
+#### 184. Which command will allow changing the number of equal-cost routes for OSPF?
+
+- The command `(config-router)#maximum-paths 10` will configure a maxmimum of 10 routes of equal cost for load balancing.
+
+#### 185. What is the maximum number of equal-cost routes that can be configured for OSPF on Cisco routers?
+
+- The maximum number of equal-cost routes that can be configured for load balancing with OSPF on a Cisco router is 32.
+
+#### 189. What is the default OSPF hello interval in which hello packets are sent out on a broadcast (multi-access) network?
+
+- The default hello interval is 10 seconds for a broadcast (multi-access) network such as LAN
+
+#### 194. After changing the router’s RID for OSPF, which command needs to be entered?
+
+- After the OSPF configuration is changed, OSPF needs to be restarted.
+- This is achieved by `#clear ip ospf`
+
+#### 195. Which statement about OSPF area border routers is correct?
+
+- Type 3 LSAs contain summary information about the networks on the other side of ABR.
+- ABRs listen to Type 1 and 2 LSAs but do not exchange link state advertisement messages.
+
+#### 210. Which command will display the DR for a LAN?
+
+- The command `#show ip ospf interface` will display the interface details of each interface for OSPF.
+
+#### 211. In the following exhibit, Router A will not form an adjacency with Router B. What is the problem?
+
+- In order to form adjacency, the area IDs must match and hello/dead timers should match.
+
+#### 216. Which is a correct statement about support for OSPF on an MPLS network?
+
+- Both the customer edge (CE) routers and the provider edge (PE) routers can host erea0.
+- However, the service provider must support area 0, called the `super backbone`, on its PE routers since all areas must be connected to area 0.
+
+#### 218. You have changed the router’s priority for OSPF to make the router the DR, but the router has not become a DR. What must be done to force the election?
+
+- When configuring OSPF for DR, if you configure another router with higher priority, the original DR will remain the current DR.
+- OSPF does not allow for preemption, and therefore you must force the election by clearing the OSPF process on the DR by `#clear ip ospf process x`
+
+#### 225. What is the default priority of HSRP?
+
+- The default priority of HSRP is 100.
+
+#### 226. What is the maximum number of HSRPv1 groups that can be created?
+
+- You can create up to 256 HSRP groups on a router.
+
+#### 227. Which port and protocol are used by HSRP for communications?
+
+- HSRP routers communicate with each other on port 1985 using UDP.
+
+#### 230. When a host sends an outgoing packet to an HSRP group, which router provides the destination address for the default gateway?
+
+- The virtual router is responsible for host communications such as an ARP request for the host's default gateway.
+- It is the virtual router's IP address and MAC address that are used for outgoing packets.
+
+#### 231. Which timer must expire for a standby router in an HSRP group to become the active router?
+
+- The `hold timer` must expire for the standby router to become an active router.
+- The hold timer is 3 times the hello timer, so 3 hello packets must be missed before the standby becomes active.
+
+#### 232. Which port and protocol are used by Gateway Load Balancing Protocol (GLBP) for communications?
+
+- GLBP use the port number 3222 and the UDP protocol for router communications.
+
+#### 233. Which is a difference between HSRPv1 and HSRPv2?
+
+- HSRPv2 allows for timers to be configured in milliseconds in lieu of seconds.
+
+#### 235. Which router is elected to become the GLBP active virtual gateway?
+
+- The router with the highest priority will become the AVG.
+- However, if all routers have the same priority, then the router with the highest IP address becomes the tiebreaker.
+
+#### 238. What is the maximum number of HSRPv2 groups that can be created?
+
+- You can create up to 4096 HSRP groups on a router with HSRPv2.
+
+#### 240. What is the definition of preemption for HSRP?
+
+- `Preemption` allows for the election process to happen for a newly added HSRP router.
+
+#### 245. Which command will configure VRRP on an interface with an IP address of 10.1.2.3?
+
+- `(config-if)#vrrp 1 ip 10.1.2.3` will configure the interface with VRRP with a virtual IP address of 10.1.2.3
+
+#### 246. Refer to the following exhibit. You are running HSRP on Router A and Router B. You intermittently have ISP outages. What command should you configure to alert HSRP to the outage?
+
+- The command `(config-if)#standby 1 track serial 0/0/1` tells the HSRP group of 1 to track the status of interface serial 0/0/1.
+
+#### 247. Which command will allow you to see real-time diagnostics of HSRP?
+
+- `#debug standby` will allow you to see real-time information from HSRP on the router on which you have entered the command.
+
+#### 249. Which command will allow you to set the hello and hold timers for HSRPv2 to a hello of 200 milliseconds and a hold of 700 milliseconds?
+
+- `(config-if)#standby 1 timers msec 200 msec 700` will set the HSRP group of 1 with hello timer of 200 milliseconds and hold timer of 700 milliseconds.
