@@ -2133,7 +2133,7 @@ seq:time-stamp:%facility-severity-MNEMONIC:description
   - `#terminal monitor` is required on remote host everytime to display the logging
 - `Buffer`: Syslog messages will be saved to RAM
   - `(config)# logging buffered [size] <level>`
-- `External Server`: Can configure the device to send messages to and external server
+- `External Server`: Can configure the device to send messages to an external server
   - Syslog servers will listen for messages on UDP port 514
   - `(config)# logging host? <server-ip>`
   - `(config)# logging trap <level>` to set level for external logging
@@ -2297,7 +2297,7 @@ TFTP file transfers have three phases:
 ### Static NAT Configuration
 
 - `(config-if)# ip nat inside` defines inside interfaces connected to the internal network
-- `(config-if)# ip nat inside` defines outside interfaces connected to the external network
+- `(config-if)# ip nat outside` defines outside interfaces connected to the external network
 - `(config)# ip nat inside source static <inside-local-ip> <inside-global-ip>` configures the one-to-one IP mapping
 - `#show ip nat translations` shows NAT entries
 - `#clear ip nat translation *` will clear all dynamic NAT entries
@@ -2350,7 +2350,7 @@ TFTP file transfers have three phases:
 
 ### Power over Ethernet (PoE)
 
-- Allows `Power Sourcing Equipment (PSE)` to provider power to `Powered Devices (PD)` over an Ethernet cable
+- Allows `Power Sourcing Equipment (PSE)` to provide power to `Powered Devices (PD)` over an Ethernet cable
 - The PSE receives AC power from the outlet, converts it to DC power and supplies it to PDs.
 - PoE has a process to determine if a connected device needs power and how much power it needs
 - `Power policing` can be configured to prevent a PD from taking too much power.

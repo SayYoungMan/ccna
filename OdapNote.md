@@ -1073,3 +1073,162 @@ The 'logging trap' command can be used to control logging to a Syslog server - t
 #### 249. Which command will allow you to set the hello and hold timers for HSRPv2 to a hello of 200 milliseconds and a hold of 700 milliseconds?
 
 - `(config-if)#standby 1 timers msec 200 msec 700` will set the HSRP group of 1 with hello timer of 200 milliseconds and hold timer of 700 milliseconds.
+
+### 4. IP Services
+
+#### 8. In the following exhibit, the enterprise owns the address block of 179.43.44.0/28. Which command will create a NAT pool for Dynamic NAT?
+
+- `(config)#ip nat pool EntPool 179.23.44.2 179.43.44.15 netmask 255.255.255.0` will configure the pool called with the range of IP addresses in 179.43.44.0/28.
+- The /24 is used in lieu of /28 because the serial interface is a /24 so all the IP addresses in that network are /24.
+
+#### 15. Which command will allow you to see if the router or switch is using NTP?
+
+- The command `#show clock detail` will display either `no time source` or `time source is NTP` if the router or switch is configured to slave off a server for time.
+
+#### 16. Which command will allow you to view the time details from a configured server?
+
+- `#show ntp associations detail` will show you to view the NTP clock details from the master NTP server.
+
+#### 18. Which command will help you diagnose if the router or switch is getting an answer back from an NTP server?
+
+- `#debug ntp packets` will allow you to verify packets received from an NTP server.
+
+#### 24. Which command will set the router’s internal clock to 2:24 August 1, 2019?
+
+- `#clock set 2:24:00 1 august 2019` will set the clock correctly
+
+#### 26. Which record type is used for an IPv4 address mapping to FQDN for DNS queries?
+
+- `PTR (Pointer record)` is used to look up IP addresses and return FQDNs that are mapped to them.
+
+#### 33. At what point of the lease time will the client ask for a renewal of the IP address from the DHCP server?
+
+- DHCP clients request a renewal of the lease halfway through the lease time of the IP address.
+
+#### 34. Which statement is correct about the DHCP process?
+
+- After the initial Discover, Offer, Request and Acknowledge, it is the client's responsibility to maintain the lease of the IP address. This includes release and renewal.
+- DHCP server is not responsible for maintaining the life cycle of an IP address.
+
+#### 47. Which command will allow you to verify the network management station that is configured to receive trap notifications?
+
+- `#show snmp host` will display the host that is configured to receive notifications of trap or inform massages.
+
+#### 48. When you configure SNMPv3 for a restricted OID, what is the first step?
+
+- When you begin to configure SNMPv3 for a restricted OID, the first step is configuring a view.
+- The view allows or restricts what the user will have access to.
+
+#### 50. Which command will configure the severity level of syslog events that will be sent to the syslog server for debugging?
+
+- The command `(config)#logging trap debugging` will configure syslog events to be sent to the syslog server for the severity levels of debugging (7) through emergency (0).
+
+#### 52. Which command will send logging with time stamps rather than sequence numbers?
+
+- `(config)#service timestamps log datetime` will configure syslog messages to be logged with the date and time rather than arbitrary sequence number.
+
+#### 58. Which command will direct logging to the internal log space?
+
+- `(config)#logging buffered` will direct buffering of log messages to RAM.
+
+#### 60. What is the default level for syslog facility logging?
+
+- The default syslog facility level is debugging (7).
+- All debugging messages are logged to the internal buffer by default.
+
+#### 61. Which command will allow you to verify the active DHCP server that has assigned an IP address to the router?
+
+- `#show dhcp lease` will help you verify the IP address configured on the router, the DHCP server that served the lease and the lease time in seconds.
+
+#### 64. Which DHCP field helps a DHCP server decide which scope to serve to the DHCP relay agent?
+
+- `GIADDR` field is filled out by the DHCP relay agent before the DHCP packet is sent to the DHCP server.
+- This field helps the DHCP server decide which scope to send an Offer message back for.
+- `CIADDR` field is used for the client IP address.
+- `SIADDR` field is used for the server IP address.
+- `CHADDR` is the client hardware address.
+
+#### 66. Which command will allow you to diagnose DHCP relay agent messages on a router or switch?
+
+- `#debug ip dhcp server packet` will show the details of a DHCP relay agent conversation.
+- It will detail conversation between the client and router and the router and the DHCP server.
+
+#### 67. What is DHCPv6 used for when a network is configured for Stateless Address Autoconfiguration (SLAAC)?
+
+- `SLAAC` allows for the client to learn the network ID and calculate a host ID that is unique.
+- However, SLAAC lacks the ability to configure options such as DNS time servers, etc.
+- DHCPv6 allows for the configuration of these options when used in conjunction with SLAAC.
+
+#### 69. Which statement is correct about stateful DHCPv6?
+
+- `Stateful DHCPv6` supplies the network ID and host ID.
+- The default router is discovered through the `Neighbor Discovery Protocol (NDP)`.
+
+#### 71. What happens if you delete a current lease on the DHCP server?
+
+- When the lease for a node is deleted on DHCP server, server is free to hand out the lease to another node.
+- The client will retain the IP address until the renewal period, which will cause a duplication of IP addressing.
+
+#### 72. What happens at the client when the lease for an IP address reaches seven-eighths of the lease cycle?
+
+- At seven-eighths of the lease cycle, the DHCP client will perform a `rebinding`.
+- The rebinding process means that the original DHCP server was down at the one-half mark of the lease, so now the client will try to rebind with any responding DHCP server.
+- The client will retain the lease until the end of the lease cycle.
+
+#### 77. Which DSCP marking has the highest priority?
+
+- `DSCP EF 46` has the highest priority and should be used for VoIP traffic and video.
+
+#### 78. What is the recommended maximum delay VoIP traffic should not exceed?
+
+- The maximum delay that VoIP traffic should not exceed is 150 ms.
+
+#### 80. Which method helps combat queue starvation for QoS queuing?
+
+- QoS queue starvation occurs when the LLQ is given priority over the CBWFQ.
+- Therefore, policing of the LLQ will help limit queue starvation and allow those queues an equal share of the total output bandwidth.
+
+#### 84. Why should QoS policing be implemented?
+
+- QoS policing should be implemented to adhere network traffic to a `contracted committed information rate (CIR)`.
+
+#### 88. Which command will enable SSH version 2 for logins?
+
+- `(config)#ip ssh version 2` will set SSH version to 2.
+
+#### 89. Which command will configure the router or switch to allow SSH as a protocol for management with a fallback of Telnet?
+
+- `(config-line)#transport ssh telnet` will configure the VTY line to accept as a login protocol and fall back to Telnet.
+
+#### 91. You have created the SSH encryption keys, but you cannot enable SSH version 2. What is the problem?
+
+- When you are configuring SSH version 2, the key strength must be at least 768 bits for the modulus.
+
+#### 92. Which command will configure a local user for SSH access?
+
+- `(config)#username user1 password Password20!` will create a user account called user1 with a password of Password20!.
+
+#### 94. You want to turn on local authentication so that a user must supply a username and password when managing the switch. You have created the username and password combinations on the switch. Which command will direct SSH and Telnet to use this authentication model?
+
+- After configuring username and password combinations, you will need to configure the line that will use local authentication.
+- `(config-line)#login local` will apply to all the transport methods configured on the line.
+
+#### 95. Which banner will be displayed first when a user connects to a Cisco device via SSH?
+
+- The `login banner` will be displayed during initial connection to Cisco device via SSH.
+
+#### 98. Which command will allow you to boot a router from a TFTP server for the image of c2900-universalk9-mz.SPA.151-4.M4.bin on the TFTP server of 192.168.1.2?
+
+- `(config)#boot system c2900-universalk9-mz.SPA.151-4.M4.bin tftp://192.168.1.2` will configure the router for booting of the image from the TFTP server.
+- Under normal circumstances, this should not be used in production, because the router boot process is dependent on the availability of the TFTP server.
+
+#### 99. You’re upgrading the flash memory on a 2900 router with a brand-new flash card. What needs to be done to restore the IOS?
+
+- When the router boots, it will not find the IOS and will boot into ROMMON mode.
+- From ROMMON mode, you will configure an IP address, subnet mask, gateway, TFTP server and image and initiate a TFTP download to flash.
+- Once it's downloaded, you can boot the router and verify operations.
+
+#### 100. Which command(s) are required before you can use an FTP server for backing up configuration? Assume that the username is USER and the password is USERPASS.
+
+- `(config)#ip ftp username USER` will configure the username USER for FTP connections
+- `(config)#ip ftp password USERPASS` will configure the password USERPASS for FTP connections
