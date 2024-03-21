@@ -12,6 +12,8 @@
 - 161: SNMP Agent
 - 162: SNMP Manager
 - 514: Syslog
+- 1812: RADIUS
+- 1813: RADIUS
 - 1985: HSRP
 - 3222: GLBP
 - 5246: Control tunnel
@@ -24,6 +26,7 @@
 - 22: SSH
 - 23: Telnet
 - 25: SMTP
+- 49: TACACS+
 - 53: DNS
 - 80: HTTP
 - 110: POP3

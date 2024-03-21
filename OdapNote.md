@@ -1232,3 +1232,201 @@ The 'logging trap' command can be used to control logging to a Syslog server - t
 
 - `(config)#ip ftp username USER` will configure the username USER for FTP connections
 - `(config)#ip ftp password USERPASS` will configure the password USERPASS for FTP connections
+
+### 5. Security Fundamentals
+
+#### 1. Which term describes the outside of the corporate firewall?
+
+- `Perimeter area` is out side of the corporate firewall.
+- The perimeter area generally holds equipment necessary for routing to the ISP.
+
+#### 10. Which method would prevent tampering of data in transit?
+
+- `Secure Sockets Layer (SSL)` communications offer both encryption and authentication of the data via certificate signing.
+- This would prevent tampering of the data end to end.
+
+#### 15. Which attack can be used on a native VLAN?
+
+- `Double tagging` is an attack that can be used against the native VLAN.
+- The attacker will tag the native VLAN on a frame and then tag another inside that frame for the VLAN that the attacker intends to compromise.
+- When the switch receives the first frame, it removes the default VLAN tag and forwards it to other switches via a trunk port.
+- When the other switch receives the frame with the second VLAN tag, it forwards it to the VLAN the attacker is targeting.
+
+#### 21. What type of filters can be placed over a monitor to prevent the data on the screen from being readable when viewed from the side?
+
+- `Privacy filter` are either film or glass add-ons that are placed over a monitor.
+- They prevent the data on the screen from being readable when viewed from the sides.
+
+#### 23. Several office-level users have administrative privileges on the network. Which of the following is the easiest to implement to immediately add security to the network?
+
+- By implementing `least previlege` and removing the administrative privileges from the office workers, you can easily secure the network.
+
+#### 24. You need to protect your users from Trojans, viruses, and phishing emails. What should you implement?
+
+- `Anti-malware software` covers a wide array of security threats to users, including Trojans, viruses and phishing emails.
+
+#### 35. Which command will create and apply an access list to secure router or switch management?
+
+- You must first create an access list to permit the host that will manage the router or switch with `(config)#access-list 1 permit host 192.168.1.5`
+- Then, enter the VTY line in which it will be applied with the command `line vty 0 5`.
+- Then apply it with the command `(config-line)#ip access-class 1 in`, which differs from the command `ip access-group`, which is used on interfaces.
+
+#### 43. During a recent external security audit, it was determined that your enable password should be secured with SHA-256 scrypt. Which command will change the password strength on the switches and routers?
+
+- The command `(config)#enable algorithm-type scrypt secret Password20!` will change the enable password to `Password20!` and the scrypt algorithm type.
+
+#### 46. You need to disconnect a network admin from the switch or router. Which command would you use?
+
+- `#clear line vty 2` will disconnect a remote admin connected to the switch.
+
+#### 49. What is the end device that sends credentials for 802.1X called?
+
+- The end device that sends credentials is called the `supplicant`.
+- The supplicant is a piece of software in the OS that supplies the credentials for AAA authentication.
+
+#### 50. What is the switch called in an 802.1X configuration?
+
+- The switch is responsible for communicating with the supplicant and sending information to the authenticating server.
+- This device is called the `authenticator`.
+
+#### 51. What protocol does the supplicant communicate to the authenticator for 802.1X?
+
+- The protocol used to communicate between the supplicants and the authenticator is `802.1X EAP`.
+- `Extensible Authentication Protocol (EAP)` is a layer 2 protocol used specifically for authenticating devices to switch ports and wireless.
+
+#### 54. A smart card is an example of which type of authentication?
+
+- `Smart card` is an example of multifactor authentication because you must have the smart card and know the passphrase that secures the credentials stored on the card.
+
+#### 58. Which layer 3 protocol does GRE use?
+
+- `GRE` uses the layer 3 protocol 47.
+
+#### 61. What is the default MTU of a GRE tunnel?
+
+- The maximum transmission unit of a GRE tunnel is 1476 because there are 24 bytes of overhead for the GRE header.
+- 20 bytes are for public IP header and 4 bytes for GRE.
+
+#### 62. Which command will help you verify the source and destination of a GRE tunnel?
+
+- `#show interface tunnel 0` will show in the output the source and destination of the tunnel.
+
+#### 63. In the following exhibit, if you do a traceroute on Router A to a destination of 192.168.3.50, how many hops will show?
+
+- If a traceroute is performed to 192.168.3.50 on Router A, it will show one hop.
+- This is because the 192.168.3.0 network is on the otherside of the tunnel interface, which is one hop away.
+
+#### 65. Which protocol helps resolve and direct traffic for DMVPN connections?
+
+- `Next Hop Router Protocol (NHRP)` is responsible for resolving and directing traffic for DMVPN traffic.
+
+#### 67. DMVPN is an example of which topology?
+
+- DMVPN is an example of `hub-and-spoke` or `point-to-multipoint` topology.
+
+#### 68. Which benefit of using a secure VPN allows verification that a packet was not tampered with in transit?
+
+- Data integrity is one of the benefits of using a secure VPN protocol.
+- To ensure its integrity, a packet is sealed with a hash that must be calculated to the same hash on the otherside when it is received and decrypted.
+
+#### 69. Which Cisco technology is often used to create VPN tunnels between sites?
+
+- `Cisco FTD` devices are used to create VPN tunnels between sites.
+- FTD devices run the Cisco FTD software, which allows for firewalls, intrusion prevention and VPNs among other security-related functions.
+
+#### 70. You have several remote workers who enter patient information and require a high level of security. Which technology would best suit the connectivity for these workers?
+
+- Since you have several remote workers who telecommute, the best connectivity option would be `client SSL/VPN connectivity`.
+- A product called `Cisco Any Connect Secure Mobility Clients` allow for SSL encryption for VPN tunnels back to the main site.
+
+#### 71. Which protocol does IPsec use to encrypt data packets?
+
+- IPsec uses `Encapsulating Security Payload (ESP)` protocol to encrypt data.
+
+#### 79. What is the expanded range of a standard access list?
+
+- The expanded range of a standard access list is 1300 to 1999.
+- The range for an expanded extended access list is 2000 to 2699.
+
+#### 87. Which type of ACL allows for removing a single entry without removing the entire ACL?
+
+- `Named access control list` allows for removing and adding entries by their line number.
+- Standard and extended access lists require the entire ACL to be removed and reconfigured if one entry needs to be removed.
+
+#### 88. Which type of ACL allows you to open a port only after someone has successfully logged into the router?
+
+- Once a successful login is performed at the router, the `dynamic access control list` is activated.
+- This is also called lock and key security.
+
+#### 98. Which command will allow you to see the output in the following exhibit with the line numbers?
+
+- `#show ip access-list` will show all access lists with the line numbers
+
+#### 100. Which command will create an extended named access list?
+
+- `(config)#ip access-list extended named_list` will create an extended named access list
+
+#### 113. You are configuring a port for port security and receive the error Command rejected: FastEthernet0/1 is a dynamic port. Which commands will help you configure the port?
+
+- When port security is configured, the port cannot be in dynamic mode or DTP mode.
+
+#### 119. Which command will allow you to see logged security violations for port security?
+
+- `#show port-security` will show all ports that have logged port security violations.
+
+#### 126. Which command will allow you to globally reset all ports with an err-disable state with minimal disruption?
+
+- `(config)#errdisable recovery cause psecure_violation` will reset all ports with an err-disable status.
+
+#### 130. Which is an authentication protocol for AAA servers to secure Telnet authentication?
+
+- `TACACS+` is a protocol used for communications between a switch or router and the AAA server for authenticating users.
+
+#### 131. Which command will configure the router to use a TACACS+ server and a backup of local for authentication of logins?
+
+- `(config)#aaa authentication login default group tacacs+ local` will configure AAA authentication for login using the default list and a group of TACACS+ servers for TACACS+ login first and a backup of local for authentication.
+
+#### 132. You configured the AAA authentication for login to default local but forgot to create a local AAA user. What will happen when you log out?
+
+- The router will lock you out since you have not provided a local account to login with.
+
+#### 133. You were routinely looking at logs and found that a security incident occurred. Which type of incident detection is described?
+
+- Routinely looking at a log file and discovering that a security incident has occurred is an example of `passive detection`.
+
+#### 135. Matilda is interested in securing her SOHO wireless network. What should she do to be assured that only her devices can join her wireless network?
+
+- Enabling `MAC filtering` on the AP will allow the devices that she specifies.
+
+#### 138. Which security mode does WPA3-Enterprise use that offers the highest level of security?
+
+- `WPA3-Enterprise` offers a 192-bit security mode that uses 192-bit minimum strength security protocols.
+
+#### 140. Which feature does 802.11i add to the WPA security protocol?
+
+- The `802.11i` standard added the feature of per-frame encryption.
+
+#### 141. Which mode of encryption does 802.11i (WPA2) introduce?
+
+- The `802.11i (WPA2)` specification introduced a specific mode of AES encryption called Counter Mode with Cipher Block Chaining Message Authentication Code Protocol (CCMP)
+
+#### 142. Which feature was introduced with WPA3 to enhance security?
+
+- The WPA3 protocol introduced the feature of `Simultaneous Authentication of Equals (SAE)` authentication.
+
+#### 143. When configuring WPA2-Enterprise mode on a wireless LAN controller, what must be configured?
+
+- When configuring WAP2-Enterprise mode on a wireless LAN controller, you must configure a RADIUS server for authentication of the users or computers joining wireless.
+
+#### 144. When configuring WPA2, you want to ensure that it does not fall back to the older WPA specification. What parameter should you disable?
+
+- You should disable the `Temporal Key Integrity Protocol (TKIP)` when configuring WPA2.
+- This will ensure that the WAP and client do not fall back to the older WPA.
+
+#### 148. You are configuring a WPA2 WLAN. Which security configuration should you use for the highest level of security?
+
+- WPA2 protocol can be configured with AES encryption to provide the highest level of security.
+
+#### 150. Which protocol will restrict you from achieving high throughput rates?
+
+- When a WLAN is configured with `WPA-TKIP`, it will not be able to achieve over 54 Mbps.
