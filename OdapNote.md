@@ -1430,3 +1430,121 @@ The 'logging trap' command can be used to control logging to a Syslog server - t
 #### 150. Which protocol will restrict you from achieving high throughput rates?
 
 - When a WLAN is configured with `WPA-TKIP`, it will not be able to achieve over 54 Mbps.
+
+### 6. Automation and Programmability
+
+#### 4. What is the term that is used to describe the framework responsible for assisting in network automation?
+
+- The term `DevOps` is used to describe the framework responsible for assisting in network automation.
+- `NetOps` refers to the network operation team's responsibility.
+- `SysOps` is used to describe the control of network systems such as DNS and DHCP.
+- `SecOps` refers to the security operation as it pertains to the network.
+
+#### 5. Which management methodology is commonly used by developers for network automation?
+
+- The management methodology that is commonly used by developers for network automation is `Lean and Agile`.
+- Agile focuses on an adaptive approach for simultaneous workflows, such as configuration of default route on several routers.
+
+#### 7. Which element of YAML defines a key-value pair?
+
+- YAML uses `mapping` to define keys and values as pairs.
+
+#### 12. You are developing a network automation script that retrieves information. Which interface can you implement that will act similar to an API?
+
+- SNMP was originally created to allow retrieval of information from network devices and can be programmatically controlled similar to API.
+
+#### 16. Which is a benefit of controller-based networking?
+
+- A benefit of controller-based networking is increased security.
+- When ACLs and filters are applied, they are applied informally to all nodes that are controlled by the controller.
+
+#### 24. Which method for configuration is used with Cisco Prime Infrastructure?
+
+- SNMP along with Telnet and SSH are used to configure network devices with Cisco Prime.
+
+#### 25. Which type of architecture is used with controller-based networks?
+
+- `Spine/Leaf` architecture model has been adopted in controller-based networks.
+
+#### 37. On which SDN plane does CDP function?
+
+- CDP functions on the management plane of the SDN model.
+- It helps with management of routers and switches and does not directly impact the data plane.
+
+#### 42. What is the maximum hop count of fabric switching?
+
+- The maximum hop count on fabric switching is a total of 3 hops.
+- When a host transmits, it will enter a Leaf switch; then the Leaf switch will then forward traffic to the spine and againe to leaf switch and to the destination host.
+
+#### 45. Which WAN technology uses the overlay to connect remote offices?
+
+- `DMVPN` is a WAN technology that allows for VPNs to be created using the overlay of SDN.
+
+#### 48. Which next-hop packet forwarding protocol is used with SDN switching networks?
+
+- `Equal-Cost Multi-Path routing (ECMP)` packet forwarding protocol is used to calculate next-hop forwarding with SDN switch networks.
+
+#### 50. Which protocol is not used by the DNA discovery process for reading the inventory of a network device?
+
+- After the Cisco DNA discovery process has found a device, it will use SSH, Telnet, SNMP, HTTP(S) and NETCONF.
+
+#### 51. Where would you see the overall health of the network inside of the Cisco DNA Center?
+
+- `Assurance` section of Cisco DNA Center allows you to see the overall health of network devices managed by DNA center.
+
+#### 52. Which Cisco DNA Center feature allows you to template and apply standard configuration such as DNS servers, NTP servers, and AAA servers?
+
+- `Plug and Play` is a feature inside Cisco DNA Center that allows you to onbaord network devices and apply standard configurations.
+
+#### 53. You want to see how everything is connected at a particular site. Which section contains a tool to obtain this information inside of the Cisco DNA Center?
+
+- Under the `Provision` section, you can click on the hierarchy item that contains the site, then you will select the topology icon in the result pane.
+- This will allow you to view how everything is connected at a particular site.
+
+#### 54. You need to add an OSPF area to a number of routers. What is the easiest method to achieve this with the Cisco DNA Center?
+
+- With `DNA Command Runner Tool`, you can execute a command on a group of devices.
+
+#### 55. In which section inside of the Cisco DNA Center can you view and manage inventory of routers, switches, APs, and WLCs?
+
+- `Provision` section allows you to view and edit the discovered inventory of network devices.
+
+#### 56. You are developing a Python script that will interact with the Cisco DNA Center. Which section will detail the API that you will need to use?
+
+- You can see the details of an API for Cisco DNA Center by using the `Platform` section.
+
+#### 57. What is the Cisco DNA Center feature that automates the fabric of the underlay and overlay of the network?
+
+- The Cisco `SD-Access` is an automated Plug and Play solution that automates the underlay and overlay of the fabric.
+
+#### 58. Which feature does Cisco Prime Infrastructure provide that Cisco DNA Center cannot provide?
+
+- Cisco DNA Center cannot provide device configuration backups, which still requires Cisco Prime Infrastructure.
+
+#### 77. Which component in an Ansible setup defines the connection information so that Ansible can perform configuration management?
+
+- `Inventory` component defines the various hosts and their connection information in an Ansible setup.
+
+#### 79. Which Puppet component contains the configuration for the managed hosts?
+
+- `Manifest` component of Puppet contains the configuration for the managed hosts.
+
+#### 81. Which Chef component collects system state information and reports back to the Chef Server component?
+
+- `Ohai` component is responsible for monitoring system state information and reporting back to the Chef server component.
+
+#### 84. Which Ansible tool will allow you to try commands against a host without making a Playbook?
+
+- `Ad-hoc interface` allows you to try commands against a host without making a Playbook.
+
+#### 85. What are global variables that contain information specific to Puppet called?
+
+- `Facts` describes global variables that contain information that is specific to Puppet.
+
+#### 86. Once you have completed a Cookbook for Chef, where do you upload the Cookbook so it is accessible on the Chef Server?
+
+- Once you have completed a Cookbook for Chef, you will upload the Cookbook to the `Bookshelf` located on the Chef Server.
+
+#### 89. What function does Knife serve in the Chef configuration management utility?
+
+- The `Knife utility` is a CLI that allows for the management of Chef.
