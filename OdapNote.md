@@ -1548,3 +1548,126 @@ The 'logging trap' command can be used to control logging to a Syslog server - t
 #### 89. What function does Knife serve in the Chef configuration management utility?
 
 - The `Knife utility` is a CLI that allows for the management of Chef.
+
+### 7. Practice Exam 1
+
+#### 8. What is the term that defines the access point for the service provider’s services?
+
+- `Point of presence (PoP)` is the term that defines the access point of the provider's services.
+- These services might be Internet, private WAN, or cloud resources
+
+#### 9. You have several VMs in a public cloud. What is a benefit of creating NTP VNF in the public cloud for the VMs?
+
+- Lowering bandwith between the premises and your VMs on the public cloud is a direct benefit of locating NTP VNF on the public cloud for VM time synchronization.
+
+#### 10. When deciding to move DNS into the cloud for an application on the public cloud, what is the primary decision factor?
+
+- Bandwidth is the primary decision factor for moving DNS closer to the application in the public cloud.
+- However, if the majority of DNS users are on premises, then it should remain on premises for bandwidth reasons.
+
+#### 14. What are stateless DHCPv6 servers used for?
+
+- Stateless DHCPv6 servers are used to configure DHCP options only.
+- The one option that all clients need is the DNS server.
+- Default gateway and IPv6 address are configured via RS and RA packets, when a client starts up in the network.
+
+#### 19. Which command will show the number of entries in a MAC address table?
+
+- `#show mac address-table count` will show the current MAC address entry count and will also show the maximum number of entries the table can hold.
+
+#### 23. Which is a correct statement about the output in the following exhibit?
+
+- The switch has negotiated with the adjacent switch to become a trunk and set its trunking protocol to 802.1Q.
+- The letter n in front of 802.1Q specifies it was negotiated.
+
+#### 24. You have a switch with several hundred interfaces. You only want to see the running- config for one interface, Gi3/45. Which command will allow you to see the running-config for only Gi3/45?
+
+- `#show running-config interface gi 3/45` will show the running-configuration for only interface Gi3/45.
+
+#### 30. You are configuring an EtherChannel between two switches. You check your configuration on the first switch and are ready to configure the second switch. What mode do you need to configure on the other switch? Refer to the following exhibit.
+
+- Since the auto mode was used on the first switch, desirable should be used on the second switch to assure forming of an EtherChannel by using the command `(config-if)#channel-group 1 mode desirable`
+
+#### 35. Which AP mode allows for RF analysis of the 802.11ac radio spectrum?
+
+- `Monitor mode` can be used for analysis of the radio spectrum.
+
+#### 38. Which is a benefit of using TACACS+ for authentication of users?
+
+- TACACS+ is a Cisco-defined protocol.
+- One of the useful features is that it can authenticate a user and only allow that user to access certain commands on the router or switch.
+
+#### 40. You want all guests to register for wireless Internet access before granting them access. What should you implement?
+
+- `Captive portal` will allow you to require all guests to register for wireless Internet access before granting them access.
+- When you connect to the SSID, they will be presented with the captive portal web page.
+
+#### 45. Which command will allow you to see the next advertisement interval for RIPv2?
+
+- `#show ip protocols` will display the next interval when RIPv2 advertisements are sent out.
+
+#### 48. You have RIPv2 configured on an Internet-facing router. Which command will suppress RIPv2 advertisements on the interface link?
+
+- `(config-router)#passive-interface serial 0/0` configured in the router instance will suppress updates from exiting interface Serial 0/0.
+
+#### 49. Which is a problem with using RIPv2 in a network?
+
+- RIPv2 has extremely slow convergence time. This is because the advertisement of routes is every 30 seconds.
+
+#### 64. Which command will allow you to see the networks the current router is advertising for OSPF?
+
+- `#show ip protocols` will list the router ID of the current router as well as the networks that are being advertised via OSPF on the current router.
+
+#### 69. Which statement describes FQDNs?
+
+- FQDNs are significant from right to left, starting with a period of signify the root.
+- The period is normally not visible on the FQDN, but it is processed as the root lookup.
+
+#### 70. Which protocol and port number does SNMP use for polling from the NMS?
+
+- SNMP uses UDP port 161 for communication from the NMS to a network device for information requests.
+- Uses UDP 162 for traps.
+
+#### 75. Which command needs to be configured to enable the SSH Copy Protocol (SCP)?
+
+- `(config)#ip scp server enable` needs to be configured to enable the `SSH Copy Protocol (SCP)`
+
+#### 76. What is the attack in which DTP is exploited by a malicious user?
+
+- `VLAN hopping` is an attack in which DTP is exploted.
+- The attacker negotiates a trunk with the switch via DTP and can hop from VLAN to VLAN.
+
+#### 77. Which layer 2 protocol has built-in security for WAN connections?
+
+- `Point-to-Point Protocol (PPP)` is a layer 2 WAN protocol that supports CHAP which secures connections.
+
+#### 82. You have been asked to recommend a private WAN technology. All of the remote offices have varied physical connectivity paths. Which private WAN technology should you recommend?
+
+- MPLS allows for varied access links such as serial leased lines, Frame Relay, Metro Ethernet, etc.
+- You can leverage the existing connectivity methods to form a private WAN.
+
+#### 83. Which protocol does IPsec use to check integrity of data packets?
+
+- IPSec uses `Authentication Header (AH)` protocol to check data integrity.
+- This is done by creating a numerial hash of the data via SHA1, SHA2, or MD5 algorithms.
+
+#### 89. Which protocol was released to fix WEP?
+
+- `Wi-Fi Protected Access (WPA)` was rushed out and released to fix weak security in the `Wired Equipvalent Privacy (WEP)` wireless security protocol.
+- WPA2 was formally released to address weaknesses in the RC4-TKIP security protocol.
+
+#### 92. Which is a negative outcome from automating a configuration change across the enterprise?
+
+- A negative outcome from automation of configuration across an enterprise is that you increase the odds of configuration conflicts.
+
+#### 94. Which protocol is used with the Southbound interface in the SDN controller?
+
+- `OpenFlow protocol` is an openstandard used to configure network devices via the `Southbound interface (SBI)` of the SDN controller.
+
+#### 95. On which layer does the fabric of software defined network switch packets?
+
+- The fabric of the SDN switches packets on layer 3.
+
+#### 100. Which command is used to output JSON from the execution of a command on a Cisco router or switch?
+
+- `show interface status | json-pretty native` is used to convert the output of a command to JSON in a Cisco router or switch.
