@@ -1671,3 +1671,78 @@ The 'logging trap' command can be used to control logging to a Syslog server - t
 #### 100. Which command is used to output JSON from the execution of a command on a Cisco router or switch?
 
 - `show interface status | json-pretty native` is used to convert the output of a command to JSON in a Cisco router or switch.
+
+## CCNA Certification Study Guide
+
+### Assessment Test
+
+#### 4. You reload a router with a configuration register setting of 0x2101. What will the router do when it reloads?
+
+- 2100 boots the router into ROM monitor mode
+- 2101 loads the mini-IOS from ROM
+- 2102 is the default and loads the IOS from flash
+
+#### 5. Which of the following commands provides the product ID and serial number of a router?
+
+- `#show license udi` commands displays the `unique device identifier (UDI)` of the router, which comprises the product ID and serial number of the router.
+
+#### 6. Which command allows you to view the technology options and licenses that are supported on your router along with several status variables?
+
+- `#show license feature` command allows you to view the technology package licenses and feature licenses that are supported on your router along with several status variables related to software activation and licensing.
+
+#### 7. You need to look at past network data in DNA Center. How long can you look back into the DNA snapshot?
+
+- DNA center stores the network snapshot for one week.
+
+#### 11. What command is used to view the IPv6-to-MAC-address resolution table on a Cisco router?
+
+- `#show ipv6 neighbor` provides the ARP cache on a router.
+
+#### 17. When do two adjacent routers enter the 2WAY state?
+
+- The process starts by sending out Hello packets.
+- Every listening router will then add the originating router to the neighbor database.
+- The responding routers will reply with all of their Hello information so that the originating router can add them to its own neighbor table.
+- At this point, we will have reached the 2WAY sate.
+
+#### 20. Which statement about GRE is not true?
+
+- `Generic Routing Encapsulation (GRE)` has no built-in security mechanisms.
+
+#### 28. On which interface do you configure an IP address for a switch?
+
+- For switch, the IP address is configured under a logical interface, called a `management domain` and VLAN 1 by default.
+
+#### 31. Your inside locals are not being translated to the inside global addresses. Which of the fol- lowing commands will show you if your inside globals are allowed to use the NAT pool?
+
+- Once you create your pool, `(config-if)#ip nat inside source` must be used to say which inside locals are allowed to use the pool.
+- To see if access list 100 is configured correctly, `#show access-list` is needed.
+
+#### 38. Which class of IP address provides 15 bits for subnetting?
+
+- Class A addressing provides 22 bits for host subnetting.
+- Class B provides 16 bits but only 14 are available for subnetting.
+
+#### 39. What DNS record do you need to create for APs to automatically discover the WLC.
+
+- For the DNS method, you need to create a A record for `CISCO-CAPWAP-CONTROLLER` that points to the WLC management IP.
+
+#### 45. What’s the default QoS queue for a WLAN?
+
+- WLANs default to silver queue, which effectively means no QoS is being utilized.
+
+#### 46. Where is a hub specified in the OSI model?
+
+- Hubs regenerate electrical signals, which are specified at the Physical layer.
+
+#### 50. 1000Base-T is which IEEE standard?
+
+- `802.3ab` is the standard for 1 Gbps on twisted-pair.
+
+#### 53. Which command is used to determine if an access list is enabled on a particular interface?
+
+- `#show ip interface` will show you if any interfaces have an outbound or inbound access list set.
+
+#### 57. You boss read about WPA3 and want you to explain it to him. What replaced the default open authentication with which of the following enhancements?
+
+- 802.11 open authentication support has been replaced with `Opportunistic Wireless Encryption (OWE)` enhancement.
