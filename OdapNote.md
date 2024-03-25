@@ -1746,3 +1746,102 @@ The 'logging trap' command can be used to control logging to a Syslog server - t
 #### 57. You boss read about WPA3 and want you to explain it to him. What replaced the default open authentication with which of the following enhancements?
 
 - 802.11 open authentication support has been replaced with `Opportunistic Wireless Encryption (OWE)` enhancement.
+
+## Boson Exsim
+
+### Practice Exam A
+
+#### 13. Which of the following is true about IPSec configured in transport mode?
+
+- IPSec supports two modes: transport and tunnel.
+- In transport mode, only the IP packet's payload is encrypted by IPSec.
+- IPSec in tunnel mode, encrypts the entire packet so it requires additional headers.
+
+#### 14. In a split-MAC deployment, which device is responsible for prioritizing packets and responding to beacon and probe requests?
+
+- Lightweight AP handles real-time processing of data, such as sending and receiving 802.11 traffic, responding to beacons and probe messages, encryption and packet prioritization.
+- WLC handles tasks that are not time-sensitive such as security management, LAP config management and client load balancing.
+
+#### 15. Which of the following security settings are you most likely to configure by using Layer 3 Security drop-down list box on the Layer 3 tab?
+
+- There are two different sets of Layer 3 security feature that you can configure on a Cisco WLC: one ofr WLAN and one for Guest LAN.
+- `IPSec` enables Layer 3 security of WLANs by IPSec
+- `VPN Pass-through` enables Layer 3 security for WLANs by allowing a client to establish a connection with a speicifc VPN server.
+- `Web Authentication` enables Layer 3 security for Guest LANs by prompting a user for name and password.
+- `Web Passthrough` enables direct access to the network for Guest LANs without prompting.
+
+#### 24. SSH configuration message question
+
+- To enable SSH for VTY lines, you should complete the following steps:
+  1. Configure host name other than default by `hostname` command
+  2. Configure domain name by `ip domain-name` command
+  3. Generate RSA key pair for router by `crypto key generate rsa` command
+  4. Configure VTY lines to use SSH by `transport input ssh` command
+
+#### 25. Which of the following statements about FlexConnect ACLs is true?
+
+- `FlexConnect ACLs` are configured on WAP VLAN interfaces if the lightweight AP is operating in FlexConnect mode.
+- Although it is possible to configure FlexConnect ACLs for the native VLAN, it's not possible to configure FlexConnect ACLs for the native VLAN if the VLAN configuration is inherited from a FlexConnect group.
+
+#### 34. You want to use an HTTPS connection to access and configure a WLC.
+
+- You should issue `config network secureweb enable` command to configure WLC to support HTTPS management connections.
+
+#### 38. Which of the following statements is correct regarding how OSPF operates on the interface?
+
+- Nonbroadcast and point-to-multipoint nonbroadcast networks do not allow multicast packets.
+- To configure OSPF to send unicast updates, you must configure neighbour routes with `neighbor` command so they can establish adjacencies on OSPF non-broadcast networks.
+
+#### 39. Select the following EIGRP terms and drag them to their corresponding definitions
+
+- `Feasible Distance` is the best metric along a path to a destination.
+- `Advertised Distance` is the metric that has been calculated by the next-hop router.
+- `Successor` is the best path to a destination network. The route with the lowest FD is chosen as the successor.
+- `Feasible successor` is a backup path that is guaranteed to be loop-free and can be used if the successor route goes down.
+
+#### 41. Select the 802.11 MAC frame components, and drag them to their appropriate position within the 802.11 MAC frame format.
+
+- FC - DUR - ADD1 - ADD2 - ADD3 - SEQ - ADD4 - DATA - FCS
+
+#### 43. Which of the following are used by WPA2 to provide MICs and encryption?
+
+- AES and CCMP are used by WPA2 to provide MICs and encryption.
+- Wireless security protocols use MICs to prevent data tempering and encryption to protect confidentiality.
+
+#### 49. Which of the following is not information provided from an IP phone to a switch by using CDP?
+
+- Although VLAN IDs are sent using CDP to devices on network, it is the switch that sends voice VLAN ID to IP phones and not vice versa.
+
+#### 55. Which of the following best describes what will occur when an attached PD attempts to draw more than allocated amount of power from configured interface?
+
+- `power inline police action log` command will restart and send a log message to the console when an attached PD attempts to draw more than the cutoff power from the configured interface.
+
+#### 58. Which of the following statements are true regarding dynamic interfaces on WLCs?
+
+- `Dynamic interfaces` are user-defined and are typically used for client data.
+
+#### 60. Which of the following APIs are typically used to enable communication between SDN controller and application plane?
+
+- `REST` is a northbound API architecture that uses HTTPS to enable external resources to access and make use of programmatic methods that are exposed by the API.
+- `OSGi` is a Java-based northbound API framework that is intended to enable the development of modular programs.
+
+#### 65. Which of the following statements best describes the AAA Override feature on a Cisco WLC?
+
+- The AAA Override feature on a Cisco WLC can be used to configure VLAN tagging, QoS and ACLs to individual clients based on RADIUS attributes.
+
+#### 71. Which of the following is the best way to mitigate zero-day exploits?
+
+- Hardening a system so that it provides only required functionality is the best way to mitigate zero-day exploits.
+- `A zero-day vulnerability` is a vulnerability that has not yet been identified and therefore has no fix.
+
+#### 82. You are configuring a normal WLAN by using WLC GUI. You click Create New on WLANs page. Which action are you most likely to perform first.
+
+- To create a new normal WLAN, you should complete four steps on the WLANs > New page of WLC GUI:
+  1. Select the type of WLAN you are creating from `Type` drop-down list box.
+  2. Enter a 32-character or less profile name in the `Profile Name` field.
+  3. Enter a 32-character or less SSID in the `SSID` field
+  4. Choose a WLAN ID from the `ID` drop-down list box
+
+#### 83. Which of the following best describes an AP deployment that connects APs to a WLC that is housed within a switch stack?
+
+- In `Embedded AP deployment`, the WLC is embedded wihtin a stack of switching hardware instead of existing as a separate entity.
