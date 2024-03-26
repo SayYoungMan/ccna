@@ -56,8 +56,8 @@
 - STP Max age: 20 seconds (6 seconds for RSTP)
 - STP convergence: 50 seconds
 - RIP advertisement: every 30 seconds
-- OSPF hello message: every 10 seconds
-- OSPF dead timer: 40 seconds
+- OSPF hello message: every 10 seconds (30 seconds for nonbroadcast, point-to-multipoint)
+- OSPF dead timer: 40 seconds (120 seconds for nonbroadcast, point-to-multipoint)
 - OSPF LSA aging: 30 minutes
 - CDP message: every 60 seconds
 - CDP holdtime: 180 seconds
@@ -68,6 +68,7 @@
 - Mac address table aging: 5 minutes
 - PAgP notification: every 30 seconds
 - ARP table aging: 240 seconds
+- HSRP Hello Messages: every 3 seconds
 
 ## Protocol Numbers
 
