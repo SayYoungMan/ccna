@@ -1,5 +1,32 @@
 # CCNA CheatSheet
 
+## Standards
+
+### IEEE
+
+- 802.3i: 10Base-T (Ethernet)
+- 802.3u: 100Base-TX (Fast Ethernet)
+- 802.3z: 1000Base-LX
+- 802.3ab: 1000Base-T (Gigabit Ethernet)
+- 802.3ae: 10GBase-SR/LR/ER
+- 802.3an: 10GBase-T (10 Gig Ethernet)
+- 802.1q: dot1q VLAN tagging
+- 802.1d: STP
+- 802.1w: RSTP
+- 802.1s: MSTP
+- 802.11, 802.11b, 802.11g: 2.4GHz Wireless network
+- 802.11a: 5GHz Wireless network
+- 802.11i: WPA2
+- 802.1x: Authentication for wireless network
+- 802.3af: PoE
+- 802.3at: PoE+
+- 802.3ad: LACP
+
+### RFC
+
+- RFC 1918: Private IPv4 Range
+- RFC 4954: QoS DSCP marking recommendation
+
 ## Addresses
 
 ### MAC Address
