@@ -1672,6 +1672,80 @@ The 'logging trap' command can be used to control logging to a Syslog server - t
 
 - `show interface status | json-pretty native` is used to convert the output of a command to JSON in a Cisco router or switch.
 
+### 8. Practice Exam 2
+
+#### 5. Which sub-protocol inside of the PPP suite is responsible for tagging layer 3 protocols so that multiple protocols can be used over a PPP connection?
+
+- `Network Control Protocol (NCP)` works at layer 3 tagging the network protocols from end to end when PPP is used.
+- This gives PPP the ability to offer multiprotocol transport.
+
+#### 10. You are running several web servers in a cloud with a server load balancer. As demand increases, you add web servers. According to the NIST standard of cloud computing, which feature can you use to increase your compute capability for demand?
+
+- `Rapid elasticity` is the ability to add and remove compute capability in the cloud.
+
+#### 14. What is the process of stateful DHCPv6 for IPv6?
+
+- `Stateful DHCPv6` uses a process of Solicit, Advertise, Request, Reply.
+- However, IPv6 uses DHCPv6 Solicit multicast address.
+
+#### 15. When SLAAC is performed on an IPv6 host, which process happens first?
+
+- Before a host can communicate via an RS packet, it first needs a valid IP address, which is a link-local address so that it can send RS packet and receive RA packet.
+
+#### 16. In IPv6, the solicited-node multicast message is used for what?
+
+- The `Solicited-node multicast message` is used for resolution of the MAC address for an IPv6 address.
+
+#### 17. The following exhibit is an Ethernet frame. What is field A in the exhibit?
+
+- The first field after `preamble` and `start frame delimiter (SFD)` is the `destination MAC address`.
+- `Type` field is after two address fields and is used to define the upper-layer protocol the data belongs to.
+
+#### 30. You have configured the command channel-group 1 mode active on a range of interfaces that will participate in an EtherChannel. Which pseudo interface is created for overall management of the EtherChannel?
+
+- When you configure the `channel-group 1 mode active` command on the first interface, a pseudo interface is created called `port-channel 1`.
+
+#### 35. Which AP mode requires all traffic to be centrally switched at the WLC?
+
+- `Local mode` is a centralized switching mode in which all traffic is first sent to the WLC to be centrally switched to its intended destination.
+
+#### 38. Which protocol will encrypt the entire packet from the switch or router to the AAA server?
+
+- `TACACS+` protocol will encrypt the entire packet from the switch or router to the AAA server.
+
+#### 43. Why can a route have a destination of an interface rather than an IP address?
+
+- Serial interfaces are point-to-point connections.
+- Any traffic directed down the interface will automatically appear on the adjacent router.
+
+#### 45. What is the purpose of the RIPv2 holddown timer?
+
+- The holddown timer's job is to allow the network to stabilize after a route had become unreachable via an update.
+- This limits the potential problems related to a flapping port and allows RIPv2 to converge route updates in the entire network.
+- The default holddown timer is set to 180 seconds.
+
+#### 66. Which is a disadvantage of using NAT?
+
+- NAT creates packet switching path delay because each address travling through NAT process requires lookup time for translation.
+
+#### 71. Which command will configure all event logs to be sent to a syslog server?
+
+- `(config)#logging host 192.168.1.6` will configure all logs to be sent to the syslog server.
+
+#### 74. Which layer 3 protocol is used for marking packets with QoS?
+
+- `DSCP` is a 6-bit values in the `Type of Service (ToS)` field of the IP header.
+- The DSCP value defines the importance of packets at layer 3.
+
+#### 86. Which command is used to view the DHCP snooping database?
+
+- `#show ip dhcp snooping binding` will display the DHCP snooping database.
+- This database will have entries for the MAC address, IP address, lease time, VLAN, and interface.
+
+#### 88. Which authentication method will allow an authenticated user to access only certain commands on a router or switch?
+
+- `TACACS+` will allow for authentication of users and also provides a method of restricting users to specific commands.
+
 ## CCNA Certification Study Guide
 
 ### Assessment Test
