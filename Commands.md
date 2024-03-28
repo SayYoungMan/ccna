@@ -62,6 +62,7 @@
 - `(config-vlan)#name <name>`: Assign a name to the VLAN
 - `(config-if)#switchport mode {access|trunk}`: Configure the port to be access/trunk port
 - `(config-if)#switchport access vlan <vlan-number>`: Assign port to the VLAN
+- `(config-if)#switchport voice vlan <vlan-id>`: Tag phone's traffic with VLAN ID
 
 ### Trunk Port
 
@@ -270,15 +271,100 @@
 - `(config)#logging host <server-ip>`: Make device to send syslog messages to an external server
 - `(config)#logging trap <level>`: Set level for external logging
 
+## SSH
+
+- `#show version`: Check IOS image and see if it has K9 in name
+- `#show ip ssh`: Show details about SSH configuration
+- `(config)#line vty 0 15`: Configure VTY lines
+- `(config-line)#transport input <protocol>`: Allow certain protocols
+- `(config-line)#access-class <number>`: Apply ACL to VTY
+- `(config)#crypto key generate rsa`: Generate RSA keys
+- `(config)#ip ssh version 2`: Enable SSHv2
+- `(config-line)#login local`: Enable user authentication
+
+## FTP & TFTP
+
+- `#show file systems`: View the IOS file system
+- `#show flash`: View the contents of flash
+- `#copy {ftp:/tftp:} flash:`: Copy the file to flash using FTP/TFTP
+- `(config)#boot system <file-path>`: Use new version of IOS
+- `#delete <file-path>`: Delete the file in the path
+- `(config)#ip ftp <username/password>`: Configure FTP username/password that device will use when connecting to FTP server
+
+## NAT
+
+- `#show ip nat translations`: Show NAT entries
+- `#show ip nat statistics`: Show useful metrics
+- `#clear ip nat translation *`: Clear all dynamic NAT entries
+- `(config-if)#ip nat {inside|outside}`: Define the interface as inside/outside
+- `(config)#ip nat inside source static <inside-local-ip> <inside-global-ip>`: Configure 1-1 static IP mapping
+- `(config)#access-list <number> permit <network> <wildcard-mask>`: Define the traffic that should be translated
+- `(config)#ip nat pool <pool-name> <start-ip> <end-ip> {prefix-length <length>|netmask <mask>}` to define pool of inside global IPs
+- `(config)#ip nat inside source list <acl-number> pool <pool-name>`: Configure dynamic NAT by mapping ACL to the pool
+- `(config)#ip nat inside source list <acl-number> interface <interface-id> overload`: Use PAT out of the exit interface
+
 ## Security
 
 - `(config)#enable password <password>`: Set password on privilege level but not secure
 - `(config)#service password-encryption`: Encrypt all current and future passwords in config
 - `(config)#enable secret <password>`: Set more secure password and it takes precedence over `enable password`
 
+### Console Port Security
+
+- `(config)#line console 0`: Enter console line config mode
+- `(config-line)#password <password>`: Configure console line's password
+- `(config-line)#login`: Require a user to enter configured password to access the CLI via console port
+- `(config-line)#login <user-name>`: Require a user to login using one of the configured usernames on the device
+- `(config-line)#exec-timeout <time>`: Log the user out after defined time of inactivity
+
+### Port Security
+
+- `#show port-security`: Show useful overview of port securities defined in different interfaces
+- `#show port-security interface <interface-id>`: Show the port security configured on the interface
+- `#show mac address-table secure`: View all the secure MAC addresses
+- `(config-if)#switchport port-security`: Enable port security on switchport with default settings
+- `(config-if)#switchport port-security mac-address <address>`: Manually configure allowed MAc
+- `(config-if)#switchport port-security violation {shutdown|restrict|protect}`: Set the violation mode
+- `(config-if)#switchport port-security aging time <minutes>`: Configure secure MAC aging
+- `(config-if)#switchport port-security aging type {absolute|inactivity}`: Configure aging type
+- `(config-if)#switchport port-security aging static`: Configure static MAC aging
+- `(config-if)#switchport port-security mac-address sticky [<address>]`: Enable sticky secure MAC learning with optional static MAC address
+- `(config)#errdisable recovery cause psecure-violation`: Re-enable the interfaces disabled by port security automatically
+- `(config)#errdisable recovery interval <seconds>`: Configure the timer interval
+
+### DHCP Snooping
+
+- `#show ip dhcp snooping binding`: Show DHCP snooping binding table
+- `(config)#ip dhcp snooping`: Enable DHCP snooping globally
+- `(config)#ip dhcp snooping vlan <vlan-id>`: Enable DHCP snooping for a VLAN
+- `(config-if)#ip dhcp snooping trust`: Mark the interface as trusted
+- `(config-if)#ip dhcp snooping limit rate <number-per-sec>`: Set rate limiting
+- `(config)#errdisable recovery cause dhcp-rate-limit`: Configure auto recovery for rate limiting
+- `(config)#no ip dhcp snooping information option`: To turn off, assuming the message was received from a DHCP relay agent
+
+### Dynamic Arp Inspection (DAI)
+
+- `#show ip arp inspection interfaces`: Show all DAI configured on interfaces
+- `(config)#ip arp inspection vlan <vlan-id>`: Enable DAI for a specific VLAN
+- `(config-if)#ip arp inspection trust`: Mark the interface as trusted
+- `(config-if)#ip arp inspection limit rate <messages-count> burst interval <seconds>`: Set rate limit
+- `(config)#ip inspection validation {dst-mac|ip|src-mac}`: Enable optional checks
+- `(config)#arp access-list <name>`: Enter ARP ACL config mode
+- `(config-arp-nacl)#permit ip host <ip> mac host <mac>`: Create an ARP ACL entry
+- `(config)#ip arp inspection filter <name> vlan <vlan-id>`: Apply ARP ACL to a VLAN to manually allow IP-MAC mapping not found in DHCP snooping binding table
+
+## VRF
+
+- `#show ip vrf`: See all VRFs configured on a router
+- `#show ip route vrf <name>`: View the routing table of the VRF
+- `(config)#ip vrf <name>`: Create VRF
+- `(config-if)#ip vrf forwarding <vrf-name>`: Assign the interface to VRF
+
 ## PC Commands
 
 - `arp -a`: Show ARP table
 - `ping <ip-address>`: Ping the address to test reachability
+- `tracert <ip-address>`: Show hops made to reach destination
+- `ipconfig /all`: Show all IP related information of host
 - `ipconfig /release`: Release DHCP leased address
 - `ipconfig /renew`: Ask for a new IP address
