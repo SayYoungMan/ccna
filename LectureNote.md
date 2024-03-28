@@ -1230,7 +1230,7 @@
 - `(config)# router rip` to use RIP
 - `(config-router)# version <version>` to set RIP version
 - `(config-router)# no auto-summary` to disable auto conversion to classful networks
-- To stop continuous RIP advertisements to connection with RIP neighboursm the interface should be configured as a passive interface
+- To stop continuous RIP advertisements to connection with RIP neighbours, the interface should be configured as a passive interface
   - `(config-router)# passive-interface <interface>`
 - `(config-router)# default-information originate` command advertises default route info to neighbours
 
@@ -1322,7 +1322,7 @@
 ### OSPF Cost
 
 - Calculated by `reference bandwidth / interface bandwidth`
-- Default reference bandwidth is 100 mpbs
+- Default reference bandwidth is 100 Mbps
   - You should change this value with `(config-router)# auto-cost reference-bandwidth <number>`
   - Should have same value on all OSPF routers
 - All value less than 1 will be converted to 1
@@ -1354,7 +1354,7 @@
 
 ### OSPF Config
 
-- `(config-if)# ip cost <process-id> area <area>` can activate OSPF directly on an interface.
+- `(config-if)# ip ospf <process-id> area <area>` can activate OSPF directly on an interface.
 - `(config-router)# passive-interface default` configures all interfaces as passive interfaces.
 
 ## 28. OSPF (3/3)
@@ -1643,7 +1643,7 @@ sequenceDiagram
 
 - Public addresses which can be used over the Internet
 - Must register to use them and they are globally unique
-- Originally defined as the 2000::/3 block
+- Originally defined as the `2000::/3` block
 - Now defined as all addresses which aren't reserved for other purposes
 
 ### Unique Local Addresses
@@ -1837,7 +1837,7 @@ sequenceDiagram
 ## 35. Extended ACLs
 
 - Configuring numbered ACLs with subcommands is possible the same way as named ACL
-- Can easily delete indicvidual entries in ACL config mode with `no <entry-number>`
+- Can easily delete individual entries in ACL config mode with `no <entry-number>`
 - Whereas from global config mode, you can only delete entire ACL
 - Can insert new entries in between other entries by specifying sequence number
 - `(config)#ip access-list resequence <acl-id> <starting-seq-num> <increment>` to resequence the entries in ACL
@@ -1847,7 +1847,7 @@ sequenceDiagram
 - Numbered ACLs have range of 100-199 and 2000-2699
 - Can match traffic based on more parameters
 - `(config)# access-list <number> [permit|deny] <protocol> <src-ip> <dest-ip>` to configure extended ACL based on source and destination IP address
-- `(config)# ip access-list extended {name|number}` to enter external ACL configuration mode
+- `(config)# ip access-list extended {name|number}` to enter extended ACL configuration mode
 - `(config-ext-nacl)# [seq-num] [permit|deny] <protocol> <src-ip> <dest-ip>` to set the entry
 - Should be applied as close to the source as possible, to limit how far the packets travel before blocked
 
@@ -2027,7 +2027,7 @@ sequenceDiagram
 - `(dhcp-config)# domain-name <domain>` to specify the domain name of the network
 - `(dhcp-config)# default-router <ip>` to specify the default gateway
 - `(dhcp-config)# lease <time>|infinity` to specify the lease time
-- `#show ip dhcp binding` dhows all DHCP clients connected
+- `#show ip dhcp binding` shows all DHCP clients connected
 
 ### DHCP Relay Agent Configuration
 
@@ -2089,7 +2089,7 @@ sequenceDiagram
 ### SNMPv2c Configuration
 
 - `(config)# snmp-server community <password> <permission>` to configure SNMP community strings
-- `(config)# snmp-server host <ip> version 2c <community-string>` specifies NSM, version and community
+- `(config)# snmp-server host <ip> version 2c <community-string>` specifies NMS, version and community
 - `(config)# snmp-server enable traps` to configure trap messages
 
 ## 41. Syslog
